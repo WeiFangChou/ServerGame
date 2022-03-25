@@ -1,7 +1,7 @@
 package com.lineage.server.clientpackets;
 
 import com.lineage.echo.ClientExecutor;
-import com.lineage.server.timecontroller.p002pc.PcFishingTimer;
+import com.lineage.server.timecontroller.pc.PcFishingTimer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

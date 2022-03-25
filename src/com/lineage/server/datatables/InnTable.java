@@ -17,18 +17,18 @@ public class InnTable {
     private static InnTable _instance;
     private static Logger _log = Logger.getLogger(InnTable.class.getName());
 
-    public static InnTable getInstance() throws Throwable {
+    public static InnTable getInstance() throws Exception {
         if (_instance == null) {
             _instance = new InnTable();
         }
         return _instance;
     }
 
-    private InnTable() throws Throwable {
+    private InnTable() throws Exception {
         load();
     }
 
-    private void load() throws Throwable {
+    private void load() throws Exception {
         Throwable th;
         SQLException e;
         Connection con = null;

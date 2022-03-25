@@ -18,7 +18,7 @@ public class L1ReloadWeapon implements L1CommandExecutor {
     }
 
     @Override // com.lineage.server.command.executor.L1CommandExecutor
-    public void execute(L1PcInstance paramL1PcInstance, String paramString1, String paramString2) throws Throwable {
+    public void execute(L1PcInstance paramL1PcInstance, String paramString1, String paramString2) throws Exception {
         ItemTable.get().load();
         WeaponSkillTable.get().load();
         paramL1PcInstance.sendPackets(new S_SystemMessage("[weapon]+[weapon_skill]資料庫已重讀完成!"));

@@ -62,9 +62,9 @@ public class ClientExecutor extends OpcodesClient implements Runnable {
 
     public void run() {
         PacketHc m = new PacketHc(this, M);
-        GeneralThreadPool.get().schedule(m, 0L);
+        GeneralThreadPool.get().schedule(m, 0);
         PacketHc o = new PacketHc(this, O);
-        GeneralThreadPool.get().schedule(o, 0L);
+        GeneralThreadPool.get().schedule(o, 0);
         this.set_savePc(Config.AUTOSAVE_INTERVAL);
         this.set_saveInventory(Config.AUTOSAVE_INTERVAL_INVENTORY);
 
@@ -277,8 +277,9 @@ public class ClientExecutor extends OpcodesClient implements Runnable {
             data = this._decrypt.decrypt();
             return data;
         } catch (Exception var2) {
-            return null;
+
         }
+        return null;
     }
 
     public EncryptExecutor out() {

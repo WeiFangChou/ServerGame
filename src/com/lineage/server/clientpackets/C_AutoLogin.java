@@ -8,7 +8,7 @@ public class C_AutoLogin extends ClientBasePacket {
     @Override // com.lineage.server.clientpackets.ClientBasePacket
     public void start(byte[] decrypt, ClientExecutor client) {
         try {
-            read(decrypt);
+            this.read(decrypt);
             if (readC() == 6) {
                 new C_AuthLogin().checkLogin(client, readS().toLowerCase(), readS(), true);
             } else if (client.getActiveChar() == null) {

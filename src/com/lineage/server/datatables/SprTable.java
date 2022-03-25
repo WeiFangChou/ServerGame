@@ -52,7 +52,7 @@ public class SprTable {
         return _instance;
     }
 
-    public void load() throws Throwable {
+    public void load() throws Exception {
         Throwable th;
         SQLException e;
         PerformanceTimer timer = new PerformanceTimer();

@@ -17,7 +17,7 @@ public class C_BanClan extends ClientBasePacket {
     public C_BanClan() {
     }
 
-    public void start(byte[] decrypt, ClientExecutor client) throws Throwable {
+    public void start(byte[] decrypt, ClientExecutor client) throws Exception {
         try {
             this.read(decrypt);
             String s = this.readS();

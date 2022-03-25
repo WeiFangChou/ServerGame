@@ -24,7 +24,7 @@ public class L1CNPC implements L1CommandExecutor {
     }
 
     @Override // com.lineage.server.command.executor.L1CommandExecutor
-    public void execute(L1PcInstance pc, String cmdName, String arg) throws Throwable {
+    public void execute(L1PcInstance pc, String cmdName, String arg) throws Exception {
         int count;
         L1PcInstance tgpc;
         if (pc == null) {

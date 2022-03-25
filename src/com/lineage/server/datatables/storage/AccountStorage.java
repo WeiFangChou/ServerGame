@@ -7,7 +7,7 @@ public interface AccountStorage {
 
     L1Account getAccount(String str);
 
-    int getPoint(String str) throws Throwable;
+    int getPoint(String str) throws Exception;
 
     boolean isAccount(String str);
 

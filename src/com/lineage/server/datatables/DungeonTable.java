@@ -118,7 +118,7 @@ public class DungeonTable {
         _log.info("載入地圖切換點設置數量: " + _dungeonMap.size() + "(" + timer.get() + "ms)");
     }
 
-    public boolean dg(int locX, int locY, int mapId, L1PcInstance pc) throws Throwable {
+    public boolean dg(int locX, int locY, int mapId, L1PcInstance pc) throws Exception {
         int servertime = L1GameTimeClock.getInstance().currentTime().getSeconds();
         int nowtime = servertime % 86400;
         String key = "" + mapId + locX + locY;
@@ -207,7 +207,7 @@ public class DungeonTable {
         return false;
     }
 
-    private int checkInnKey(L1PcInstance pc, int npcid) throws Throwable {
+    private int checkInnKey(L1PcInstance pc, int npcid) throws Exception {
         Iterator var4 = pc.getInventory().getItems().iterator();
 
         while(true) {

@@ -26,7 +26,7 @@ public class S_ClanMatching extends ServerBasePacket {
         writeC(0);
     }
 
-    public S_ClanMatching(L1PcInstance pc, int type, int objid, int htype) throws Throwable {
+    public S_ClanMatching(L1PcInstance pc, int type, int objid, int htype)  {
         try {
             L1ClanMatching cml = L1ClanMatching.getInstance();
             String clanname = null;

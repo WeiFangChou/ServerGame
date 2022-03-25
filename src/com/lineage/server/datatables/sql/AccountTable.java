@@ -75,27 +75,16 @@ public class AccountTable implements AccountStorage {
             value.set_pay_first(0);
             cn = DatabaseFactoryLogin.get().getConnection();
             ps = cn.prepareStatement("INSERT INTO `accounts` SET `login`=?,`password`=?,`lastactive`=?,`access_level`=?,`ip`=?,`host`=?,`character_slot`=?,`spw`=?,`server_no`=?,`累積金額`=?,`是否首儲`=?");
-            int i = 1;
-            ps.setString(i, value.get_login().toLowerCase());
-            int i2 = i + 1;
-            ps.setString(i2, value.get_password());
-            int i3 = i2 + 1;
-            ps.setTimestamp(i3, value.get_lastactive());
-            int i4 = i3 + 1;
-            ps.setInt(i4, 0);
-            int i5 = i4 + 1;
-            ps.setString(i5, value.get_ip());
-            int i6 = i5 + 1;
-            ps.setString(i6, value.get_mac());
-            int i7 = i6 + 1;
-            ps.setInt(i7, 0);
-            int i8 = i7 + 1;
-            ps.setString(i8, value.get_spw());
-            int i9 = i8 + 1;
-            ps.setInt(i9, value.get_server_no());
-            int i10 = i9 + 1;
-            ps.setInt(i10, value.get_point());
-            ps.setInt(i10 + 1, 0);
+            int i = 0;
+            ps.setString(++i, value.get_login().toLowerCase());
+            ps.setString(++i, value.get_password());
+            ps.setTimestamp(++i, value.get_lastactive());
+            ps.setInt(++i, 0);
+            ps.setString(++i, value.get_ip());
+            ps.setString(++i, value.get_mac());
+            ps.setInt(++i, 0);
+            ps.setString(++i, value.get_spw());
+            ps.setInt(++i, value.get_server_no());
             ps.execute();
             _log.info("新帳號建立: " + value.get_login());
             SQLUtil.close(ps);
@@ -103,14 +92,12 @@ public class AccountTable implements AccountStorage {
             return value;
         } catch (SQLException e) {
             _log.error(e.getLocalizedMessage(), e);
-            SQLUtil.close(ps);
-            SQLUtil.close(cn);
-            return null;
         } catch (Throwable th) {
+        } finally {
             SQLUtil.close(ps);
             SQLUtil.close(cn);
-            throw th;
         }
+        return null;
     }
 
     @Override // com.lineage.server.datatables.storage.AccountStorage
@@ -126,18 +113,15 @@ public class AccountTable implements AccountStorage {
             if (rs.next()) {
                 return true;
             }
-            SQLUtil.close(ps);
-            SQLUtil.close(co);
-            SQLUtil.close(rs);
             return false;
         } catch (Exception e) {
-            //_log.error(e.getLocalizedMessage(), e);
-            return false;
+            _log.error(e.getLocalizedMessage(), e);
         } finally {
             SQLUtil.close(ps);
             SQLUtil.close(co);
             SQLUtil.close(rs);
         }
+        return false;
     }
 
     @Override // com.lineage.server.datatables.storage.AccountStorage
@@ -154,7 +138,7 @@ public class AccountTable implements AccountStorage {
             ps = co.prepareStatement("SELECT * FROM `accounts` WHERE `login`=?");
             ps.setString(1, loginName.toLowerCase());
             rs = ps.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 String login = rs.getString("login").toLowerCase();
                 String password = rs.getString("password");
                 Timestamp lastactive = rs.getTimestamp("lastactive");
@@ -184,27 +168,18 @@ public class AccountTable implements AccountStorage {
                 value.set_pay_first(pay_first);
                 return value;
             }
-            SQLUtil.close(ps);
-            SQLUtil.close(co);
-            SQLUtil.close(rs);
-            return null;
         } catch (Exception e) {
             _log.error(e.getLocalizedMessage(), e);
-            return null;
         } catch (Throwable throwable) {
-            throwable.printStackTrace();
-            return null;
         } finally {
             SQLUtil.close(ps);
             SQLUtil.close(co);
             SQLUtil.close(rs);
         }
-
+        return null;
     }
 
-    private static int getPlayers(String loginName) throws Throwable {
-        Throwable th;
-        Exception e;
+    private static int getPlayers(String loginName) throws Exception {
         Connection co = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -214,40 +189,16 @@ public class AccountTable implements AccountStorage {
             ps = co.prepareStatement("SELECT * FROM `characters` WHERE `account_name`=?");
             ps.setString(1, loginName.toLowerCase());
             rs = ps.executeQuery();
-            while (rs.next()) {
-                try {
-                    i++;
-                } catch (Exception e2) {
-                    e = e2;
-                    try {
-                        _log.error(e.getLocalizedMessage(), e);
-                        SQLUtil.close(ps);
-                        SQLUtil.close(co);
-                        SQLUtil.close(rs);
-                        return 0;
-                    } catch (Throwable th2) {
-                        th = th2;
-                        SQLUtil.close(ps);
-                        SQLUtil.close(co);
-                        SQLUtil.close(rs);
-                        throw th;
-                    }
-                } catch (Throwable th3) {
-                    th = th3;
-                    SQLUtil.close(ps);
-                    SQLUtil.close(co);
-                    SQLUtil.close(rs);
-                    throw th;
-                }
-            }
+            while (rs.next()) {i++;}
+            return i;
+        } catch (Exception e) {
+            _log.error(e.getLocalizedMessage(), e);
+        }finally {
             SQLUtil.close(ps);
             SQLUtil.close(co);
             SQLUtil.close(rs);
-            return i;
-        } catch (Exception e3) {
-            e = e3;
-            return i;
         }
+        return 0;
     }
 
     @Override // com.lineage.server.datatables.storage.AccountStorage
@@ -270,25 +221,22 @@ public class AccountTable implements AccountStorage {
 
     @Override // com.lineage.server.datatables.storage.AccountStorage
     public void updateLastActive(L1Account account) {
-        if (account != null) {
+        Connection con = null;
+        PreparedStatement pstm = null;
+        try{
             Timestamp lastactive = new Timestamp(System.currentTimeMillis());
-            account.set_lastactive(lastactive);
-            Connection con = null;
-            PreparedStatement pstm = null;
-            try {
-                con = DatabaseFactoryLogin.get().getConnection();
-                pstm = con.prepareStatement("UPDATE `accounts` SET `lastactive`=?,`ip`=?,`host`=? WHERE `login`=?");
-                pstm.setTimestamp(1, lastactive);
-                pstm.setString(2, account.get_ip());
-                pstm.setString(3, account.get_mac());
-                pstm.setString(4, account.get_login());
-                pstm.execute();
-            } catch (Exception e) {
-                _log.error(e.getLocalizedMessage(), e);
-            } finally {
-                SQLUtil.close(pstm);
-                SQLUtil.close(con);
-            }
+            con =DatabaseFactoryLogin.get().getConnection();
+            pstm = con.prepareStatement("UPDATE `accounts` SET `lastactive`=?,`ip`=?,`host`=? WHERE `login`=?");
+            pstm.setTimestamp(1, lastactive);
+            pstm.setString(2, account.get_ip());
+            pstm.setString(3, account.get_mac());
+            pstm.setString(4, account.get_login());
+            pstm.execute();
+        }catch (Exception e){
+            _log.error(e.getLocalizedMessage(), e);
+        }finally {
+            SQLUtil.close(pstm);
+            SQLUtil.close(con);
         }
     }
 
@@ -401,7 +349,7 @@ public class AccountTable implements AccountStorage {
     }
 
     @Override // com.lineage.server.datatables.storage.AccountStorage
-    public int getPoint(String loginName) throws Throwable {
+    public int getPoint(String loginName) throws Exception {
         Throwable th;
         Exception e;
         Connection co = null;

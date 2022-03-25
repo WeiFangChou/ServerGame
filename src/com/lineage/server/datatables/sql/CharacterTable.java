@@ -58,7 +58,7 @@ public class CharacterTable {
         }
     }
 
-    public L1PcInstance restoreCharacter(String charName) throws Throwable {
+    public L1PcInstance restoreCharacter(String charName) throws Exception {
         return this._charStorage.loadCharacter(charName);
     }
 
@@ -202,7 +202,7 @@ public class CharacterTable {
         }
     }
 
-    public static void loadAllCharName() throws Throwable {
+    public static void loadAllCharName() throws Exception {
         Throwable th;
         SQLException e;
         L1CharName cn = null;

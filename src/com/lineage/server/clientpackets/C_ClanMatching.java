@@ -19,7 +19,7 @@ public class C_ClanMatching extends ClientBasePacket {
     private static final Log _log = LogFactory.getLog(C_ClanMatching.class);
 
     @Override // com.lineage.server.clientpackets.ClientBasePacket
-    public void start(byte[] decrypt, ClientExecutor client) throws Throwable {
+    public void start(byte[] decrypt, ClientExecutor client)  {
         L1Clan clan;
         try {
             read(decrypt);

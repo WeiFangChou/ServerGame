@@ -229,7 +229,7 @@ public class EricLogger extends Logger {
 
     /* access modifiers changed from: protected */
     @Override // java.lang.Object
-    public void finalize() throws Throwable {
+    public void finalize() throws Exception {
         super.finalize();
     }
 

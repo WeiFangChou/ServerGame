@@ -30,7 +30,7 @@ public class DungeonRTable {
         return _instance;
     }
 
-    public void load() throws Throwable {
+    public void load() throws Exception {
         Throwable th;
         PerformanceTimer timer = new PerformanceTimer();
         Connection cn = null;

@@ -5,7 +5,7 @@ import com.lineage.server.model.Instance.L1ItemInstance;
 import com.lineage.server.model.Instance.L1PcInstance;
 import com.lineage.server.serverpackets.S_Fishing;
 import com.lineage.server.serverpackets.S_ServerMessage;
-import com.lineage.server.timecontroller.p002pc.PcFishingTimer;
+import com.lineage.server.timecontroller.pc.PcFishingTimer;
 
 public class FishingPole extends ItemExecutor {
     private FishingPole() {

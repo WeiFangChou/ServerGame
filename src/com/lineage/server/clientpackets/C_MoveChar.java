@@ -8,12 +8,17 @@ import com.lineage.server.datatables.DungeonTable;
 import com.lineage.server.model.L1Character;
 import com.lineage.server.model.L1Trade;
 import com.lineage.server.model.Instance.L1PcInstance;
+import com.lineage.server.serverpackets.S_Lock;
 import com.lineage.server.serverpackets.S_MoveCharPacket;
 import com.lineage.server.utils.CheckUtil;
 import com.lineage.server.world.WorldTrap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import william.L1PcUnlock;
+
+import static com.lineage.server.model.Instance.L1PcInstance.REGENSTATE_MOVE;
+import static com.lineage.server.model.skill.L1SkillId.ABSOLUTE_BARRIER;
+import static com.lineage.server.model.skill.L1SkillId.MEDITATION;
 
 public class C_MoveChar extends ClientBasePacket {
     private static final Log _log = LogFactory.getLog(C_MoveChar.class);
@@ -55,12 +60,9 @@ public class C_MoveChar extends ClientBasePacket {
                 return;
             }
 
-
-            boolean var6 = false;
-
-            int locx;
-            int locy;
-            int heading;
+            int locx = 0;
+            int locy = 0;
+            int heading = 0;
             try {
                 locx = this.readH();
                 locy = this.readH();
@@ -75,15 +77,17 @@ public class C_MoveChar extends ClientBasePacket {
                 trade.tradeCancel(pc);
             }
 
-            pc.killSkillEffectTimer(32);
+            pc.killSkillEffectTimer(MEDITATION);
             pc.setCallClanId(0);
-            if (!pc.hasSkillEffect(78)) {
-                pc.setRegenState(2);
+            if (!pc.hasSkillEffect(ABSOLUTE_BARRIER)) {
+                pc.setRegenState(REGENSTATE_MOVE);
             }
 
             pc.getMap().setPassable(pc.getLocation(), true);
             int oleLocx = pc.getX();
             int oleLocy = pc.getY();
+
+
             int newlocx = locx + HEADING_TABLE_X[heading];
             int newlocy = locy + HEADING_TABLE_Y[heading];
 
@@ -102,14 +106,18 @@ public class C_MoveChar extends ClientBasePacket {
                 }
 
                 if (!isError) {
-                    boolean isPassable = pc.getMap().isPassable(oleLocx, oleLocy, heading, (L1Character)null);
-                    if (!isPassable && CheckUtil.checkPassable(pc, newlocx, newlocy, pc.getMapId())) {
-                        isError = true;
+                    boolean isPassable = pc.getMap().isPassable(oleLocx, oleLocy, heading, null);
+                    if (!isPassable) {
+                        if(CheckUtil.checkPassable(pc, newlocx, newlocy, pc.getMapId())) {
+                            isError = true;
+                        }
                     }
+
                 }
 
                 if (isError) {
-                    L1PcUnlock.Pc_Unlock(pc);
+                    //L1PcUnlock.Pc_Unlock(pc);
+                    pc.sendPackets(new S_Lock(pc));
                     return;
                 }
             } catch (Exception var18) {
@@ -118,7 +126,7 @@ public class C_MoveChar extends ClientBasePacket {
 
             if (ConfigOther.CHECK_MOVE_INTERVAL) {
                 int result = pc.speed_Attack().checkInterval(ACT_TYPE.MOVE);
-                if (result == 2) {
+                if (result == AcceleratorChecker.R_DISPOSED) {
                     return;
                 }
             }
@@ -152,6 +160,7 @@ public class C_MoveChar extends ClientBasePacket {
 
     }
 
+    @Override
     public String getType() {
         return this.getClass().getSimpleName();
     }

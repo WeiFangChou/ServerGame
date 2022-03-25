@@ -72,7 +72,7 @@ public class L1UltimateBattle {
 
     /* access modifiers changed from: private */
     /* access modifiers changed from: public */
-    private void spawnSupplies(int curRound) throws Throwable {
+    private void spawnSupplies(int curRound) throws Exception {
         List<L1UbSupplie> sup = UbSupplies.getInstance().getUbSupplies(curRound);
         if (sup.size() != 0) {
             for (L1UbSupplie t : sup) {

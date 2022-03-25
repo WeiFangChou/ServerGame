@@ -26,7 +26,7 @@ public class LoadZnoe {
         return _instance;
     }
 
-    public void load() throws Throwable {
+    public void load() throws Exception {
         Throwable th;
         InputStreamReader is = null;
         BufferedReader br = null;

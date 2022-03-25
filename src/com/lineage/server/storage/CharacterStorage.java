@@ -7,7 +7,7 @@ public interface CharacterStorage {
 
     void deleteCharacter(String str, String str2) throws Exception;
 
-    L1PcInstance loadCharacter(String str) throws Throwable;
+    L1PcInstance loadCharacter(String str) throws Exception;
 
     void storeCharacter(L1PcInstance l1PcInstance) throws Exception;
 }

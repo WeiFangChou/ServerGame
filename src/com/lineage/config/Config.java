@@ -39,7 +39,7 @@ public final class Config {
     public static final int Time = 490882;
     public static final String VER = "3.63C";
 
-    public static void load() throws Throwable {
+    public static void load() throws Exception {
         Properties pack = new Properties();
         try {
             InputStream is = new FileInputStream(new File("./config/pack.properties"));

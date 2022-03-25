@@ -205,7 +205,7 @@ public class ItemTable {
         return _instance;
     }
 
-    public void load() throws Throwable {
+    public void load() throws Exception {
         PerformanceTimer timer = new PerformanceTimer();
         SuperCardTable.getInstance().load();
         _etcitems = allEtcItem();
@@ -215,7 +215,7 @@ public class ItemTable {
         _log.info("載入道具,武器,防具資料: " + _etcitems.size() + "+" + _weapons.size() + "+" + _armors.size() + "=" + (_etcitems.size() + _weapons.size() + _armors.size()) + "(" + timer.get() + "ms)");
     }
 
-    private Map<Integer, L1EtcItem> allEtcItem() throws Throwable {
+    private Map<Integer, L1EtcItem> allEtcItem() throws Exception {
         Throwable th;
         SQLException e;
         NullPointerException e2;
@@ -334,7 +334,7 @@ public class ItemTable {
         return result;
     }
 
-    private Map<Integer, L1Weapon> allWeapon() throws Throwable {
+    private Map<Integer, L1Weapon> allWeapon() throws Exception {
         Throwable th;
         SQLException e;
         NullPointerException e2;
@@ -504,7 +504,7 @@ public class ItemTable {
         return result;
     }
 
-    private Map<Integer, L1Armor> allArmor() throws Throwable {
+    private Map<Integer, L1Armor> allArmor() throws Exception {
         Throwable th;
         SQLException e;
         NullPointerException e2;

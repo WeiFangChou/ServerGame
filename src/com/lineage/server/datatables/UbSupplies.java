@@ -17,18 +17,18 @@ public class UbSupplies {
     private static Logger _log = Logger.getLogger(UbSupplies.class.getName());
     private final List<L1UbSupplie> _ubSupplies = Lists.newArrayList();
 
-    private UbSupplies() throws Throwable {
+    private UbSupplies() throws Exception {
         load();
     }
 
-    public static UbSupplies getInstance() throws Throwable {
+    public static UbSupplies getInstance() throws Exception {
         if (_instance == null) {
             _instance = new UbSupplies();
         }
         return _instance;
     }
 
-    public void load() throws Throwable {
+    public void load() throws Exception {
         Throwable th;
         SQLException e;
         L1UbSupplie us = null;
