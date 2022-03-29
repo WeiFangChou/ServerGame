@@ -162,13 +162,13 @@ public class Npc_CKEW50 extends NpcExecutor {
             if (time != null)
                 quest.set_time(time.intValue());
             if (pc.isCrown()) {
-                L1Teleport.teleport(pc, 32720, 32900, (short)2000, 2, true);
+                L1Teleport.teleport(pc, 32720, 32900, 2000, 2, true);
             } else if (pc.isKnight()) {
-                L1Teleport.teleport(pc, 32721, 32853, (short)2000, 3, true);
+                L1Teleport.teleport(pc, 32721, 32853, 2000, 3, true);
             } else if (pc.isElf()) {
-                L1Teleport.teleport(pc, 32725, 32940, (short)2000, 1, true);
+                L1Teleport.teleport(pc, 32725, 32940, 2000, 1, true);
             } else if (pc.isWizard()) {
-                L1Teleport.teleport(pc, 32810, 32941, (short)2000, 7, true);
+                L1Teleport.teleport(pc, 32810, 32941, 2000, 7, true);
             }
             pc.getQuest().set_step(CKEWLv50_1.QUEST.get_id(), 2);
         } catch (Exception e) {

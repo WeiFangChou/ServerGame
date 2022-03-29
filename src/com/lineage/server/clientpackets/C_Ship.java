@@ -42,7 +42,7 @@ public class C_Ship extends ClientBasePacket {
                 int locX = readH();
                 int locY = readH();
                 pc.sendPackets(new S_OwnCharPack(pc));
-                L1Teleport.teleport(pc, locX, locY, (short) shipMapId, 0, false);
+                L1Teleport.teleport(pc, locX, locY,  shipMapId, 0, false);
             }
         } catch (Exception ignored) {
         } finally {

@@ -84,11 +84,11 @@ public class Sor_City extends ItemExecutor {
                 int[] loc = locs[this._random.nextInt(locs.length)];
                 pc.getInventory().removeItem(item, 1L);
                 L1BuffUtil.cancelAbsoluteBarrier(pc);
-                L1Teleport.teleport(pc, loc[0], loc[1], (short)loc[2], 5, true);
+                L1Teleport.teleport(pc, loc[0], loc[1], loc[2], 5, true);
             } else {
                 pc.getInventory().removeItem(item, 1L);
                 L1BuffUtil.cancelAbsoluteBarrier(pc);
-                L1Teleport.teleport(pc, 33080, 33392, (short)4, 5, true);
+                L1Teleport.teleport(pc, 33080, 33392, 4, 5, true);
             }
         } else {
             pc.sendPackets((ServerBasePacket)new S_ServerMessage(276));

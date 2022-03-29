@@ -4,7 +4,7 @@ public class L1Furniture {
     private int _item_obj_id;
     private int _locx;
     private int _locy;
-    private short _mapid;
+    private int _mapid;
     private int _npcid;
 
     public int get_npcid() {
@@ -39,11 +39,11 @@ public class L1Furniture {
         this._locy = locy;
     }
 
-    public short get_mapid() {
+    public int get_mapid() {
         return this._mapid;
     }
 
-    public void set_mapid(short mapid) {
+    public void set_mapid(int mapid) {
         this._mapid = mapid;
     }
 }

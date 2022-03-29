@@ -509,7 +509,7 @@ public class L1SummonInstance extends L1NpcInstance {
         this._currentPetStatus = this._tempModel;
     }
 
-    private static void teleport(L1NpcInstance npc, int x, int y, short map, int head) {
+    private static void teleport(L1NpcInstance npc, int x, int y, int map, int head) {
         try {
             World.get().moveVisibleObject(npc, map);
             L1WorldMap.get().getMap(npc.getMapId()).setPassable(npc.getX(), npc.getY(), true, 2);

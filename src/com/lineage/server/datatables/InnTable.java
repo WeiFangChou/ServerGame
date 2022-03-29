@@ -24,13 +24,12 @@ public class InnTable {
         return _instance;
     }
 
-    private InnTable() throws Exception {
+    private InnTable() {
         load();
     }
 
-    private void load() throws Exception {
-        Throwable th;
-        SQLException e;
+    private void load()   {
+
         Connection con = null;
         PreparedStatement pstm = null;
         ResultSet rs = null;
@@ -40,13 +39,12 @@ public class InnTable {
             pstm = con.prepareStatement("SELECT * FROM inn");
             rs = pstm.executeQuery();
             while (rs.next()) {
-                try {
                     int key = rs.getInt("npcid");
-                    if (!_dataMap.containsKey(Integer.valueOf(key))) {
+                    if (!_dataMap.containsKey(key)) {
                         inn = new Inn(null);
-                        _dataMap.put(Integer.valueOf(key), inn);
+                        _dataMap.put(key, inn);
                     } else {
-                        inn = _dataMap.get(Integer.valueOf(key));
+                        inn = _dataMap.get(key);
                     }
                     L1Inn l1inn = new L1Inn();
                     l1inn.setInnNpcId(rs.getInt("npcid"));
@@ -56,35 +54,14 @@ public class InnTable {
                     l1inn.setLodgerId(rs.getInt("lodger_id"));
                     l1inn.setHall(rs.getBoolean("hall"));
                     l1inn.setDueTime(rs.getTimestamp("due_time"));
-                    inn._inn.put(Integer.valueOf(roomNumber), l1inn);
-                } catch (SQLException e2) {
-                    e = e2;
-                    try {
-                        _log.log(Level.SEVERE, e.getLocalizedMessage(), (Throwable) e);
-                        SQLUtil.close(rs);
-                        SQLUtil.close(pstm);
-                        SQLUtil.close(con);
-                        return;
-                    } catch (Throwable th2) {
-                        th = th2;
-                        SQLUtil.close(rs);
-                        SQLUtil.close(pstm);
-                        SQLUtil.close(con);
-                        throw th;
-                    }
-                } catch (Throwable th3) {
-                    th = th3;
-                    SQLUtil.close(rs);
-                    SQLUtil.close(pstm);
-                    SQLUtil.close(con);
-                    throw th;
-                }
+                    inn._inn.put(roomNumber, l1inn);
             }
+        } catch (SQLException e) {
+            _log.log(Level.SEVERE, e.getLocalizedMessage(),  e);
+        }finally {
             SQLUtil.close(rs);
             SQLUtil.close(pstm);
             SQLUtil.close(con);
-        } catch (SQLException e3) {
-            e = e3;
         }
     }
 
@@ -102,7 +79,7 @@ public class InnTable {
             pstm.setInt(6, inn.getRoomNumber());
             pstm.execute();
         } catch (Exception e) {
-            _log.log(Level.SEVERE, e.getLocalizedMessage(), (Throwable) e);
+            _log.log(Level.SEVERE, e.getLocalizedMessage(), e);
         } finally {
             SQLUtil.close(pstm);
             SQLUtil.close(con);
@@ -110,8 +87,8 @@ public class InnTable {
     }
 
     public L1Inn getTemplate(int npcid, int roomNumber) {
-        if (_dataMap.containsKey(Integer.valueOf(npcid))) {
-            return (L1Inn) _dataMap.get(Integer.valueOf(npcid))._inn.get(Integer.valueOf(roomNumber));
+        if (_dataMap.containsKey(npcid)) {
+            return _dataMap.get(npcid)._inn.get(roomNumber);
         }
         return null;
     }
@@ -124,7 +101,7 @@ public class InnTable {
             this._inn = Maps.newHashMap();
         }
 
-        /* synthetic */ Inn(Inn inn) {
+        Inn(Inn inn) {
             this();
         }
     }

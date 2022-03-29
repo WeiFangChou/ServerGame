@@ -74,16 +74,16 @@ public class CheckUtil {
 
     private static void isPartyMap(L1PcInstance pc) {
         try {
-            short mapid = pc.getMapId();
+            int mapid = pc.getMapId();
             Integer userCount = NpcTeleportTable.get().isPartyMap(mapid);
             if (userCount == null) {
                 return;
             }
             if (!pc.isInParty()) {
                 pc.sendPackets(new S_ServerMessage(425));
-                L1Teleport.teleport(pc, 33080, 33392, (short) 4, 5, true);
+                L1Teleport.teleport(pc, 33080, 33392,  4, 5, true);
             } else if (pc.getParty().partyUserInMap(mapid) < userCount.intValue()) {
-                L1Teleport.teleport(pc, 33080, 33392, (short) 4, 5, true);
+                L1Teleport.teleport(pc, 33080, 33392,  4, 5, true);
             }
         } catch (Exception e) {
             _log.error(e.getLocalizedMessage(), e);
@@ -93,7 +93,7 @@ public class CheckUtil {
     private static void isTimeMap(L1PcInstance pc) {
         try {
             if (NpcTeleportTable.get().isTimeMap(pc.getMapId()) && ServerUseMapTimer.MAP.get(pc) == null) {
-                L1Teleport.teleport(pc, 33080, 33392, (short) 4, 5, true);
+                L1Teleport.teleport(pc, 33080, 33392,  4, 5, true);
             }
         } catch (Exception e) {
             _log.error(e.getLocalizedMessage(), e);
@@ -118,7 +118,7 @@ public class CheckUtil {
         }
     }
 
-    public static boolean checkPassable(L1PcInstance pc, int locx, int locy, short mapid) {
+    public static boolean checkPassable(L1PcInstance pc, int locx, int locy, int mapid) {
         if (QuestMapTable.get().isQuestMap(pc.getMapId())) {
             return false;
         }

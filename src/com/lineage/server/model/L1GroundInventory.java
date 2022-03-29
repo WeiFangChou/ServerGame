@@ -42,7 +42,7 @@ public class L1GroundInventory extends L1Inventory {
         }
     }
 
-    public L1GroundInventory(int objectId, int x, int y, short map) {
+    public L1GroundInventory(int objectId, int x, int y, int map) {
         setId(objectId);
         setX(x);
         setY(y);

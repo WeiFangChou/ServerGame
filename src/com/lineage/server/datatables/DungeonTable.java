@@ -102,7 +102,7 @@ public class DungeonTable {
                     dungeonType = DungeonTable.DungeonType.SHIP_FOR_HEINE;
                 }
 
-                newDungeon = new DungeonTable.NewDungeon(newX, newY, (short)newMapId, heading, no, dungeonType, (DungeonTable.NewDungeon)null);
+                newDungeon = new DungeonTable.NewDungeon(newX, newY, newMapId, heading, no, dungeonType, (DungeonTable.NewDungeon)null);
                 if (_dungeonMap.containsKey(key)) {
                     _log.error("相同SRC傳送座標(" + key + ")");
                 }
@@ -186,7 +186,7 @@ public class DungeonTable {
 
             if (teleportable) {
                 npcid = newDungeon._id;
-                short newMap = newDungeon._newMapId;
+                int newMap = newDungeon._newMapId;
                 type = newDungeon._newX;
                 int newY = newDungeon._newY;
                 int heading = newDungeon._heading;
@@ -236,7 +236,7 @@ public class DungeonTable {
         }
     }
 
-    private void teleport(L1PcInstance pc, int id, int newX, int newY, short newMap, int heading, boolean b) {
+    private void teleport(L1PcInstance pc, int id, int newX, int newY, int newMap, int heading, boolean b) {
         pc.setTeleportX(newX);
         pc.setTeleportY(newY);
         pc.setTeleportMapId(newMap);
@@ -270,12 +270,12 @@ public class DungeonTable {
         int _id;
         int _newX;
         int _newY;
-        short _newMapId;
+        int _newMapId;
         int _heading;
         int _no;
         DungeonTable.DungeonType _dungeonType;
 
-        private NewDungeon(int newX, int newY, short newMapId, int heading, int no, DungeonType dungeonType, NewDungeon newDungeon) {
+        private NewDungeon(int newX, int newY, int newMapId, int heading, int no, DungeonType dungeonType, NewDungeon newDungeon) {
             this._id = DungeonTable._nextId.incrementAndGet();
             this._newX = newX;
             this._newY = newY;

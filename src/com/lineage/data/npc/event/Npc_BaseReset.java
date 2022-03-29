@@ -42,7 +42,7 @@ public class Npc_BaseReset extends NpcExecutor {
                 L1SkillUse l1skilluse = new L1SkillUse();
                 l1skilluse.handleCommands(pc, 44, pc.getId(), pc.getX(), pc.getY(), 0, 1);
                 pc.getInventory().takeoffEquip(945);
-                L1Teleport.teleport(pc, 32737, 32789, (short)997, 4, false);
+                L1Teleport.teleport(pc, 32737, 32789, 997, 4, false);
                 int initStatusPoint = 75 + pc.getElixirStats();
                 int pcStatusPoint = pc.getBaseStr() + pc.getBaseInt() + pc.getBaseWis() +
                         pc.getBaseDex() + pc.getBaseCon() + pc.getBaseCha();

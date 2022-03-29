@@ -24,7 +24,7 @@ public class Transmission_Reel extends ItemExecutor {
         try {
             int locx = 0;
             int locy = 0;
-            short mapid = 0;
+            int mapid = 0;
             switch (item.getItemId()) {
                 case 40289:
                     locx = 32631;

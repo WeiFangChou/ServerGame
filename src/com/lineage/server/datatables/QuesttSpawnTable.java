@@ -116,7 +116,7 @@ public class QuesttSpawnTable {
                             spawnDat.setMinRespawnDelay(respawn_delay);
                             spawnDat.setMovementDistance(movement_distance);
                             spawnDat.setHeading(heading2);
-                            spawnDat.setMapId((short) mapid2);
+                            spawnDat.setMapId( mapid2);
                             spawnDat.setSpawnType(near_spawn);
                             spawnDat.setTime(SpawnTimeTable.getInstance().get(spawnDat.getId()));
                             spawnDat.setName(template1.get_name());

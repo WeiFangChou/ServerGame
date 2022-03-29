@@ -60,7 +60,7 @@ public class Wand_Blink extends ItemExecutor {
         int newY;
         int newX2;
         int newY2;
-        short xy = (short) ((int) ((Math.random() * 3.0d) + 1.0d));
+        int xy =  ((int) ((Math.random() * 3.0d) + 1.0d));
         if (ta instanceof L1PcInstance) {
             L1PcInstance targetPc = (L1PcInstance) ta;
             int target_x = pc.getX() - targetPc.getX();
@@ -107,7 +107,7 @@ public class Wand_Blink extends ItemExecutor {
                         break;
                 }
                 L1Map map = L1WorldMap.get().getMap(targetPc.getMapId());
-                short mapId = targetPc.getMapId();
+                int mapId = targetPc.getMapId();
                 int head = targetPc.getHeading();
                 if (L1TownLocation.isGambling(newX2, newY2, mapId)) {
                     pc.sendPackets(new S_ServerMessage(280));
@@ -162,7 +162,7 @@ public class Wand_Blink extends ItemExecutor {
                     break;
             }
             L1Map map2 = L1WorldMap.get().getMap(targetNpc.getMapId());
-            short mapId2 = targetNpc.getMapId();
+            int mapId2 = targetNpc.getMapId();
             int head2 = targetNpc.getHeading();
             if (!map2.isInMap(newX, newY) || !map2.isPassable(newX, newY, targetNpc)) {
                 pc.sendPackets(new S_ServerMessage(280));
@@ -174,7 +174,7 @@ public class Wand_Blink extends ItemExecutor {
         }
     }
 
-    private void teleport(L1MonsterInstance targetNpc, int x, int y, short map, int head) {
+    private void teleport(L1MonsterInstance targetNpc, int x, int y, int map, int head) {
         World.get().moveVisibleObject(targetNpc, map);
         targetNpc.getMap().setPassable(targetNpc.getX(), targetNpc.getY(), true, 2);
         targetNpc.setX(x);

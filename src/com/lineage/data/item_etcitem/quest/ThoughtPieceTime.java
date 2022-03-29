@@ -58,7 +58,7 @@ public class ThoughtPieceTime extends ItemExecutor {
             if (time != null) {
                 quest.set_time(time.intValue());
             }
-            L1Teleport.teleport(pc, 32729, 32831, (short) mapid, 2, true);
+            L1Teleport.teleport(pc, 32729, 32831,  mapid, 2, true);
         } catch (Exception e) {
             _log.error(e.getLocalizedMessage(), e);
         }

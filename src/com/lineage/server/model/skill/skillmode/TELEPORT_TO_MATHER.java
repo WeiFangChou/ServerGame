@@ -13,7 +13,7 @@ public class TELEPORT_TO_MATHER extends SkillMode {
     public int start(L1PcInstance srcpc, L1Character cha, L1Magic magic, int integer) throws Exception {
         L1PcInstance pc = (L1PcInstance) cha;
         if (pc.getMap().isEscapable() || pc.isGm()) {
-            L1Teleport.teleport(pc, 33051, 32337, (short) 4, 5, true);
+            L1Teleport.teleport(pc, 33051, 32337,  4, 5, true);
         } else {
             pc.sendPackets(new S_ServerMessage(276));
             pc.sendPackets(new S_Paralysis(7, false));

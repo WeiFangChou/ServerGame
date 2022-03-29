@@ -21,7 +21,7 @@ public class GoHome_Reel extends ItemExecutor {
     public void execute(int[] data, L1PcInstance pc, L1ItemInstance item) throws Exception {
         if (pc.getMap().isEscapable() || pc.isGm()) {
             int[] loc = GetbackTable.GetBack_Location(pc, true);
-            L1Teleport.teleport(pc, loc[0], loc[1], (short) loc[2], 5, true);
+            L1Teleport.teleport(pc, loc[0], loc[1],  loc[2], 5, true);
             pc.getInventory().removeItem(item, 1);
         } else {
             pc.sendPackets(new S_ServerMessage(647));

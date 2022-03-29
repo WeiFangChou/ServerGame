@@ -58,10 +58,9 @@ public final class ConfigRate {
             CREATE_CHANCE_HISTORY_BOOK = Integer.parseInt(set.getProperty("CreateChanceHistoryBook", "50"));
             set.clear();
         } catch (Exception e) {
-            throw new ConfigErrorException("設置檔案遺失: ./config/rates.properties");
-        } catch (Throwable th) {
+            throw new ConfigErrorException("設置檔案遺失: "+RATES_CONFIG_FILE);
+        }finally {
             set.clear();
-            throw th;
         }
     }
 }

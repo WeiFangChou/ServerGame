@@ -66,7 +66,7 @@ public class L1HauntedHouse {
         for (L1PcInstance pc : membersArray) {
             if (pc.getMapId() == 5140) {
                 new L1SkillUse().handleCommands(pc, 44, pc.getId(), pc.getX(), pc.getY(), 0, 1);
-                L1Teleport.teleport(pc, 32624, 32813, (short) 4, 5, true);
+                L1Teleport.teleport(pc, 32624, 32813,  4, 5, true);
             }
         }
         clearMembers();

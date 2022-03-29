@@ -84,7 +84,7 @@ public class PcOtherThreadPool {
      */
     public ScheduledFuture<?> schedule(final Runnable r, final long delay) {
         try {
-            if (delay <= 0) {
+            if (delay <= 0L) {
                 _executor.execute(r);
                 return null;
             }
@@ -92,8 +92,9 @@ public class PcOtherThreadPool {
 
         } catch (final RejectedExecutionException e) {
             _log.error(e.getLocalizedMessage(), e);
+            return null;
         }
-        return null;
+
     }
 
     /**
@@ -112,10 +113,10 @@ public class PcOtherThreadPool {
                 // 该命令可能在新的线程、已入池的线程或者正调用的线程中执行，这由 Executor 实现决定。
                 _executor.execute(r);
                 return null;
+            }else {
+                // 创建并执行在给定延迟后启用的一次性操作。
+                return _scheduler.schedule(r, delay, TimeUnit.MILLISECONDS);
             }
-            // 创建并执行在给定延迟后启用的一次性操作。
-            return _scheduler.schedule(r, delay, TimeUnit.MILLISECONDS);
-
         } catch (final RejectedExecutionException e) {
             _log.error(e.getLocalizedMessage(), e);
             return null;

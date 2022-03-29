@@ -57,7 +57,7 @@ public class TextMapReader extends MapReader {
             MapData mapData = mapDatas.get(key);
             int mapId = mapData.mapId;
             try {
-                map = new L1V1Map((short) mapId, read(mapId, (mapData.endX - mapData.startX) + 1, (mapData.endY - mapData.startY) + 1), mapData.startX, mapData.startY, mapData.isUnderwater, mapData.markable, mapData.teleportable, mapData.escapable, mapData.isUseResurrection, mapData.isUsePainwand, mapData.isEnabledDeathPenalty, mapData.isTakePets, mapData.isRecallPets, mapData.isUsableItem, mapData.isUsableSkill, mapData.isMapteleport);
+                map = new L1V1Map( mapId, read(mapId, (mapData.endX - mapData.startX) + 1, (mapData.endY - mapData.startY) + 1), mapData.startX, mapData.startY, mapData.isUnderwater, mapData.markable, mapData.teleportable, mapData.escapable, mapData.isUseResurrection, mapData.isUsePainwand, mapData.isEnabledDeathPenalty, mapData.isTakePets, mapData.isRecallPets, mapData.isUsableItem, mapData.isUsableSkill, mapData.isMapteleport);
             } catch (Exception e) {
                 _log.error("地圖資料生成數據載入異常: " + mapId, e);
                 map = null;

@@ -55,7 +55,7 @@ public class L1FieldObjectInstance extends L1NpcInstance {
                         pc.sendPackets(new S_ServerMessage(403, item2.getLogName()));
                     }
                     new L1SkillUse().handleCommands(pc, 44, pc.getId(), pc.getX(), pc.getY(), 0, 1);
-                    L1Teleport.teleport(pc, 32624, 32813, (short) 4, 5, true);
+                    L1Teleport.teleport(pc, 32624, 32813,  4, 5, true);
                 }
             }
         } catch (Exception e) {

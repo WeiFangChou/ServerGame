@@ -51,7 +51,7 @@ public class L1UltimateBattle {
     private int _locY2;
     private L1Location _location;
     private Set<Integer> _managers = new HashSet();
-    private short _mapId;
+    private int _mapId;
     private int _maxLevel;
     private int _maxPlayer;
     private final ArrayList<L1PcInstance> _members = new ArrayList<>();
@@ -207,7 +207,7 @@ public class L1UltimateBattle {
                 for (int i = 0; i < length; i++) {
                     L1PcInstance pc2 = membersArray[i];
                     Random random = new Random();
-                    L1Teleport.teleport(pc2, 33503 + random.nextInt(4), random.nextInt(4) + 32764, (short) 4, 5, true);
+                    L1Teleport.teleport(pc2, 33503 + random.nextInt(4), random.nextInt(4) + 32764,  4, 5, true);
                     L1UltimateBattle.this.removeMember(pc2);
                 }
                 L1UltimateBattle.this.clearColosseum();
@@ -270,11 +270,11 @@ public class L1UltimateBattle {
         this._ubId = id;
     }
 
-    public short getMapId() {
+    public int getMapId() {
         return this._mapId;
     }
 
-    public void setMapId(short mapId) {
+    public void setMapId(int mapId) {
         this._mapId = mapId;
     }
 

@@ -38,15 +38,15 @@ public class ServerShipTimer extends TimerTask {
                 switch (pc.getMapId()) {
                     case 5:
                         pc.getInventory().consumeItem(40299, 1);
-                        teleport(pc, 32540, 32728, (short) 4);
+                        teleport(pc, 32540, 32728,  4);
                         break;
                     case 84:
                         pc.getInventory().consumeItem(40301, 1);
-                        teleport(pc, 33426, 33501, (short) 4);
+                        teleport(pc, 33426, 33501,  4);
                         break;
                     case 447:
                         pc.getInventory().consumeItem(40302, 1);
-                        teleport(pc, 32297, 33086, (short) 440);
+                        teleport(pc, 32297, 33086,  440);
                         break;
                 }
             }
@@ -55,22 +55,22 @@ public class ServerShipTimer extends TimerTask {
                 switch (pc2.getMapId()) {
                     case 6:
                         pc2.getInventory().consumeItem(40298, 1);
-                        teleport(pc2, 32631, 32982, (short) 0);
+                        teleport(pc2, 32631, 32982,  0);
                         break;
                     case 83:
                         pc2.getInventory().consumeItem(40300, 1);
-                        teleport(pc2, 32936, 33057, (short) 70);
+                        teleport(pc2, 32936, 33057,  70);
                         break;
                     case 446:
                         pc2.getInventory().consumeItem(40303, 1);
-                        teleport(pc2, 32751, 32873, (short) 445);
+                        teleport(pc2, 32751, 32873,  445);
                         break;
                 }
             }
         }
     }
 
-    private final void teleport(L1PcInstance tgpc, int locx, int locy, short mapid) {
+    private final void teleport(L1PcInstance tgpc, int locx, int locy, int mapid) {
         tgpc.setTeleportX(locx);
         tgpc.setTeleportY(locy);
         tgpc.setTeleportMapId(mapid);

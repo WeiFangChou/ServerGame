@@ -11,11 +11,11 @@ public class L1Object implements Serializable {
     private final L1Location _loc = new L1Location();
     private int _showId = -1;
 
-    public short getMapId() {
-        return (short) this._loc.getMap().getId();
+    public int getMapId() {
+        return  this._loc.getMap().getId();
     }
 
-    public void setMap(short mapId) {
+    public void setMap(int mapId) {
         this._loc.setMap(L1WorldMap.get().getMap(mapId));
     }
 

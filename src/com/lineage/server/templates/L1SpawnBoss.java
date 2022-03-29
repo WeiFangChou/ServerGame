@@ -89,12 +89,12 @@ public class L1SpawnBoss extends L1SpawnEx {
     }
 
     @Override // com.lineage.server.templates.L1SpawnEx
-    public short get_tmpmapid() {
+    public int get_tmpmapid() {
         return this._tmpmapid;
     }
 
     @Override // com.lineage.server.templates.L1SpawnEx
-    public void set_tmpmapid(short tmpmapid) {
+    public void set_tmpmapid(int tmpmapid) {
         this._tmpmapid = tmpmapid;
     }
 
@@ -149,12 +149,12 @@ public class L1SpawnBoss extends L1SpawnEx {
     }
 
     @Override // com.lineage.server.templates.L1SpawnEx
-    public short get_mapid() {
+    public int get_mapid() {
         return this._mapid;
     }
 
     @Override // com.lineage.server.templates.L1SpawnEx
-    public void set_mapid(short mapid) {
+    public void set_mapid(int mapid) {
         this._mapid = mapid;
     }
 
@@ -210,9 +210,9 @@ public class L1SpawnBoss extends L1SpawnEx {
                 npcTemp.setHeading(Math.min(this._heading, 7));
                 int npcId = npcTemp.getNpcTemplate().get_npcId();
                 if (npcId == 45488 && this._mapid == 9) {
-                    npcTemp.setMap((short) (this._mapid + _random.nextInt(2)));
+                    npcTemp.setMap( (this._mapid + _random.nextInt(2)));
                 } else if (npcId == 45601 && this._mapid == 11) {
-                    npcTemp.setMap((short) (this._mapid + _random.nextInt(3)));
+                    npcTemp.setMap( (this._mapid + _random.nextInt(3)));
                 } else {
                     npcTemp.setMap(this._mapid);
                 }
@@ -245,14 +245,14 @@ public class L1SpawnBoss extends L1SpawnEx {
                 if (npcId == 45573 && npcTemp.getMapId() == 2) {
                     for (L1PcInstance pc : World.get().getAllPlayers()) {
                         if (pc.getMapId() == 2) {
-                            L1Teleport.teleport(pc, 32664, 32797, (short) 2, 0, true);
+                            L1Teleport.teleport(pc, 32664, 32797,  2, 0, true);
                         }
                     }
                 }
                 if ((npcId == 46142 && npcTemp.getMapId() == 73) || (npcId == 46141 && npcTemp.getMapId() == 74)) {
                     for (L1PcInstance pc2 : World.get().getAllPlayers()) {
                         if (pc2.getMapId() >= 72 && pc2.getMapId() <= 74) {
-                            L1Teleport.teleport(pc2, 32840, 32833, (short) 72, pc2.getHeading(), true);
+                            L1Teleport.teleport(pc2, 32840, 32833,  72, pc2.getHeading(), true);
                         }
                     }
                 }

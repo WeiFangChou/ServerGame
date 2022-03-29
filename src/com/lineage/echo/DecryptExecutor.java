@@ -1,66 +1,96 @@
 package com.lineage.echo;
 
-import com.lineage.config.Config;
-import com.lineage.echo.encryptions.Encryption;
-import com.lineage.server.utils.StreamUtil;
 import java.io.InputStream;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.lineage.config.Config;
+import com.lineage.echo.DecryptErrorException;
+import com.lineage.echo.encryptions.Encryption;
+import com.lineage.server.utils.StreamUtil;
+
+/**
+ * 封包解密管理
+ * @author dexc
+ *
+ */
 public class DecryptExecutor {
-    private static final Log _log = LogFactory.getLog(DecryptExecutor.class);
-    private final ClientExecutor _client;
-    private final InputStream _in;
-    private Encryption _keys;
 
-    public DecryptExecutor(ClientExecutor client, InputStream in) {
-        this._client = client;
-        this._keys = client.get_keys();
-        this._in = in;
-    }
+	private static final Log _log = LogFactory.getLog(DecryptExecutor.class);
 
-    public ClientExecutor get_client() {
-        return this._client;
-    }
+	private final ClientExecutor _client;
 
-    public byte[] decrypt() throws Exception {
-        try {
-            int hiByte = this._in.read();
-            int loByte = this._in.read();
-            if (loByte < 0) {
-                throw new DecryptErrorException();
-            }
-            if (Config.LOGINS_TO_AUTOENTICATION) {
-                hiByte ^= this._client._xorByte;
-                loByte ^= this._client._xorByte;
-            }
-            int dataLength = ((loByte << 8) + hiByte) - 2;
-            byte[] data = new byte[dataLength];
-            int readSize = 0;
-            int i = 0;
-            while (i != -1 && readSize < dataLength) {
-                i = this._in.read(data, readSize, dataLength - readSize);
-                readSize += i;
-            }
-            if (readSize != dataLength) {
-                throw new RuntimeException();
-            }
-            if (Config.LOGINS_TO_AUTOENTICATION) {
-                for (int i2 = 0; i2 < dataLength; i2++) {
-                    data[i2] = (byte) (data[i2] ^ this._client._xorByte);
-                }
-            }
-            return this._keys.decrypt(data);
-        } catch (Exception e) {
-            throw new DecryptErrorException();
-        }
-    }
+	private final InputStream _in;
+	
+	private Encryption _keys;
 
-    public void stop() {
-        try {
-            StreamUtil.close(this._in);
-        } catch (Exception e) {
-            _log.error(e.getLocalizedMessage(), e);
-        }
-    }
+	public DecryptExecutor(final ClientExecutor client, final InputStream in) {
+		_client = client;
+		_keys = client.get_keys();
+		_in = in;
+	}
+
+	public ClientExecutor get_client() {
+		return _client;
+	}
+	
+	/**
+	 * 客戶端封包解密處理(IO)
+	 *
+	 * @return
+	 * @throws Exception
+	 */
+	public byte[] decrypt() throws Exception {
+		
+		try {
+			int hiByte = this._in.read();
+			int loByte = this._in.read();
+
+			if (loByte < 0) {
+				throw new DecryptErrorException();
+			}
+			
+			//TODO 伺服器綑綁 
+			if(Config.LOGINS_TO_AUTOENTICATION) {
+				hiByte ^= _client._xorByte;
+				loByte ^= _client._xorByte;
+			}
+			
+			final int dataLength = ((loByte << 8) + hiByte) - 2;
+
+			final byte data[] = new byte[dataLength];
+
+			int readSize = 0;
+
+			for (int i = 0; (i != -1) && (readSize < dataLength); readSize += i) {
+				i = this._in.read(data, readSize, dataLength - readSize);
+			}
+
+			if (readSize != dataLength) {
+				throw new RuntimeException();
+			}
+			
+			if(Config.LOGINS_TO_AUTOENTICATION) {
+				for(int i = 0; i < dataLength; i++) {
+					data[i]=(byte)(data[i] ^ _client._xorByte);
+				}
+			}
+
+			return _keys.decrypt(data);
+
+		} catch (final Exception e) {
+			//_log.error(e.getLocalizedMessage(), e);
+			throw new DecryptErrorException();
+		}
+	}
+
+	public void stop() {
+		try {
+			StreamUtil.close(this._in);
+			
+		} catch (final Exception e) {
+			_log.error(e.getLocalizedMessage(), e);
+		}
+	}
 }

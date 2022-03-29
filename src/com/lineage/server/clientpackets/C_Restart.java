@@ -32,7 +32,7 @@ public class C_Restart extends ClientBasePacket {
                 World.get().moveVisibleObject(pc, loc[2]);
                 pc.setX(loc[0]);
                 pc.setY(loc[1]);
-                pc.setMap((short) loc[2]);
+                pc.setMap( loc[2]);
                 pc.set_showId(-1);
                 pc.sendPackets(new S_MapID(pc, pc.getMapId(), pc.getMap().isUnderwater()));
                 pc.broadcastPacketAll(new S_OtherCharPacks(pc));

@@ -200,7 +200,7 @@ public class L1FollowerInstance extends L1NpcInstance {
         }
     }
 
-    public void spawn(int npcId, int x, int y, int h, short m) {
+    public void spawn(int npcId, int x, int y, int h, int m) {
         try {
             L1QuestInstance newnpc = (L1QuestInstance) L1SpawnUtil.spawn(npcId, x, y, m, h);
             newnpc.onNpcAI();

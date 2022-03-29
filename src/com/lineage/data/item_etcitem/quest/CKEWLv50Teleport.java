@@ -58,19 +58,19 @@ public class CKEWLv50Teleport extends ItemExecutor {
                             tgpc.getInventory().removeItem(reitem);
                         }
                         if (tgpc.isCrown()) {
-                            L1Teleport.teleport(tgpc, 32790, 32773, (short)2000, 2, true);
+                            L1Teleport.teleport(tgpc, 32790, 32773, 2000, 2, true);
                             continue;
                         }
                         if (tgpc.isKnight()) {
-                            L1Teleport.teleport(tgpc, 32788, 32773, (short)2000, 2, true);
+                            L1Teleport.teleport(tgpc, 32788, 32773, 2000, 2, true);
                             continue;
                         }
                         if (tgpc.isElf()) {
-                            L1Teleport.teleport(tgpc, 32788, 32771, (short)2000, 2, true);
+                            L1Teleport.teleport(tgpc, 32788, 32771, 2000, 2, true);
                             continue;
                         }
                         if (tgpc.isWizard())
-                            L1Teleport.teleport(tgpc, 32788, 32775, (short)2000, 2, true);
+                            L1Teleport.teleport(tgpc, 32788, 32775, 2000, 2, true);
                     }
                 }
             }

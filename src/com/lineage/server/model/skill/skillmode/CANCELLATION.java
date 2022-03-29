@@ -54,7 +54,7 @@ public class CANCELLATION extends SkillMode {
                     if (tgnpc.getGfxId() == tgnpc.getTempCharGfx()) {
                         int x = tgnpc.getX();
                         int y = tgnpc.getY();
-                        short m = tgnpc.getMapId();
+                        int m = tgnpc.getMapId();
                         int h = tgnpc.getHeading();
                         tgnpc.deleteMe();
                         L1SpawnUtil.spawnT(45641, x, y, m, h, 300);

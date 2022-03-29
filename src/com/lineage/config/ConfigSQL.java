@@ -42,12 +42,11 @@ public final class ConfigSQL {
             DB_URL3 = set.getProperty("URL3", "?useUnicode=true&characterEncoding=UTF8");
             DB_LOGIN = set.getProperty("Login", "lineage");
             DB_PASSWORD = set.getProperty("Password", "lineage2022");
-            set.clear();
+
         } catch (Exception e) {
-            throw new ConfigErrorException("設置檔案遺失: ./config/sql.properties" );
-        } catch (Throwable th) {
+            throw new ConfigErrorException("設置檔案遺失: "+SQL_CONFIG );
+        }finally {
             set.clear();
-            throw th;
         }
     }
 }

@@ -22,7 +22,7 @@ public class MASS_TELEPORT extends SkillMode {
             if (pc.getMap().isEscapable() || pc.isGm()) {
                 int newX = bookm.getLocX();
                 int newY = bookm.getLocY();
-                short mapId = bookm.getMapId();
+                int mapId = bookm.getMapId();
                 for (L1PcInstance member : World.get().getVisiblePlayer(pc)) {
                     if (pc.getLocation().getTileLineDistance(member.getLocation()) <= 3 && member.getClanid() == pc.getClanid() && pc.getClanid() != 0 && member.getId() != pc.getId() && !member.isPrivateShop()) {
                         member.setTeleportX(newX);
@@ -41,7 +41,7 @@ public class MASS_TELEPORT extends SkillMode {
             L1Location newLocation = pc.getLocation().randomLocation(200, true);
             int newX2 = newLocation.getX();
             int newY2 = newLocation.getY();
-            short mapId2 = (short) newLocation.getMapId();
+            int mapId2 =  newLocation.getMapId();
             for (L1PcInstance member2 : World.get().getVisiblePlayer(pc)) {
                 if (pc.getLocation().getTileLineDistance(member2.getLocation()) <= 3 && member2.getClanid() == pc.getClanid() && pc.getClanid() != 0 && member2.getId() != pc.getId() && !member2.isPrivateShop()) {
                     member2.setTeleportX(newX2);

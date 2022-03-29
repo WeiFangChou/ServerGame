@@ -120,17 +120,18 @@ public class C_MoveChar extends ClientBasePacket {
                     pc.sendPackets(new S_Lock(pc));
                     return;
                 }
-            } catch (Exception var18) {
-                _log.error(var18.getLocalizedMessage(), var18);
+            } catch (Exception e) {
+                _log.error(e.getLocalizedMessage(), e);
             }
 
             if (ConfigOther.CHECK_MOVE_INTERVAL) {
                 int result = pc.speed_Attack().checkInterval(ACT_TYPE.MOVE);
                 if (result == AcceleratorChecker.R_DISPOSED) {
-                    return;
+                    _log.error("要求角色移动:速度异常(" + pc.getName() + ")");
+
                 }
             }
-
+            // 检查地图使用权
             CheckUtil.isUserMap(pc);
             if (DungeonTable.get().dg(newlocx, newlocy, pc.getMap().getId(), pc)) {
                 return;
@@ -151,10 +152,9 @@ public class C_MoveChar extends ClientBasePacket {
             pc.setNpcSpeed();
             pc.getMap().setPassable(pc.getLocation(), false);
             WorldTrap.get().onPlayerMoved(pc);
-        } catch (Exception var20) {
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        } finally {
+        } catch (Exception e) {
+            _log.error(e.getLocalizedMessage(), e);
+        }finally {
             this.over();
         }
 

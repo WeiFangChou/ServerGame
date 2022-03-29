@@ -76,7 +76,7 @@ public class Npc_DragonA1 extends NpcExecutor {
                     if (i <= users - 1 && otherPc.getId() != party.getLeaderID()) {
                         WorldQuest.get().put(showId, ADLv80_1.MAPID, questid, otherPc);
                         _playList.put(new Integer(otherPc.getId()), otherPc.getName());
-                        L1Teleport.teleport(otherPc, 32595, 32747,  (short)1005, 1, true);
+                        L1Teleport.teleport(otherPc, 32595, 32747,  1005, 1, true);
                         QuestClass.get().startQuest(otherPc, ADLv80_1.QUEST.get_id());
                         QuestClass.get().endQuest(otherPc, ADLv80_1.QUEST.get_id());
                     }
@@ -93,11 +93,11 @@ public class Npc_DragonA1 extends NpcExecutor {
             if (time != null) {
                 quest.set_time(time.intValue());
             }
-            L1SpawnUtil.spawnDoor(quest, 10005, 7556, 32759, 32799, (short)1005, 1);
-            L1SpawnUtil.spawnDoor(quest, 10006, 7556, 32787, 32848, (short)1005, 1);
-            L1SpawnUtil.spawnDoor(quest, 10007, 7556, 32781, 32919, (short)1005, 1);
+            L1SpawnUtil.spawnDoor(quest, 10005, 7556, 32759, 32799, 1005, 1);
+            L1SpawnUtil.spawnDoor(quest, 10006, 7556, 32787, 32848, 1005, 1);
+            L1SpawnUtil.spawnDoor(quest, 10007, 7556, 32781, 32919, 1005, 1);
             L1SpawnUtil.spawn(71014, new L1Location(32781, 32705, (int) ADLv80_1.MAPID), 5, showId);
-            L1Teleport.teleport(pc, 32595, 32747, (short)1005, 1, true);
+            L1Teleport.teleport(pc, 32595, 32747, 1005, 1, true);
             QuestClass.get().startQuest(pc, ADLv80_1.QUEST.get_id());
             QuestClass.get().endQuest(pc, ADLv80_1.QUEST.get_id());
             _playList.put(new Integer(pc.getId()), pc.getName());

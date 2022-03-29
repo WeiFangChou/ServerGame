@@ -13,8 +13,8 @@ import org.apache.commons.logging.LogFactory;
 
 public class L1CastleLocation {
     public static final int ADEN_CASTLE_ID = 7;
-    private static final short ADEN_INNER_CASTLE_MAP = 300;
-    private static final short ADEN_MAP = 4;
+    private static final int ADEN_INNER_CASTLE_MAP = 300;
+    private static final int ADEN_MAP = 4;
     private static final int ADEN_SUB_TOWER1_X = 34057;
     private static final int ADEN_SUB_TOWER1_Y = 33291;
     private static final int ADEN_SUB_TOWER2_X = 34123;
@@ -23,7 +23,7 @@ public class L1CastleLocation {
     private static final int ADEN_SUB_TOWER3_Y = 33230;
     private static final int ADEN_SUB_TOWER4_X = 34123;
     private static final int ADEN_SUB_TOWER4_Y = 33230;
-    private static final short ADEN_TOWER_MAP = 4;
+    private static final int ADEN_TOWER_MAP = 4;
     private static final int ADEN_TOWER_X = 34090;
     private static final int ADEN_TOWER_Y = 33260;
     private static final int ADEN_X1 = 34007;
@@ -31,9 +31,9 @@ public class L1CastleLocation {
     private static final int ADEN_Y1 = 33172;
     private static final int ADEN_Y2 = 33332;
     public static final int DIAD_CASTLE_ID = 8;
-    private static final short DIAD_INNER_CASTLE_MAP = 330;
-    private static final short DIAD_MAP = 320;
-    private static final short DIAD_TOWER_MAP = 320;
+    private static final int DIAD_INNER_CASTLE_MAP = 330;
+    private static final int DIAD_MAP = 320;
+    private static final int DIAD_TOWER_MAP = 320;
     private static final int DIAD_TOWER_X = 33033;
     private static final int DIAD_TOWER_Y = 32895;
     private static final int DIAD_X1 = 32888;
@@ -41,8 +41,8 @@ public class L1CastleLocation {
     private static final int DIAD_Y1 = 32839;
     private static final int DIAD_Y2 = 32953;
     public static final int DOWA_CASTLE_ID = 6;
-    private static final short DOWA_MAP = 66;
-    private static final short DOWA_TOWER_MAP = 66;
+    private static final int DOWA_MAP = 66;
+    private static final int DOWA_TOWER_MAP = 66;
     private static final int DOWA_TOWER_X = 32828;
     private static final int DOWA_TOWER_Y = 32818;
     private static final int DOWA_X1 = 32755;
@@ -50,9 +50,9 @@ public class L1CastleLocation {
     private static final int DOWA_Y1 = 32790;
     private static final int DOWA_Y2 = 32920;
     public static final int GIRAN_CASTLE_ID = 4;
-    private static final short GIRAN_INNER_CASTLE_MAP = 52;
-    private static final short GIRAN_MAP = 4;
-    private static final short GIRAN_TOWER_MAP = 4;
+    private static final int GIRAN_INNER_CASTLE_MAP = 52;
+    private static final int GIRAN_MAP = 4;
+    private static final int GIRAN_TOWER_MAP = 4;
     private static final int GIRAN_TOWER_X = 33631;
     private static final int GIRAN_TOWER_Y = 32678;
     private static final int GIRAN_X1 = 33559;
@@ -60,9 +60,9 @@ public class L1CastleLocation {
     private static final int GIRAN_Y1 = 32615;
     private static final int GIRAN_Y2 = 32755;
     public static final int HEINE_CASTLE_ID = 5;
-    private static final short HEINE_INNER_CASTLE_MAP = 64;
-    private static final short HEINE_MAP = 4;
-    private static final short HEINE_TOWER_MAP = 4;
+    private static final int HEINE_INNER_CASTLE_MAP = 64;
+    private static final int HEINE_MAP = 4;
+    private static final int HEINE_TOWER_MAP = 4;
     private static final int HEINE_TOWER_X = 33524;
     private static final int HEINE_TOWER_Y = 33396;
     private static final int HEINE_X1 = 33458;
@@ -70,9 +70,9 @@ public class L1CastleLocation {
     private static final int HEINE_Y1 = 33315;
     private static final int HEINE_Y2 = 33490;
     public static final int KENT_CASTLE_ID = 1;
-    private static final short KENT_INNER_CASTLE_MAP = 15;
-    private static final short KENT_MAP = 4;
-    private static final short KENT_TOWER_MAP = 4;
+    private static final int KENT_INNER_CASTLE_MAP = 15;
+    private static final int KENT_MAP = 4;
+    private static final int KENT_TOWER_MAP = 4;
     private static final int KENT_TOWER_X = 33139;
     private static final int KENT_TOWER_Y = 32768;
     private static final int KENT_X1 = 33089;
@@ -80,8 +80,8 @@ public class L1CastleLocation {
     private static final int KENT_Y1 = 32717;
     private static final int KENT_Y2 = 32827;
     public static final int OT_CASTLE_ID = 2;
-    private static final short OT_MAP = 4;
-    private static final short OT_TOWER_MAP = 4;
+    private static final int OT_MAP = 4;
+    private static final int OT_TOWER_MAP = 4;
     private static final int OT_TOWER_X = 32798;
     private static final int OT_TOWER_Y = 32291;
     private static final int OT_X1 = 32750;
@@ -89,9 +89,9 @@ public class L1CastleLocation {
     private static final int OT_Y1 = 32250;
     private static final int OT_Y2 = 32350;
     public static final int WW_CASTLE_ID = 3;
-    private static final short WW_INNER_CASTLE_MAP = 29;
-    private static final short WW_MAP = 4;
-    private static final short WW_TOWER_MAP = 4;
+    private static final int WW_INNER_CASTLE_MAP = 29;
+    private static final int WW_MAP = 4;
+    private static final int WW_TOWER_MAP = 4;
     private static final int WW_TOWER_X = 32623;
     private static final int WW_TOWER_Y = 33379;
     private static final int WW_X1 = 32571;
@@ -172,7 +172,7 @@ public class L1CastleLocation {
         return 0;
     }
 
-    public static int getCastleId(int locx, int locy, short mapid) {
+    public static int getCastleId(int locx, int locy, int mapid) {
         return getCastleId(new L1Location(locx, locy, mapid));
     }
 
@@ -206,7 +206,7 @@ public class L1CastleLocation {
         return getCastleIdByArea(loc) != 0;
     }
 
-    public static boolean checkInAllWarArea(int locx, int locy, short mapid) {
+    public static boolean checkInAllWarArea(int locx, int locy, int mapid) {
         return checkInAllWarArea(new L1Location(locx, locy, mapid));
     }
 

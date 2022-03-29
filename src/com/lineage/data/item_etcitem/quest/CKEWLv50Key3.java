@@ -58,19 +58,19 @@ public class CKEWLv50Key3 extends ItemExecutor {
                             tgpc.getInventory().removeItem(reitem);
                         }
                         if (tgpc.isCrown()) {
-                            L1Teleport.teleport(tgpc, 32741, 32776, (short)2000, 2, true);
+                            L1Teleport.teleport(tgpc, 32741, 32776, 2000, 2, true);
                             continue;
                         }
                         if (tgpc.isKnight()) {
-                            L1Teleport.teleport(tgpc, 32741, 32771, (short)2000, 2, true);
+                            L1Teleport.teleport(tgpc, 32741, 32771, 2000, 2, true);
                             continue;
                         }
                         if (tgpc.isElf()) {
-                            L1Teleport.teleport(tgpc, 32735, 32771, (short)2000, 2, true);
+                            L1Teleport.teleport(tgpc, 32735, 32771, 2000, 2, true);
                             continue;
                         }
                         if (tgpc.isWizard())
-                            L1Teleport.teleport(tgpc, 32735, 32776, (short)2000, 2, true);
+                            L1Teleport.teleport(tgpc, 32735, 32776, 2000, 2, true);
                     }
                 }
             }

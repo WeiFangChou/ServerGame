@@ -91,7 +91,7 @@ public class EventSpawnTable {
                                 spawnDat.setMinRespawnDelay(respawn_delay);
                                 spawnDat.setMovementDistance(movement_distance);
                                 spawnDat.setHeading(heading);
-                                spawnDat.setMapId((short) mapid);
+                                spawnDat.setMapId( mapid);
                                 spawnDat.setSpawnType(near_spawn);
                                 spawnDat.setTime(SpawnTimeTable.getInstance().get(spawnDat.getId()));
                                 spawnDat.setName(template1.get_name());

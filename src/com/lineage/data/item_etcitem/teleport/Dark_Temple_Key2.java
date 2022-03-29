@@ -16,7 +16,7 @@ public class Dark_Temple_Key2 extends ItemExecutor {
         if (pc.getX() >= 32701 && pc.getX() <= 32705 &&
                 pc.getY() >= 32894 && pc.getY() <= 32898 &&
                 pc.getMapId() == 522) {
-            L1Teleport.teleport(pc, 32700, 32896, (short)523, 5, true);
+            L1Teleport.teleport(pc, 32700, 32896, 523, 5, true);
         } else {
             pc.sendPackets((ServerBasePacket)new S_ServerMessage(79));
         }

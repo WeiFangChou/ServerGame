@@ -108,12 +108,12 @@ public class Npc_Dilong extends NpcExecutor {
             if (npcs != null)
                 for (L1NpcInstance npc : npcs)
                     L1PolyMorph.doPoly((L1Character)npc, 1128, 1800, 1);
-            L1SpawnUtil.spawnDoor(quest, 10000, 89, 32809, 32795, (short)201, 1);
-            L1SpawnUtil.spawnDoor(quest, 10001, 88, 32812, 32909, (short)201, 0);
-            L1SpawnUtil.spawnDoor(quest, 10002, 89, 32825, 32920, (short)201, 1);
-            L1SpawnUtil.spawnDoor(quest, 10003, 90, 32868, 32919, (short)201, 0);
+            L1SpawnUtil.spawnDoor(quest, 10000, 89, 32809, 32795, 201, 1);
+            L1SpawnUtil.spawnDoor(quest, 10001, 88, 32812, 32909, 201, 0);
+            L1SpawnUtil.spawnDoor(quest, 10002, 89, 32825, 32920, 201, 1);
+            L1SpawnUtil.spawnDoor(quest, 10003, 90, 32868, 32919, 201, 0);
             pc.getInventory().takeoffEquip(945);
-            L1Teleport.teleport(pc, 32791, 32788, (short)201, 5, true);
+            L1Teleport.teleport(pc, 32791, 32788, 201, 5, true);
         } catch (Exception e) {
             _log.error(e.getLocalizedMessage(), e);
         }

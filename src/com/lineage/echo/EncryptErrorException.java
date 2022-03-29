@@ -3,18 +3,25 @@ package com.lineage.echo;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+/**
+ * 錯誤訊息
+ * @author daien
+ *
+ */
 public class EncryptErrorException extends Exception {
-    private static final Log _log = LogFactory.getLog(EncryptErrorException.class);
-    private static final long serialVersionUID = 1;
 
-    public EncryptErrorException() {
-    }
+	private static final Log _log = LogFactory.getLog(EncryptErrorException.class);
 
-    public EncryptErrorException(String string) {
-        _log.error(string);
-    }
+	private static final long serialVersionUID = 1L;
 
-    public EncryptErrorException(String string, Exception e) {
-        _log.error(string, e);
-    }
+	public EncryptErrorException() {
+	}
+
+	public EncryptErrorException(final String string) {
+		_log.error(string);
+	}
+
+	public EncryptErrorException(final String string, final Exception e) {
+		_log.error(string, e);
+	}
 }

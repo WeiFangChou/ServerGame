@@ -42,7 +42,7 @@ public class L1SKick implements L1CommandExecutor {
             }
             target.setX(33080);
             target.setY(33392);
-            target.setMap((short) 4);
+            target.setMap( 4);
             target.getNetConnection().kick();
         } else if (pc == null) {
             _log.warn(String.valueOf(arg) + " 不在線上。");

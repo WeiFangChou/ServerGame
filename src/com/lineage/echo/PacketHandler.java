@@ -1,10 +1,4 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package com.lineage.echo;
-
 
 import com.lineage.config.Config;
 import com.lineage.echo.encryptions.PacketPrint;
@@ -103,178 +97,165 @@ import com.lineage.server.clientpackets.C_War;
 import com.lineage.server.clientpackets.C_Who;
 import com.lineage.server.clientpackets.C_Windows;
 import com.lineage.server.clientpackets.ClientBasePacket;
-import com.lineage.echo.OpcodesClient.*;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 public class PacketHandler extends PacketHandlerExecutor {
-    private static final Log _log = LogFactory.getLog(PacketHandler.class);
-    private static final Map<Integer, ClientBasePacket> _opListClient = new HashMap<Integer, ClientBasePacket>();
-    private ClientExecutor _client;
+	private static final Log _log = LogFactory.getLog(PacketHandler.class);
+	private static final Map<Integer, ClientBasePacket> _opListClient = new HashMap();
+	private ClientExecutor _client;
 
-    public void handlePacket(byte[] decrypt) {
+	public void handlePacket(byte[] decrypt) {
+		_log.error("PacketHandle Running");
+		ClientBasePacket basePacket = null;
+		if (decrypt != null) {
+			if (decrypt.length > 0) {
+				try {
+					int key = decrypt[0] & 255;
+					basePacket = (ClientBasePacket)_opListClient.get(key);
+					if (Config.DEBUG && basePacket != null) {
+						_log.info("客戶端: " + basePacket.getType() + "\nOP ID: " + key + " length:" + decrypt.length + "\nInfo:\n" + PacketPrint.get().printData(decrypt, decrypt.length));
+					}
 
-        ClientBasePacket basePacket = null;
-        if (decrypt != null) {
-            return;
-        }
+					if (basePacket == null) {
+						_log.info("\nClient: " + key + "\n" + PacketPrint.get().printData(decrypt, decrypt.length) + this.getNow_YMDHMS());
+					} else {
+						basePacket.start(decrypt, this._client);
+					}
+				} catch (Exception var8) {
+					if (Config.DEBUG) {
+						String name = "Not Login Pc";
+						if (this._client.getActiveChar() != null) {
+							name = this._client.getActiveChar().getName();
+						}
 
-        if (decrypt.length > 0) {
-            return;
-        }
+						_log.error("OP ID: " + (decrypt[0] & 255) + " Pc Name: " + name + "\n" + basePacket.getType() + "\n" + PacketPrint.get().printData(decrypt, decrypt.length), var8);
+					}
+				} finally {
+					basePacket = null;
+				}
 
-        try {
-            final int key = decrypt[0] & 255;
-            basePacket = _opListClient.get(key);
-            if (Config.DEBUG) {
-                if (basePacket != null) {
-                    _log.info("客戶端: " + basePacket.getType() + "\nOP ID: " + key + " length:" + decrypt.length + "\nInfo:\n" + PacketPrint.get().printData(decrypt, decrypt.length));
+			}
+		}
+	}
 
-                }
-            }
+	private final String getNow_YMDHMS() {
+		String nowDate = (new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")).format(new Date());
+		return nowDate;
+	}
 
-            if (basePacket == null) {
-                _log.info("\nClient: " + key + "\n" + PacketPrint.get().printData(decrypt, decrypt.length) + this.getNow_YMDHMS());
-            } else {
-                basePacket.start(decrypt, this._client);
-            }
-        } catch (Exception var8) {
-            if (Config.DEBUG) {
-                String name = "Not Login Pc";
-                if (this._client.getActiveChar() != null) {
-                    name = this._client.getActiveChar().getName();
-                }
+	public PacketHandler(ClientExecutor client) {
+		this._client = client;
+	}
 
-                _log.error("OP ID: " + (decrypt[0] & 255) + " Pc Name: " + name + "\n" + basePacket.getType() + "\n" + PacketPrint.get().printData(decrypt, decrypt.length), var8);
-            }
-        } finally {
-            //basePacket = null;
-        }
+	public static void load() {
+		put(236, new C_CharReset());
+		put(104, new C_Disconnect());
+		put(101, new C_Exclude());
+		put(129, new C_CharcterConfig());
+		put(199, new C_Door());
+		put(96, new C_Title());
+		put(12, new C_BoardDelete());
+		put(225, new C_Pledge());
+		put(65, new C_ChangeHeading());
+		put(37, new C_NPCAction());
+		put(115, new C_UseSkill());
+		put(107, new C_Emblem());
+		put(167, new C_TradeCancel());
+		put(150, new C_ChangeWarTime());
+		put(134, new C_AddBookmark());
+		put(154, new C_CreateClan());
+		put(127, new C_ServerVersion());
+		put(185, new C_Propose());
+		put(221, new C_BoardBack());
+		put(16, new C_Shop());
+		put(59, new C_BoardRead());
+		put(103, new C_Trade());
+		put(10, new C_DeleteChar());
+		put(61, new C_Attr());
+		put(57, new C_AuthLogin());
+		put(40, new C_Result());
+		put(35, new C_Deposit());
+		put(192, new C_Drawal());
+		put(75, new C_LoginToServerOK());
+		put(173, new C_SkillBuy());
+		put(207, new C_SkillBuyOK());
+		put(241, new C_TradeAddItem());
+		put(99, new C_AddBuddy());
+		put(56, new C_ReturnToLogin());
+		put(190, new C_Chat());
+		put(110, new C_TradeOK());
+		put(137, new C_CheckPK());
+		put(200, new C_TaxRate());
+		put(237, new C_NewCharSelect());
+		put(60, new C_Buddy());
+		put(54, new C_DropItem());
+		put(204, new C_LeaveParty());
+		put(68, new C_Attack());
+		put(247, new C_AttackBow());
+		put(222, new C_BanClan());
+		put(73, new C_Board());
+		put(209, new C_DeleteInventoryItem());
+		put(122, new C_ChatWhisper());
+		put(42, new C_Party());
+		put(188, new C_PickUpItem());
+		put(49, new C_Who());
+		put(244, new C_GiveItem());
+		put(95, new C_MoveChar());
+		put(223, new C_DeleteBookmark());
+		put(71, new C_Restart());
+		put(121, new C_LeaveClan());
+		put(58, new C_NPCTalk());
+		put(70, new C_BanParty());
+		put(211, new C_DelBuddy());
+		put(235, new C_War());
+		put(131, new C_LoginToServer());
+		put(193, new C_ShopList());
+		put(62, new C_ChatGlobal());
+		put(30, new C_JoinClan());
+		put(53, new C_CommonClick());
+		put(253, new C_CreateChar());
+		put(157, new C_ExtraCommand());
+		put(14, new C_BoardWrite());
+		put(44, new C_ItemUSe());
+		put(166, new C_CreateParty());
+		put(249, new C_EnterPortal());
+		put(109, new C_Amount());
+		put(106, new C_FixWeaponList());
+		put(238, new C_SelectList());
+		put(210, new C_ExitGhost());
+		put(144, new C_CallPlayer());
+		put(155, new C_SelectTarget());
+		put(217, new C_PetMenu());
+		put(213, new C_UsePetItem());
+		put(88, new C_Rank());
+		put(113, new C_ChatParty());
+		put(47, new C_Fight());
+		put(22, new C_Mail());
+		put(117, new C_Ship());
+		put(246, new C_Clan());
+		put(5, new C_NewAccess());
+		put(239, new C_Teleport());
+		put(226, new C_Teleport());
+		put(81, new C_Password());
+		put(182, new C_KeepALIVE());
+		put(41, new C_Windows());
+		put(162, new C_AutoLogin());
+		put(26, new C_FishClick());
+		put(-2, new C_Unkonwn());
+		put(228, new C_ClanMatching());
+	}
 
+	public static void put(Integer key, ClientBasePacket value) {
+		if (_opListClient.get(key) == null) {
+			_opListClient.put(key, value);
+		} else if (!key.equals(-1)) {
+			_log.error("重複標記的OPID: " + key + " " + value.getType());
+		}
 
-    }
-
-    private String getNow_YMDHMS() {
-        String nowDate = (new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")).format(new Date());
-        return nowDate;
-    }
-
-    public PacketHandler(ClientExecutor client) {
-        this._client = client;
-    }
-
-    public static void load() {
-        put(C_OPCODE_CHARRESET, new C_CharReset());
-        put(C_OPCODE_QUITGAME, new C_Disconnect());
-        put(C_OPCODE_EXCLUDE, new C_Exclude());
-        put(C_OPCODE_CHARACTERCONFIG, new C_CharcterConfig());
-        put(C_OPCODE_DOOR, new C_Door());
-        put(C_OPCODE_TITLE, new C_Title());
-        put(C_OPCODE_BOARDDELETE, new C_BoardDelete());
-        put(C_OPCODE_PLEDGE, new C_Pledge());
-        put(C_OPCODE_CHANGEHEADING, new C_ChangeHeading());
-        put(C_OPCODE_NPCACTION, new C_NPCAction());
-        put(C_OPCODE_USESKILL, new C_UseSkill());
-        put(C_OPCODE_EMBLEM, new C_Emblem());
-        put(C_OPCODE_TRADEADDCANCEL, new C_TradeCancel());
-        put(C_OPCODE_CHANGEWARTIME, new C_ChangeWarTime());
-        put(C_OPCODE_BOOKMARK, new C_AddBookmark());
-        put(C_OPCODE_CREATECLAN, new C_CreateClan());
-        put(C_OPCODE_CLIENTVERSION, new C_ServerVersion());
-        put(C_OPCODE_PROPOSE, new C_Propose());
-        put(C_OPCODE_BOARDBACK, new C_BoardBack());
-        put(C_OPCODE_SHOP, new C_Shop());
-        put(C_OPCODE_BOARDREAD, new C_BoardRead());
-        put(C_OPCODE_TRADE, new C_Trade());
-        put(C_OPCODE_DELETECHAR, new C_DeleteChar());
-        put(C_OPCODE_ATTR, new C_Attr());
-        put(C_OPCODE_LOGINPACKET, new C_AuthLogin());
-        put(C_OPCODE_RESULT, new C_Result());
-        put(C_OPCODE_DEPOSIT, new C_Deposit());
-        put(C_OPCODE_DRAWAL, new C_Drawal());
-        put(C_OPCODE_LOGINTOSERVEROK, new C_LoginToServerOK());
-        put(C_OPCODE_SKILLBUY, new C_SkillBuy());
-        put(C_OPCODE_SKILLBUYOK, new C_SkillBuyOK());
-        put(241, new C_TradeAddItem());
-        put(99, new C_AddBuddy());
-        put(56, new C_ReturnToLogin());
-        put(190, new C_Chat());
-        put(110, new C_TradeOK());
-        put(137, new C_CheckPK());
-        put(200, new C_TaxRate());
-        put(237, new C_NewCharSelect());
-        put(60, new C_Buddy());
-        put(54, new C_DropItem());
-        put(204, new C_LeaveParty());
-        put(68, new C_Attack());
-        put(247, new C_AttackBow());
-        put(222, new C_BanClan());
-        put(73, new C_Board());
-        put(209, new C_DeleteInventoryItem());
-        put(122, new C_ChatWhisper());
-        put(42, new C_Party());
-        put(188, new C_PickUpItem());
-        put(49, new C_Who());
-        put(244, new C_GiveItem());
-        put(95, new C_MoveChar());
-        put(223, new C_DeleteBookmark());
-        put(71, new C_Restart());
-        put(121, new C_LeaveClan());
-        put(58, new C_NPCTalk());
-        put(70, new C_BanParty());
-        put(211, new C_DelBuddy());
-        put(C_OPCODE_WAR, new C_War());
-        put(C_OPCODE_LOGINTOSERVER, new C_LoginToServer());
-        put(C_OPCODE_PRIVATESHOPLIST, new C_ShopList());
-        put(C_OPCODE_CHATGLOBAL, new C_ChatGlobal());
-        put(C_OPCODE_JOINCLAN, new C_JoinClan());
-        put(C_OPCODE_COMMONCLICK, new C_CommonClick());
-        put(C_OPCODE_NEWCHAR, new C_CreateChar());
-        put(C_OPCODE_EXTCOMMAND, new C_ExtraCommand());
-        put(C_OPCODE_BOARDWRITE, new C_BoardWrite());
-        put(C_OPCODE_USEITEM, new C_ItemUSe());
-        put(C_OPCODE_CREATEPARTY, new C_CreateParty());
-        put(C_OPCODE_ENTERPORTAL, new C_EnterPortal());
-        put(C_OPCODE_AMOUNT, new C_Amount());
-        put(C_OPCODE_FIX_WEAPON_LIST, new C_FixWeaponList());
-        put(C_OPCODE_SELECTLIST, new C_SelectList());
-        put(C_OPCODE_EXIT_GHOST, new C_ExitGhost());
-        put(C_OPCODE_CALL, new C_CallPlayer());
-        put(C_OPCODE_SELECTTARGET, new C_SelectTarget());
-        put(C_OPCODE_PETMENU, new C_PetMenu());
-        put(C_OPCODE_USEPETITEM, new C_UsePetItem());
-        put(C_OPCODE_RANK, new C_Rank());
-        put(C_OPCODE_CAHTPARTY, new C_ChatParty());
-        put(C_OPCODE_FIGHT, new C_Fight());
-        put(C_OPCODE_MAIL, new C_Mail());
-        put(C_OPCODE_SHIP, new C_Ship());
-        put(C_OPCODE_CLAN, new C_Clan());
-        put(C_OPCODE_NEWACC, new C_NewAccess());
-        put(C_OPCODE_TELEPORT, new C_Teleport());
-        put(C_OPCODE_TELEPORT2, new C_Teleport());
-        put(C_OPCODE_PWD, new C_Password());
-        put(C_OPCODE_KEEPALIVE, new C_KeepALIVE());
-        put(C_OPCODE_WINDOWS, new C_Windows());
-        put(C_OPCODE_AUTO, new C_AutoLogin());
-        put(C_OPCODE_FISHCLICK, new C_FishClick());
-        put(C_OPCODE_HIRESOLDIER, new C_Unkonwn());
-        put(C_OPCODE_CLAN_RECOMMEND, new C_ClanMatching());
-    }
-
-    public static void put(Integer key, ClientBasePacket value) {
-        if (_opListClient.get(key) == null) {
-            _opListClient.put(key, value);
-        } else {
-            if (!key.equals(-1)) {
-                _log.error("重複標記的OPID: " + key + " " + value.getType());
-            }
-        }
-
-    }
+	}
 }

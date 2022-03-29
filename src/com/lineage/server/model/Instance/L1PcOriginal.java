@@ -1363,7 +1363,7 @@ public class L1PcOriginal {
         }
     }
 
-    public static short resetOriginalHpr(L1PcInstance pc) {
+    public static int resetOriginalHpr(L1PcInstance pc) {
         int originalCon = pc.getOriginalCon();
         if (pc.isCrown()) {
             if (originalCon == 13 || originalCon == 14) {
@@ -1435,7 +1435,7 @@ public class L1PcOriginal {
         }
     }
 
-    public static short resetOriginalMpr(L1PcInstance pc) {
+    public static int resetOriginalMpr(L1PcInstance pc) {
         int originalWis = pc.getOriginalWis();
         if (pc.isCrown()) {
             if (originalWis == 13 || originalWis == 14) {

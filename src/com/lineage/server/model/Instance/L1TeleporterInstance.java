@@ -84,13 +84,13 @@ public class L1TeleporterInstance extends L1NpcInstance {
         if (isTeleport) {
             try {
                 if (action.equalsIgnoreCase("teleport 29")) {
-                    L1Teleport.teleport(player, 32723, 32850, (short) 2000, 2, true);
-                    L1Teleport.teleport(null, 32750, 32851, (short) 2000, 6, true);
-                    L1Teleport.teleport(null, 32878, 32980, (short) 2000, 6, true);
-                    L1Teleport.teleport(null, 32876, 33003, (short) 2000, 0, true);
+                    L1Teleport.teleport(player, 32723, 32850,  2000, 2, true);
+                    L1Teleport.teleport(null, 32750, 32851,  2000, 6, true);
+                    L1Teleport.teleport(null, 32878, 32980,  2000, 6, true);
+                    L1Teleport.teleport(null, 32876, 33003,  2000, 0, true);
                     GeneralThreadPool.get().execute(new TeleportDelyTimer());
                 } else if (action.equalsIgnoreCase("teleport barlog")) {
-                    L1Teleport.teleport(player, 32755, 32844, (short) 2002, 5, true);
+                    L1Teleport.teleport(player, 32755, 32844,  2002, 5, true);
                     GeneralThreadPool.get().execute(new TeleportDelyTimer());
                 }
             } catch (Exception ignored) {

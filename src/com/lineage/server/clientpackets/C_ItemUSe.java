@@ -6,6 +6,7 @@ import com.lineage.server.datatables.ItemBoxTable;
 import com.lineage.server.datatables.Item_Box_Table;
 import com.lineage.server.model.L1ItemDelay;
 import com.lineage.server.model.L1PcInventory;
+import com.lineage.server.model.L1PcQuest;
 import com.lineage.server.model.L1PolyMorph;
 import com.lineage.server.model.Instance.L1ItemInstance;
 import com.lineage.server.model.Instance.L1PcInstance;
@@ -275,8 +276,9 @@ public class C_ItemUSe extends ClientBasePacket {
                     break;
                 case 3:
                     if (isClass) {
-                        ItemClass.get().item((int[]) null, pc, useItem);
+                        ItemClass.get().item( null, pc, useItem);
                     }
+                    break;
                 case 4:
                     break;
                 case 5:
@@ -353,7 +355,7 @@ public class C_ItemUSe extends ClientBasePacket {
                     }
 
                     if (isClass) {
-                        ItemClass.get().item((int[]) null, pc, useItem);
+                        ItemClass.get().item(null, pc, useItem);
                     }
                     break;
                 case 11:
@@ -364,9 +366,6 @@ public class C_ItemUSe extends ClientBasePacket {
                 case 52:
                 case 53:
                 case 54:
-                default:
-                    _log.info("未處理的物品分類: " + use_type);
-                    break;
                 case 12:
                 case 31:
                 case 33:
@@ -387,7 +386,7 @@ public class C_ItemUSe extends ClientBasePacket {
                 case 34:
                 case 36:
                     if (isClass) {
-                        ItemClass.get().item((int[]) null, pc, useItem);
+                        ItemClass.get().item(null, pc, useItem);
                     }
                     break;
                 case 14:
@@ -402,20 +401,23 @@ public class C_ItemUSe extends ClientBasePacket {
                     break;
                 case 15:
                     if (isClass) {
-                        ItemClass.get().item((int[]) null, pc, useItem);
+                        ItemClass.get().item( null, pc, useItem);
                     }
                     break;
                 case 16:
                     if (isClass) {
                         String cmd = this.readS();
                         pc.setText(cmd);
-                        ItemClass.get().item((int[]) null, pc, useItem);
+                        ItemClass.get().item(null, pc, useItem);
                     }
                     break;
                 case 17:
                     if (isClass) {
                         try {
-                            newData = new int[]{this.readD(), this.readH(), this.readH()};
+                            newData = new int[3];
+                            newData[0] = this.readD();// 选取目标的OBJID
+                            newData[1] = this.readH();// X座标
+                            newData[2] = this.readH();// Y座标
                             ItemClass.get().item(newData, pc, useItem);
                         } catch (Exception var49) {
                             return;
@@ -427,7 +429,9 @@ public class C_ItemUSe extends ClientBasePacket {
                 case 46:
                     if (isClass) {
                         try {
-                            newData = new int[]{this.readD()};
+                            newData = new int[1];
+                            newData[0] = this.readD();// 选取目标的OBJID
+
                             ItemClass.get().item(newData, pc, useItem);
                         } catch (Exception var47) {
                             return;
@@ -437,7 +441,8 @@ public class C_ItemUSe extends ClientBasePacket {
                 case 28:
                     if (isClass) {
                         try {
-                            newData = new int[]{this.readC()};
+                            newData = new int[1];
+                            newData[0] = this.readD();// 选取目标的OBJID
                             ItemClass.get().item(newData, pc, useItem);
                         } catch (Exception var45) {
                             return;
@@ -458,7 +463,9 @@ public class C_ItemUSe extends ClientBasePacket {
 
                     if (isClass) {
                         try {
-                            newData = new int[]{this.readD(), this.readH()};
+                            newData = new int[2];
+                            newData[0] = this.readD();// 选取目标的OBJID
+                            newData[1] = this.readH();// X座标
                             ItemClass.get().item(newData, pc, useItem);
                             pc.sendPackets(new S_Paralysis(7, false));
                         } catch (Exception var40) {
@@ -477,44 +484,54 @@ public class C_ItemUSe extends ClientBasePacket {
                         }
                     }
                     break;
-                case 38:
+                case 38:// 食物
                     if (!CheckUtil.getUseItem(pc)) {
                         return;
                     }
-
                     if (isClass) {
-                        ItemClass.get().item((int[]) null, pc, useItem);
+                        ItemClass.get().item(null, pc, useItem);
                     }
                     break;
-                case 39:
+                case 39:// 选取目标 (远距离)
                     if (isClass) {
                         try {
-                            newData = new int[]{this.readD(), this.readH(), this.readH()};
+                            newData = new int[3];
+                            newData[0] = this.readD();// 选取目标的OBJID
+                            newData[1] = this.readH();// X座标
+                            newData[2] = this.readH();// Y座标
                             ItemClass.get().item(newData, pc, useItem);
-                        } catch (Exception var48) {
+
+                        } catch (final Exception e) {
                             return;
                         }
                     }
                     break;
-                case 42:
+                case 42:// 钓鱼杆
                     if (isClass) {
                         try {
-                            newData = new int[]{this.readH(), this.readH(), 0};
+                            newData = new int[3];
+                            newData[0] = this.readH();//X
+                            newData[1] = this.readH();//Y
                             ItemClass.get().item(newData, pc, useItem);
                         } catch (Exception var51) {
                             return;
                         }
                     }
                     break;
-                case 55:
+                case 55:// 魔法娃娃成长药剂
                     if (isClass) {
                         try {
-                            newData = new int[]{this.readD()};
+                            newData = new int[1];
+                            newData[0] = this.readD();
                             ItemClass.get().item(newData, pc, useItem);
-                        } catch (Exception var46) {
+                        } catch (Exception e) {
                             return;
                         }
                     }
+                    break;
+                default:
+                    _log.info("未處理的物品分類: "+use_type);
+                    break;
             }
 
             if (useItem.getItem().getType2() == 0 && use_type == 0) {
@@ -527,25 +544,25 @@ public class C_ItemUSe extends ClientBasePacket {
                         pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "sonsletter"));
                         break;
                     case 40701:
-                        if (pc.getQuest().get_step(23) == 1) {
+                        if (pc.getQuest().get_step(L1PcQuest.QUEST_LUKEIN1) == 1) {
                             pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "firsttmap"));
-                        } else if (pc.getQuest().get_step(23) == 2) {
+                        } else if (pc.getQuest().get_step(L1PcQuest.QUEST_LUKEIN1) == 2) {
                             pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "secondtmapa"));
-                        } else if (pc.getQuest().get_step(23) == 3) {
+                        } else if (pc.getQuest().get_step(L1PcQuest.QUEST_LUKEIN1) == 3) {
                             pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "secondtmapb"));
-                        } else if (pc.getQuest().get_step(23) == 4) {
+                        } else if (pc.getQuest().get_step(L1PcQuest.QUEST_LUKEIN1) == 4) {
                             pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "secondtmapc"));
-                        } else if (pc.getQuest().get_step(23) == 5) {
+                        } else if (pc.getQuest().get_step(L1PcQuest.QUEST_LUKEIN1) == 5) {
                             pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "thirdtmapd"));
-                        } else if (pc.getQuest().get_step(23) == 6) {
+                        } else if (pc.getQuest().get_step(L1PcQuest.QUEST_LUKEIN1) == 6) {
                             pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "thirdtmape"));
-                        } else if (pc.getQuest().get_step(23) == 7) {
+                        } else if (pc.getQuest().get_step(L1PcQuest.QUEST_LUKEIN1) == 7) {
                             pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "thirdtmapf"));
-                        } else if (pc.getQuest().get_step(23) == 8) {
+                        } else if (pc.getQuest().get_step(L1PcQuest.QUEST_LUKEIN1) == 8) {
                             pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "thirdtmapg"));
-                        } else if (pc.getQuest().get_step(23) == 9) {
+                        } else if (pc.getQuest().get_step(L1PcQuest.QUEST_LUKEIN1) == 9) {
                             pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "thirdtmaph"));
-                        } else if (pc.getQuest().get_step(23) == 10) {
+                        } else if (pc.getQuest().get_step(L1PcQuest.QUEST_LUKEIN1) == 10) {
                             pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "thirdtmapi"));
                         }
                         break;
@@ -587,6 +604,7 @@ public class C_ItemUSe extends ClientBasePacket {
                         break;
                     case 41356:
                         pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "rparum3"));
+                        break;
                 }
             }
 
@@ -628,8 +646,8 @@ public class C_ItemUSe extends ClientBasePacket {
             if (isDelayEffect) {
                 Timestamp ts = new Timestamp(System.currentTimeMillis());
                 useItem.setLastUsed(ts);
-                pc.getInventory().updateItem(useItem, 32);
-                pc.getInventory().saveItem(useItem, 32);
+                pc.getInventory().updateItem(useItem, L1PcInventory.COL_DELAY_EFFECT);
+                pc.getInventory().saveItem(useItem, L1PcInventory.COL_DELAY_EFFECT);
             }
 
             try {
@@ -637,8 +655,8 @@ public class C_ItemUSe extends ClientBasePacket {
             } catch (Exception var39) {
                 _log.error("分類道具使用延遲異常:" + useItem.getItemId(), var39);
             }
-        } catch (Exception var55) {
-            return;
+        } catch (Exception e) {
+
         } finally {
             this.over();
         }

@@ -21,16 +21,16 @@ public class L1Loc implements L1CommandExecutor {
         try {
             int locx = pc.getX();
             int locy = pc.getY();
-            short mapid = pc.getMapId();
+            int mapid = pc.getMapId();
             int gab = pc.getMap().getOriginalTile(locx, locy);
             int h = pc.getHeading();
             Object[] objArr = new Object[6];
-            objArr[0] = Integer.valueOf(locx);
-            objArr[1] = Integer.valueOf(locy);
-            objArr[2] = Short.valueOf(mapid);
-            objArr[3] = Integer.valueOf(h);
-            objArr[4] = Integer.valueOf(gab);
-            objArr[5] = String.valueOf(pc.getMap().isCombatZone(locx, locy) ? "戰鬥區域" : "") + (pc.getMap().isSafetyZone(locx, locy) ? "安全區域" : "") + (pc.getMap().isNormalZone(locx, locy) ? "一般區域" : "");
+            objArr[0] = locx;
+            objArr[1] = locy;
+            objArr[2] = mapid;
+            objArr[3] = h;
+            objArr[4] = gab;
+            objArr[5] = (pc.getMap().isCombatZone(locx, locy) ? "戰鬥區域" : "") + (pc.getMap().isSafetyZone(locx, locy) ? "安全區域" : "") + (pc.getMap().isNormalZone(locx, locy) ? "一般區域" : "");
             pc.sendPackets(new S_SystemMessage(String.format("座標 (%d, %d, %d, %d) %d %s", objArr)));
         } catch (Exception e) {
             _log.error("錯誤的GM指令格式: " + getClass().getSimpleName() + " 執行的GM:" + pc.getName());

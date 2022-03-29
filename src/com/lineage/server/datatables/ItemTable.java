@@ -12,6 +12,7 @@ import com.lineage.server.templates.L1Weapon;
 import com.lineage.server.utils.PerformanceTimer;
 import com.lineage.server.utils.SQLUtil;
 import com.lineage.server.world.World;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,6 +21,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -215,14 +217,7 @@ public class ItemTable {
         _log.info("載入道具,武器,防具資料: " + _etcitems.size() + "+" + _weapons.size() + "+" + _armors.size() + "=" + (_etcitems.size() + _weapons.size() + _armors.size()) + "(" + timer.get() + "ms)");
     }
 
-    private Map<Integer, L1EtcItem> allEtcItem() throws Exception {
-        Throwable th;
-        SQLException e;
-        NullPointerException e2;
-        boolean z;
-        boolean z2;
-        boolean z3;
-        boolean z4;
+    private Map<Integer, L1EtcItem> allEtcItem()  {
         Map<Integer, L1EtcItem> result = new HashMap<>();
         Connection con = null;
         PreparedStatement pstm = null;
@@ -233,120 +228,52 @@ public class ItemTable {
             pstm = con.prepareStatement("SELECT * FROM `etcitem`");
             rs = pstm.executeQuery();
             while (rs.next()) {
-                try {
-                    item = new L1EtcItem();
-                    int itemid = rs.getInt("item_id");
-                    item.setItemId(itemid);
-                    item.setName(rs.getString("name"));
-                    String classname = rs.getString("classname");
-                    item.setClassname(classname);
-                    item.setUnidentifiedNameId(rs.getString("unidentified_name_id"));
-                    item.setIdentifiedNameId(rs.getString("identified_name_id"));
-                    item.setType(_etcItemTypes.get(rs.getString("item_type")).intValue());
-                    item.setUseType(_useTypes.get(rs.getString("use_type")).intValue());
-                    item.setType2(0);
-                    item.setMaterial(_materialTypes.get(rs.getString("material")).intValue());
-                    item.setWeight(rs.getInt("weight"));
-                    item.setGfxId(rs.getInt("invgfx"));
-                    item.setGroundGfxId(rs.getInt("grdgfx"));
-                    item.setItemDescId(rs.getInt("itemdesc_id"));
-                    item.setMinLevel(rs.getInt("min_lvl"));
-                    item.setMaxLevel(rs.getInt("max_lvl"));
-                    item.setBless(rs.getInt("bless"));
-                    if (rs.getInt("trade") == 0) {
-                        z = true;
-                    } else {
-                        z = false;
-                    }
-                    item.setTradable(z);
-                    if (rs.getInt("cant_delete") == 1) {
-                        z2 = true;
-                    } else {
-                        z2 = false;
-                    }
-                    item.setCantDelete(z2);
-                    item.setDmgSmall(rs.getInt("dmg_small"));
-                    item.setDmgLarge(rs.getInt("dmg_large"));
-                    if (rs.getInt("stackable") == 1) {
-                        z3 = true;
-                    } else {
-                        z3 = false;
-                    }
-                    item.set_stackable(z3);
-                    item.setMaxChargeCount(rs.getInt("max_charge_count"));
-                    item.set_delayid(rs.getInt("delay_id"));
-                    item.set_delaytime(rs.getInt("delay_time"));
-                    item.set_delayEffect(rs.getInt("delay_effect"));
-                    item.setFoodVolume(rs.getInt("food_volume"));
-                    if (rs.getInt("save_at_once") == 1) {
-                        z4 = true;
-                    } else {
-                        z4 = false;
-                    }
-                    item.setToBeSavedAtOnce(z4);
-                    item.setCard(SuperCardTable.getInstance().getCard(itemid));
-                    ItemClass.get().addList(itemid, classname, 0);
-                    result.put(new Integer(item.getItemId()), item);
-                } catch (NullPointerException e3) {
-                    e2 = e3;
-                    item = item;
-                    try {
-                        _log.error("加載失敗: " + item.getItemId(), e2);
-                        SQLUtil.close(rs);
-                        SQLUtil.close(pstm);
-                        SQLUtil.close(con);
-                        return result;
-                    } catch (Throwable th2) {
-                        th = th2;
-                        SQLUtil.close(rs);
-                        SQLUtil.close(pstm);
-                        SQLUtil.close(con);
-                        throw th;
-                    }
-                } catch (SQLException e4) {
-                    e = e4;
-                    _log.error(e.getLocalizedMessage(), e);
-                    SQLUtil.close(rs);
-                    SQLUtil.close(pstm);
-                    SQLUtil.close(con);
-                    return result;
-                } catch (Throwable th3) {
-                    th = th3;
-                    SQLUtil.close(rs);
-                    SQLUtil.close(pstm);
-                    SQLUtil.close(con);
-                    throw th;
-                }
+                item = new L1EtcItem();
+                int itemid = rs.getInt("item_id");
+                item.setItemId(itemid);
+                item.setName(rs.getString("name"));
+                String classname = rs.getString("classname");
+                item.setClassname(classname);
+                item.setUnidentifiedNameId(rs.getString("unidentified_name_id"));
+                item.setIdentifiedNameId(rs.getString("identified_name_id"));
+                item.setType(_etcItemTypes.get(rs.getString("item_type")));
+                item.setUseType(_useTypes.get(rs.getString("use_type")));
+                item.setType2(0);
+                item.setMaterial(_materialTypes.get(rs.getString("material")));
+                item.setWeight(rs.getInt("weight"));
+                item.setGfxId(rs.getInt("invgfx"));
+                item.setGroundGfxId(rs.getInt("grdgfx"));
+                item.setItemDescId(rs.getInt("itemdesc_id"));
+                item.setMinLevel(rs.getInt("min_lvl"));
+                item.setMaxLevel(rs.getInt("max_lvl"));
+                item.setBless(rs.getInt("bless"));
+                item.setTradable(rs.getInt("trade") == 0);
+                item.setCantDelete(rs.getInt("cant_delete") == 1);
+                item.setDmgSmall(rs.getInt("dmg_small"));
+                item.setDmgLarge(rs.getInt("dmg_large"));
+                item.set_stackable(rs.getInt("stackable") == 1);
+                item.setMaxChargeCount(rs.getInt("max_charge_count"));
+                item.set_delayid(rs.getInt("delay_id"));
+                item.set_delaytime(rs.getInt("delay_time"));
+                item.set_delayEffect(rs.getInt("delay_effect"));
+                item.setFoodVolume(rs.getInt("food_volume"));
+                item.setToBeSavedAtOnce(rs.getInt("save_at_once") == 1);
+                item.setCard(SuperCardTable.getInstance().getCard(itemid));
+                ItemClass.get().addList(itemid, classname, 0);
+                result.put(item.getItemId(), item);
             }
-            SQLUtil.close(rs);
-            SQLUtil.close(pstm);
-            SQLUtil.close(con);
-        } catch (NullPointerException e5) {
-            e2 = e5;
-        } catch (SQLException e6) {
-            e = e6;
+        } catch (NullPointerException e) {
+            _log.error("加載失敗: " + item.getItemId(), e);
+        } catch (SQLException e) {
             _log.error(e.getLocalizedMessage(), e);
             SQLUtil.close(rs);
             SQLUtil.close(pstm);
             SQLUtil.close(con);
-            return result;
         }
         return result;
     }
 
     private Map<Integer, L1Weapon> allWeapon() throws Exception {
-        Throwable th;
-        SQLException e;
-        NullPointerException e2;
-        boolean z;
-        boolean z2;
-        boolean z3;
-        boolean z4;
-        boolean z5;
-        boolean z6;
-        boolean z7;
-        boolean z8;
-        boolean z9;
         Map<Integer, L1Weapon> result = new HashMap<>();
         Connection con = null;
         PreparedStatement pstm = null;
@@ -357,166 +284,76 @@ public class ItemTable {
             pstm = con.prepareStatement("SELECT * FROM `weapon`");
             rs = pstm.executeQuery();
             while (rs.next()) {
-                try {
-                    weapon = new L1Weapon();
-                    int itemid = rs.getInt("item_id");
-                    weapon.setItemId(itemid);
-                    weapon.setName(rs.getString("name"));
-                    String classname = rs.getString("classname");
-                    weapon.setClassname(classname);
-                    weapon.setUnidentifiedNameId(rs.getString("unidentified_name_id"));
-                    weapon.setIdentifiedNameId(rs.getString("identified_name_id"));
-                    weapon.setType(_weaponTypes.get(rs.getString("type")).intValue());
-                    weapon.setType1(_weaponId.get(rs.getString("type")).intValue());
-                    weapon.setType2(1);
-                    weapon.setUseType(1);
-                    weapon.setMaterial(_materialTypes.get(rs.getString("material")).intValue());
-                    weapon.setWeight(rs.getInt("weight"));
-                    weapon.setGfxId(rs.getInt("invgfx"));
-                    weapon.setGroundGfxId(rs.getInt("grdgfx"));
-                    weapon.setItemDescId(rs.getInt("itemdesc_id"));
-                    weapon.setDmgSmall(rs.getInt("dmg_small"));
-                    weapon.setDmgLarge(rs.getInt("dmg_large"));
-                    weapon.setRange(rs.getInt("range"));
-                    weapon.set_safeenchant(rs.getInt("safenchant"));
-                    if (rs.getInt("use_royal") == 0) {
-                        z = false;
-                    } else {
-                        z = true;
-                    }
-                    weapon.setUseRoyal(z);
-                    if (rs.getInt("use_knight") == 0) {
-                        z2 = false;
-                    } else {
-                        z2 = true;
-                    }
-                    weapon.setUseKnight(z2);
-                    if (rs.getInt("use_elf") == 0) {
-                        z3 = false;
-                    } else {
-                        z3 = true;
-                    }
-                    weapon.setUseElf(z3);
-                    if (rs.getInt("use_mage") == 0) {
-                        z4 = false;
-                    } else {
-                        z4 = true;
-                    }
-                    weapon.setUseMage(z4);
-                    if (rs.getInt("use_darkelf") == 0) {
-                        z5 = false;
-                    } else {
-                        z5 = true;
-                    }
-                    weapon.setUseDarkelf(z5);
-                    if (rs.getInt("use_dragonknight") == 0) {
-                        z6 = false;
-                    } else {
-                        z6 = true;
-                    }
-                    weapon.setUseDragonknight(z6);
-                    if (rs.getInt("use_illusionist") == 0) {
-                        z7 = false;
-                    } else {
-                        z7 = true;
-                    }
-                    weapon.setUseIllusionist(z7);
-                    weapon.setHitModifier(rs.getInt("hitmodifier"));
-                    weapon.setDmgModifier(rs.getInt("dmgmodifier"));
-                    weapon.set_addstr(rs.getByte("add_str"));
-                    weapon.set_adddex(rs.getByte("add_dex"));
-                    weapon.set_addcon(rs.getByte("add_con"));
-                    weapon.set_addint(rs.getByte("add_int"));
-                    weapon.set_addwis(rs.getByte("add_wis"));
-                    weapon.set_addcha(rs.getByte("add_cha"));
-                    weapon.set_addhp(rs.getInt("add_hp"));
-                    weapon.set_addmp(rs.getInt("add_mp"));
-                    weapon.set_addhpr(rs.getInt("add_hpr"));
-                    weapon.set_addmpr(rs.getInt("add_mpr"));
-                    weapon.set_addsp(rs.getInt("add_sp"));
-                    weapon.set_mdef(rs.getInt("m_def"));
-                    weapon.setDoubleDmgChance(rs.getInt("double_dmg_chance"));
-                    weapon.setMagicDmgModifier(rs.getInt("magicdmgmodifier"));
-                    weapon.set_canbedmg(rs.getInt("canbedmg"));
-                    weapon.setMinLevel(rs.getInt("min_lvl"));
-                    weapon.setMaxLevel(rs.getInt("max_lvl"));
-                    weapon.setBless(rs.getInt("bless"));
-                    weapon.setTradable(rs.getInt("trade") == 0);
-                    if (rs.getInt("cant_delete") == 1) {
-                        z8 = true;
-                    } else {
-                        z8 = false;
-                    }
-                    weapon.setCantDelete(z8);
-                    if (rs.getInt("haste_item") == 0) {
-                        z9 = false;
-                    } else {
-                        z9 = true;
-                    }
-                    weapon.setHasteItem(z9);
-                    weapon.setMaxUseTime(rs.getInt("max_use_time"));
-                    ItemClass.get().addList(itemid, classname, 1);
-                    result.put(new Integer(weapon.getItemId()), weapon);
-                } catch (NullPointerException e3) {
-                    e2 = e3;
-                    weapon = weapon;
-                    try {
-                        _log.error("加載失敗: " + weapon.getItemId(), e2);
-                        SQLUtil.close(rs);
-                        SQLUtil.close(pstm);
-                        SQLUtil.close(con);
-                        return result;
-                    } catch (Throwable th2) {
-                        th = th2;
-                        SQLUtil.close(rs);
-                        SQLUtil.close(pstm);
-                        SQLUtil.close(con);
-                        throw th;
-                    }
-                } catch (SQLException e4) {
-                    e = e4;
-                    _log.error(e.getLocalizedMessage(), e);
-                    SQLUtil.close(rs);
-                    SQLUtil.close(pstm);
-                    SQLUtil.close(con);
-                    return result;
-                } catch (Throwable th3) {
-                    th = th3;
-                    SQLUtil.close(rs);
-                    SQLUtil.close(pstm);
-                    SQLUtil.close(con);
-                    throw th;
-                }
+                weapon = new L1Weapon();
+                int itemid = rs.getInt("item_id");
+                weapon.setItemId(itemid);
+                weapon.setName(rs.getString("name"));
+                String classname = rs.getString("classname");
+                weapon.setClassname(classname);
+                weapon.setUnidentifiedNameId(rs.getString("unidentified_name_id"));
+                weapon.setIdentifiedNameId(rs.getString("identified_name_id"));
+                weapon.setType(_weaponTypes.get(rs.getString("type")).intValue());
+                weapon.setType1(_weaponId.get(rs.getString("type")).intValue());
+                weapon.setType2(1);
+                weapon.setUseType(1);
+                weapon.setMaterial(_materialTypes.get(rs.getString("material")).intValue());
+                weapon.setWeight(rs.getInt("weight"));
+                weapon.setGfxId(rs.getInt("invgfx"));
+                weapon.setGroundGfxId(rs.getInt("grdgfx"));
+                weapon.setItemDescId(rs.getInt("itemdesc_id"));
+                weapon.setDmgSmall(rs.getInt("dmg_small"));
+                weapon.setDmgLarge(rs.getInt("dmg_large"));
+                weapon.setRange(rs.getInt("range"));
+                weapon.set_safeenchant(rs.getInt("safenchant"));
+                weapon.setUseRoyal(rs.getInt("use_royal") != 0);
+
+                weapon.setUseKnight(rs.getInt("use_knight") != 0);
+                weapon.setUseElf(rs.getInt("use_elf") != 0);
+                weapon.setUseMage(rs.getInt("use_mage") != 0);
+                weapon.setUseDarkelf(rs.getInt("use_darkelf") != 0);
+                weapon.setUseDragonknight(rs.getInt("use_dragonknight") != 0);
+                weapon.setUseIllusionist(rs.getInt("use_illusionist") != 0);
+                weapon.setHitModifier(rs.getInt("hitmodifier"));
+                weapon.setDmgModifier(rs.getInt("dmgmodifier"));
+                weapon.set_addstr(rs.getByte("add_str"));
+                weapon.set_adddex(rs.getByte("add_dex"));
+                weapon.set_addcon(rs.getByte("add_con"));
+                weapon.set_addint(rs.getByte("add_int"));
+                weapon.set_addwis(rs.getByte("add_wis"));
+                weapon.set_addcha(rs.getByte("add_cha"));
+                weapon.set_addhp(rs.getInt("add_hp"));
+                weapon.set_addmp(rs.getInt("add_mp"));
+                weapon.set_addhpr(rs.getInt("add_hpr"));
+                weapon.set_addmpr(rs.getInt("add_mpr"));
+                weapon.set_addsp(rs.getInt("add_sp"));
+                weapon.set_mdef(rs.getInt("m_def"));
+                weapon.setDoubleDmgChance(rs.getInt("double_dmg_chance"));
+                weapon.setMagicDmgModifier(rs.getInt("magicdmgmodifier"));
+                weapon.set_canbedmg(rs.getInt("canbedmg"));
+                weapon.setMinLevel(rs.getInt("min_lvl"));
+                weapon.setMaxLevel(rs.getInt("max_lvl"));
+                weapon.setBless(rs.getInt("bless"));
+                weapon.setTradable(rs.getInt("trade") == 0);
+                weapon.setCantDelete(rs.getInt("cant_delete") == 1);
+                weapon.setHasteItem(rs.getInt("haste_item") != 0);
+                weapon.setMaxUseTime(rs.getInt("max_use_time"));
+                ItemClass.get().addList(itemid, classname, 1);
+                result.put(new Integer(weapon.getItemId()), weapon);
             }
-            SQLUtil.close(rs);
-            SQLUtil.close(pstm);
-            SQLUtil.close(con);
-        } catch (NullPointerException e5) {
-            e2 = e5;
-        } catch (SQLException e6) {
-            e = e6;
+        } catch (NullPointerException e) {
+            _log.error("加載失敗: " + weapon.getItemId(), e);
+        } catch (SQLException e) {
             _log.error(e.getLocalizedMessage(), e);
+        }finally {
             SQLUtil.close(rs);
             SQLUtil.close(pstm);
             SQLUtil.close(con);
-            return result;
         }
         return result;
     }
 
-    private Map<Integer, L1Armor> allArmor() throws Exception {
-        Throwable th;
-        SQLException e;
-        NullPointerException e2;
-        boolean z;
-        boolean z2;
-        boolean z3;
-        boolean z4;
-        boolean z5;
-        boolean z6;
-        boolean z7;
-        boolean z8;
-        boolean z9;
+    private Map<Integer, L1Armor> allArmor()   {
+
         Map<Integer, L1Armor> result = new HashMap<>();
         Connection con = null;
         PreparedStatement pstm = null;
@@ -527,158 +364,79 @@ public class ItemTable {
             pstm = con.prepareStatement("SELECT * FROM `armor`");
             rs = pstm.executeQuery();
             while (rs.next()) {
-                try {
-                    armor = new L1Armor();
-                    int itemid = rs.getInt("item_id");
-                    armor.setItemId(itemid);
-                    armor.setName(rs.getString("name"));
-                    String classname = rs.getString("classname");
-                    armor.setClassname(classname);
-                    armor.setUnidentifiedNameId(rs.getString("unidentified_name_id"));
-                    armor.setIdentifiedNameId(rs.getString("identified_name_id"));
-                    armor.setType(_armorTypes.get(rs.getString("type")).intValue());
-                    armor.setType2(2);
-                    armor.setUseType(_useTypes.get(rs.getString("type")).intValue());
-                    armor.setMaterial(_materialTypes.get(rs.getString("material")).intValue());
-                    armor.setWeight(rs.getInt("weight"));
-                    armor.setGfxId(rs.getInt("invgfx"));
-                    armor.setGroundGfxId(rs.getInt("grdgfx"));
-                    armor.setItemDescId(rs.getInt("itemdesc_id"));
-                    armor.set_ac(rs.getInt("ac"));
-                    armor.set_safeenchant(rs.getInt("safenchant"));
-                    if (rs.getInt("use_royal") == 0) {
-                        z = false;
-                    } else {
-                        z = true;
-                    }
-                    armor.setUseRoyal(z);
-                    if (rs.getInt("use_knight") == 0) {
-                        z2 = false;
-                    } else {
-                        z2 = true;
-                    }
-                    armor.setUseKnight(z2);
-                    if (rs.getInt("use_elf") == 0) {
-                        z3 = false;
-                    } else {
-                        z3 = true;
-                    }
-                    armor.setUseElf(z3);
-                    if (rs.getInt("use_mage") == 0) {
-                        z4 = false;
-                    } else {
-                        z4 = true;
-                    }
-                    armor.setUseMage(z4);
-                    if (rs.getInt("use_darkelf") == 0) {
-                        z5 = false;
-                    } else {
-                        z5 = true;
-                    }
-                    armor.setUseDarkelf(z5);
-                    if (rs.getInt("use_dragonknight") == 0) {
-                        z6 = false;
-                    } else {
-                        z6 = true;
-                    }
-                    armor.setUseDragonknight(z6);
-                    if (rs.getInt("use_illusionist") == 0) {
-                        z7 = false;
-                    } else {
-                        z7 = true;
-                    }
-                    armor.setUseIllusionist(z7);
-                    armor.set_addstr(rs.getByte("add_str"));
-                    armor.set_addcon(rs.getByte("add_con"));
-                    armor.set_adddex(rs.getByte("add_dex"));
-                    armor.set_addint(rs.getByte("add_int"));
-                    armor.set_addwis(rs.getByte("add_wis"));
-                    armor.set_addcha(rs.getByte("add_cha"));
-                    armor.set_addhp(rs.getInt("add_hp"));
-                    armor.set_addmp(rs.getInt("add_mp"));
-                    armor.set_addhpr(rs.getInt("add_hpr"));
-                    armor.set_addmpr(rs.getInt("add_mpr"));
-                    armor.set_addsp(rs.getInt("add_sp"));
-                    armor.setMinLevel(rs.getInt("min_lvl"));
-                    armor.setMaxLevel(rs.getInt("max_lvl"));
-                    armor.set_mdef(rs.getInt("m_def"));
-                    armor.setDamageReduction(rs.getInt("damage_reduction"));
-                    armor.setWeightReduction(rs.getInt("weight_reduction"));
-                    armor.setHitModifierByArmor(rs.getInt("hit_modifier"));
-                    armor.setDmgModifierByArmor(rs.getInt("dmg_modifier"));
-                    armor.setBowHitModifierByArmor(rs.getInt("bow_hit_modifier"));
-                    armor.setBowDmgModifierByArmor(rs.getInt("bow_dmg_modifier"));
-                    armor.setHasteItem(rs.getInt("haste_item") != 0);
-                    armor.setBless(rs.getInt("bless"));
-                    if (rs.getInt("trade") == 0) {
-                        z8 = true;
-                    } else {
-                        z8 = false;
-                    }
-                    armor.setTradable(z8);
-                    if (rs.getInt("cant_delete") == 1) {
-                        z9 = true;
-                    } else {
-                        z9 = false;
-                    }
-                    armor.setCantDelete(z9);
-                    armor.set_defense_earth(rs.getInt("defense_earth"));
-                    armor.set_defense_water(rs.getInt("defense_water"));
-                    armor.set_defense_wind(rs.getInt("defense_wind"));
-                    armor.set_defense_fire(rs.getInt("defense_fire"));
-                    armor.set_regist_stun(rs.getInt("regist_stun"));
-                    armor.set_regist_stone(rs.getInt("regist_stone"));
-                    armor.set_regist_sleep(rs.getInt("regist_sleep"));
-                    armor.set_regist_freeze(rs.getInt("regist_freeze"));
-                    armor.set_regist_sustain(rs.getInt("regist_sustain"));
-                    armor.set_regist_blind(rs.getInt("regist_blind"));
-                    armor.setMaxUseTime(rs.getInt("max_use_time"));
-                    armor.set_greater(rs.getInt("greater"));
-                    ItemClass.get().addList(itemid, classname, 2);
-                    result.put(new Integer(armor.getItemId()), armor);
-                } catch (NullPointerException e3) {
-                    e2 = e3;
-                    armor = armor;
-                    try {
-                        _log.error("加載失敗: " + armor.getItemId(), e2);
-                        SQLUtil.close(rs);
-                        SQLUtil.close(pstm);
-                        SQLUtil.close(con);
-                        return result;
-                    } catch (Throwable th2) {
-                        th = th2;
-                        SQLUtil.close(rs);
-                        SQLUtil.close(pstm);
-                        SQLUtil.close(con);
-                        throw th;
-                    }
-                } catch (SQLException e4) {
-                    e = e4;
-                    _log.error(e.getLocalizedMessage(), e);
-                    SQLUtil.close(rs);
-                    SQLUtil.close(pstm);
-                    SQLUtil.close(con);
-                    return result;
-                } catch (Throwable th3) {
-                    th = th3;
-                    SQLUtil.close(rs);
-                    SQLUtil.close(pstm);
-                    SQLUtil.close(con);
-                    throw th;
-                }
+                armor = new L1Armor();
+                int itemid = rs.getInt("item_id");
+                armor.setItemId(itemid);
+                armor.setName(rs.getString("name"));
+                String classname = rs.getString("classname");
+                armor.setClassname(classname);
+                armor.setUnidentifiedNameId(rs.getString("unidentified_name_id"));
+                armor.setIdentifiedNameId(rs.getString("identified_name_id"));
+                armor.setType(_armorTypes.get(rs.getString("type")).intValue());
+                armor.setType2(2);
+                armor.setUseType(_useTypes.get(rs.getString("type")).intValue());
+                armor.setMaterial(_materialTypes.get(rs.getString("material")).intValue());
+                armor.setWeight(rs.getInt("weight"));
+                armor.setGfxId(rs.getInt("invgfx"));
+                armor.setGroundGfxId(rs.getInt("grdgfx"));
+                armor.setItemDescId(rs.getInt("itemdesc_id"));
+                armor.set_ac(rs.getInt("ac"));
+                armor.set_safeenchant(rs.getInt("safenchant"));
+
+                armor.setUseRoyal(rs.getInt("use_royal") != 0);
+                armor.setUseKnight(rs.getInt("use_knight") != 0);
+                armor.setUseElf(rs.getInt("use_elf") != 0);
+                armor.setUseMage(rs.getInt("use_mage") != 0);
+                armor.setUseDarkelf(rs.getInt("use_darkelf") == 0);
+                armor.setUseDragonknight(rs.getInt("use_dragonknight") != 0);
+                armor.setUseIllusionist(rs.getInt("use_illusionist") != 0);
+                armor.set_addstr(rs.getByte("add_str"));
+                armor.set_addcon(rs.getByte("add_con"));
+                armor.set_adddex(rs.getByte("add_dex"));
+                armor.set_addint(rs.getByte("add_int"));
+                armor.set_addwis(rs.getByte("add_wis"));
+                armor.set_addcha(rs.getByte("add_cha"));
+                armor.set_addhp(rs.getInt("add_hp"));
+                armor.set_addmp(rs.getInt("add_mp"));
+                armor.set_addhpr(rs.getInt("add_hpr"));
+                armor.set_addmpr(rs.getInt("add_mpr"));
+                armor.set_addsp(rs.getInt("add_sp"));
+                armor.setMinLevel(rs.getInt("min_lvl"));
+                armor.setMaxLevel(rs.getInt("max_lvl"));
+                armor.set_mdef(rs.getInt("m_def"));
+                armor.setDamageReduction(rs.getInt("damage_reduction"));
+                armor.setWeightReduction(rs.getInt("weight_reduction"));
+                armor.setHitModifierByArmor(rs.getInt("hit_modifier"));
+                armor.setDmgModifierByArmor(rs.getInt("dmg_modifier"));
+                armor.setBowHitModifierByArmor(rs.getInt("bow_hit_modifier"));
+                armor.setBowDmgModifierByArmor(rs.getInt("bow_dmg_modifier"));
+                armor.setHasteItem(rs.getInt("haste_item") != 0);
+                armor.setBless(rs.getInt("bless"));
+                armor.setTradable(rs.getInt("trade") == 0);
+                armor.setCantDelete(rs.getInt("cant_delete") == 1);
+                armor.set_defense_earth(rs.getInt("defense_earth"));
+                armor.set_defense_water(rs.getInt("defense_water"));
+                armor.set_defense_wind(rs.getInt("defense_wind"));
+                armor.set_defense_fire(rs.getInt("defense_fire"));
+                armor.set_regist_stun(rs.getInt("regist_stun"));
+                armor.set_regist_stone(rs.getInt("regist_stone"));
+                armor.set_regist_sleep(rs.getInt("regist_sleep"));
+                armor.set_regist_freeze(rs.getInt("regist_freeze"));
+                armor.set_regist_sustain(rs.getInt("regist_sustain"));
+                armor.set_regist_blind(rs.getInt("regist_blind"));
+                armor.setMaxUseTime(rs.getInt("max_use_time"));
+                armor.set_greater(rs.getInt("greater"));
+                ItemClass.get().addList(itemid, classname, 2);
+                result.put(armor.getItemId(), armor);
             }
-            SQLUtil.close(rs);
-            SQLUtil.close(pstm);
-            SQLUtil.close(con);
-        } catch (NullPointerException e5) {
-            e2 = e5;
-        } catch (SQLException e6) {
-            e = e6;
+        } catch (NullPointerException e) {
+            _log.error("加載失敗: " + armor.getItemId(), e);
+        } catch (SQLException e) {
             _log.error(e.getLocalizedMessage(), e);
+        }finally {
             SQLUtil.close(rs);
             SQLUtil.close(pstm);
             SQLUtil.close(con);
-            return result;
         }
         return result;
     }
@@ -709,19 +467,19 @@ public class ItemTable {
 
         _allTemplates = new L1Item[highestId + 1];
 
-        for (Iterator<Integer> iter = _etcitems.keySet().iterator(); iter.hasNext();) {
+        for (Iterator<Integer> iter = _etcitems.keySet().iterator(); iter.hasNext(); ) {
             Integer id = iter.next();
             L1EtcItem item = _etcitems.get(id);
             _allTemplates[id.intValue()] = item;
         }
 
-        for (Iterator<Integer> iter = _weapons.keySet().iterator(); iter.hasNext();) {
+        for (Iterator<Integer> iter = _weapons.keySet().iterator(); iter.hasNext(); ) {
             Integer id = iter.next();
             L1Weapon item = _weapons.get(id);
             _allTemplates[id.intValue()] = item;
         }
 
-        for (Iterator<Integer> iter = _armors.keySet().iterator(); iter.hasNext();) {
+        for (Iterator<Integer> iter = _armors.keySet().iterator(); iter.hasNext(); ) {
             Integer id = iter.next();
             L1Armor item = _armors.get(id);
             _allTemplates[id.intValue()] = item;

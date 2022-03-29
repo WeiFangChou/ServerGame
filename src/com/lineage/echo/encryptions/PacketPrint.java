@@ -7,98 +7,98 @@ package com.lineage.echo.encryptions;
  */
 public class PacketPrint {
 
-    private static PacketPrint _data;
+	private static PacketPrint _data;
 
-    public static PacketPrint get() {
-        if (_data == null) {
-            _data = new PacketPrint();
-        }
-        return _data;
-    }
+	public static PacketPrint get() {
+		if (_data == null) {
+			_data = new PacketPrint();
+		}
+		return _data;
+	}
 
-    /**
-     * <font color=#0000ff>印出封包</font>
-     * 目的:<BR>
-     * 用於檢查客戶端傳出的封包資料<BR>
-     * @param data
-     * @param len
-     * @return
-     */
-    public String printData(final byte[] data, final int len) {
+	/**
+	 * <font color=#0000ff>印出封包</font>
+	 * 目的:<BR>
+	 * 用於檢查客戶端傳出的封包資料<BR>
+	 * @param data
+	 * @param len
+	 * @return
+	 */
+	public String printData(final byte[] data, final int len) {
 
-        final StringBuffer result = new StringBuffer();
+		final StringBuffer result = new StringBuffer();
 
-        int counter = 0;
+		int counter = 0;
 
-        for (int i = 0; i < len; i++) {
+		for (int i = 0; i < len; i++) {
 
-            if (counter % 16 == 0) {
-                result.append(this.fillHex(i, 4) + ": ");
-            }
+			if (counter % 16 == 0) {
+				result.append(this.fillHex(i, 4) + ": ");
+			}
 
-            result.append(this.fillHex(data[i] & 0xff, 2) + " ");
-            counter++;
+			result.append(this.fillHex(data[i] & 0xff, 2) + " ");
+			counter++;
 
-            if (counter == 16) {
-                result.append("   ");
+			if (counter == 16) {
+				result.append("   ");
 
-                int charpoint = i - 15;
-                for (int a = 0; a < 16; a++) {
-                    final int t1 = data[charpoint++];
+				int charpoint = i - 15;
+				for (int a = 0; a < 16; a++) {
+					final int t1 = data[charpoint++];
 
-                    if ((t1 > 0x1f) && (t1 < 0x80)) {
-                        result.append((char) t1);
-                    } else {
-                        result.append('.');
-                    }
-                }
+					if ((t1 > 0x1f) && (t1 < 0x80)) {
+						result.append((char) t1);
+					} else {
+						result.append('.');
+					}
+				}
 
-                result.append("\n");
-                counter = 0;
-            }
-        }
+				result.append("\n");
+				counter = 0;
+			}
+		}
 
-        final int rest = data.length % 16;
+		final int rest = data.length % 16;
 
-        if (rest > 0) {
+		if (rest > 0) {
 
-            for (int i = 0; i < 17 - rest; i++) {
-                result.append("   ");
-            }
+			for (int i = 0; i < 17 - rest; i++) {
+				result.append("   ");
+			}
 
-            int charpoint = data.length - rest;
+			int charpoint = data.length - rest;
 
-            for (int a = 0; a < rest; a++) {
+			for (int a = 0; a < rest; a++) {
 
-                final int t1 = data[charpoint++];
+				final int t1 = data[charpoint++];
 
-                if ((t1 > 0x1f) && (t1 < 0x80)) {
-                    result.append((char) t1);
-                } else {
-                    result.append('.');
-                }
-            }
+				if ((t1 > 0x1f) && (t1 < 0x80)) {
+					result.append((char) t1);
+				} else {
+					result.append('.');
+				}
+			}
 
-            result.append("\n");
-        }
+			result.append("\n");
+		}
 
-        return result.toString();
-    }
+		return result.toString();
+	}
 
-    /**
-     * <font color=#0000ff>將數字轉成 16 進位</font>
-     * @param data
-     * @param digits
-     * @return
-     */
-    private String fillHex(final int data, final int digits) {
+	/**
+	 * <font color=#0000ff>將數字轉成 16 進位</font>
+	 * @param data
+	 * @param digits
+	 * @return
+	 */
+	private String fillHex(final int data, final int digits) {
 
-        String number = Integer.toHexString(data);
+		String number = Integer.toHexString(data);
 
-        for (int i = number.length(); i < digits; i++) {
-            number = "0" + number;
-        }
+		for (int i = number.length(); i < digits; i++) {
+			number = "0" + number;
+		}
 
-        return number;
-    }
+		return number;
+	}
 }

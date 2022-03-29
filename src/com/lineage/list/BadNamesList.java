@@ -25,14 +25,11 @@ public class BadNamesList {
     }
 
     public void load() throws Exception {
-        Throwable th;
-        Exception e;
         LineNumberReader lnr = null;
         try {
             LineNumberReader lnr2 = new LineNumberReader(new InputStreamReader(new FileInputStream(new File("data/badnames.txt")), "utf8"));
             boolean isWhile = false;
             while (true) {
-                try {
                     String line = lnr2.readLine();
                     if (line == null) {
                         _log.info("載入禁止名稱數量: " + this._nameList.size());
@@ -43,36 +40,12 @@ public class BadNamesList {
                     } else if (line.trim().length() != 0 && !line.startsWith("#")) {
                         this._nameList.add(new StringTokenizer(line, ";").nextToken());
                     }
-                } catch (FileNotFoundException e2) {
-                    e = e2;
-                    lnr = lnr2;
-                    try {
-                        _log.error(e.getLocalizedMessage(), e);
-                        StreamUtil.close(lnr);
-                    } catch (Throwable th2) {
-                        th = th2;
-                        StreamUtil.close(lnr);
-                        throw th;
-                    }
-                } catch (Exception e3) {
-                    e = e3;
-                    lnr = lnr2;
-                    _log.error(e.getLocalizedMessage(), e);
-                    StreamUtil.close(lnr);
-                } catch (Throwable th3) {
-                    th = th3;
-                    lnr = lnr2;
-                    StreamUtil.close(lnr);
-                    throw th;
-                }
             }
-        } catch (FileNotFoundException e4) {
-            e = e4;
+        } catch (FileNotFoundException e) {
             _log.error(e.getLocalizedMessage(), e);
-            StreamUtil.close(lnr);
-        } catch (Exception e5) {
-            e = e5;
+        } catch (Exception e) {
             _log.error(e.getLocalizedMessage(), e);
+        }finally {
             StreamUtil.close(lnr);
         }
     }
@@ -81,7 +54,7 @@ public class BadNamesList {
         String checkName = name.toLowerCase();
         Iterator<String> it = this._nameList.iterator();
         while (it.hasNext()) {
-            if (checkName.indexOf(it.next().toLowerCase()) != -1) {
+            if (checkName.contains(it.next().toLowerCase())) {
                 _log.info("新建人物名稱包含禁用字元: " + this._nameList.size());
                 return true;
             }

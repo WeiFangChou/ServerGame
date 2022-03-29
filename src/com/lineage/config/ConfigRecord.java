@@ -34,12 +34,11 @@ public final class ConfigRecord {
             LOGGING_CHAT_BUSINESS = Boolean.parseBoolean(set.getProperty("LoggingBusiness", "false"));
             LOGGING_CHAT_COMBINED = Boolean.parseBoolean(set.getProperty("LoggingChatCombined", "false"));
             LOGGING_CHAT_CHAT_PARTY = Boolean.parseBoolean(set.getProperty("LoggingChatChatParty", "false"));
-            set.clear();
+
         } catch (Exception e) {
-            throw new ConfigErrorException("設置檔案遺失: ./config/record.properties");
-        } catch (Throwable th) {
+            throw new ConfigErrorException("設置檔案遺失: "+RECORD_FILE);
+        }finally {
             set.clear();
-            throw th;
         }
     }
 }

@@ -4,6 +4,9 @@ import com.lineage.DatabaseFactory;
 import com.lineage.server.model.L1UbSupplie;
 import com.lineage.server.utils.SQLUtil;
 import com.lineage.server.utils.collections.Lists;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +17,7 @@ import java.util.logging.Logger;
 
 public class UbSupplies {
     private static UbSupplies _instance;
-    private static Logger _log = Logger.getLogger(UbSupplies.class.getName());
+    private static final Log _log = LogFactory.getLog(UbSupplies.class);
     private final List<L1UbSupplie> _ubSupplies = Lists.newArrayList();
 
     private UbSupplies() throws Exception {
@@ -29,8 +32,7 @@ public class UbSupplies {
     }
 
     public void load() throws Exception {
-        Throwable th;
-        SQLException e;
+
         L1UbSupplie us = null;
         Connection con = null;
         PreparedStatement pstm = null;
@@ -40,7 +42,6 @@ public class UbSupplies {
             pstm = con.prepareStatement("select * from ub_supplies ORDER BY ub_id,ub_round,ub_item_id");
             rs = pstm.executeQuery();
             while (rs.next()) {
-                try {
                     us = new L1UbSupplie();
                     us.setUbId(rs.getInt("ub_id"));
                     us.setUbName(rs.getString("ub_name"));
@@ -50,34 +51,14 @@ public class UbSupplies {
                     us.setUbItemCont(rs.getInt("ub_item_cont"));
                     us.setUbItemBless(rs.getInt("ub_item_bless"));
                     this._ubSupplies.add(us);
-                } catch (SQLException e2) {
-                    e = e2;
-                    try {
-                        _log.log(Level.SEVERE, e.getLocalizedMessage(), (Throwable) e);
-                        SQLUtil.close(rs);
-                        SQLUtil.close(pstm);
-                        SQLUtil.close(con);
-                        return;
-                    } catch (Throwable th2) {
-                        th = th2;
-                        SQLUtil.close(rs);
-                        SQLUtil.close(pstm);
-                        SQLUtil.close(con);
-                        throw th;
-                    }
-                } catch (Throwable th3) {
-                    th = th3;
-                    SQLUtil.close(rs);
-                    SQLUtil.close(pstm);
-                    SQLUtil.close(con);
-                    throw th;
-                }
+
             }
+        } catch (SQLException e) {
+            _log.error(e.getLocalizedMessage(), e);
+        }finally {
             SQLUtil.close(rs);
             SQLUtil.close(pstm);
             SQLUtil.close(con);
-        } catch (SQLException e3) {
-            e = e3;
         }
     }
 

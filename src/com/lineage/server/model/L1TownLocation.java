@@ -24,23 +24,23 @@ public class L1TownLocation {
     private static final Point[] GETBACK_LOC_TALKING_ISLAND = {new Point(32600, 32942), new Point(32574, 32944), new Point(32580, 32923), new Point(32557, 32975), new Point(32597, 32914), new Point(32580, 32974)};
     private static final Point[] GETBACK_LOC_WERLDAN = {new Point(33702, 32492), new Point(33747, 32508), new Point(33696, 32498), new Point(33723, 32512), new Point(33710, 32521), new Point(33724, 32488), new Point(33693, 32513)};
     private static final Point[] GETBACK_LOC_WINDAWOOD = {new Point(32608, 33178), new Point(32626, 33185), new Point(32630, 33179), new Point(32625, 33207), new Point(32638, 33203), new Point(32621, 33179)};
-    private static final short GETBACK_MAP_ADEN = 4;
-    private static final short GETBACK_MAP_ELVEN_FOREST = 4;
-    private static final short GETBACK_MAP_GIRAN = 4;
-    private static final short GETBACK_MAP_GLUDIO = 4;
-    private static final short GETBACK_MAP_HEINE = 4;
-    private static final short GETBACK_MAP_KENT = 4;
-    private static final short GETBACK_MAP_ORCISH_FOREST = 4;
-    private static final short GETBACK_MAP_OREN = 4;
-    private static final short GETBACK_MAP_OUM_DUNGEON = 310;
-    private static final short GETBACK_MAP_PIRATE_ISLAND = 440;
-    private static final short GETBACK_MAP_RECLUSE_VILLAGE = 400;
-    private static final short GETBACK_MAP_RESISTANCE = 400;
-    private static final short GETBACK_MAP_SILENT_CAVERN = 304;
-    private static final short GETBACK_MAP_SILVER_KNIGHT_TOWN = 4;
-    private static final short GETBACK_MAP_TALKING_ISLAND = 0;
-    private static final short GETBACK_MAP_WERLDAN = 4;
-    private static final short GETBACK_MAP_WINDAWOOD = 4;
+    private static final int GETBACK_MAP_ADEN = 4;
+    private static final int GETBACK_MAP_ELVEN_FOREST = 4;
+    private static final int GETBACK_MAP_GIRAN = 4;
+    private static final int GETBACK_MAP_GLUDIO = 4;
+    private static final int GETBACK_MAP_HEINE = 4;
+    private static final int GETBACK_MAP_KENT = 4;
+    private static final int GETBACK_MAP_ORCISH_FOREST = 4;
+    private static final int GETBACK_MAP_OREN = 4;
+    private static final int GETBACK_MAP_OUM_DUNGEON = 310;
+    private static final int GETBACK_MAP_PIRATE_ISLAND = 440;
+    private static final int GETBACK_MAP_RECLUSE_VILLAGE = 400;
+    private static final int GETBACK_MAP_RESISTANCE = 400;
+    private static final int GETBACK_MAP_SILENT_CAVERN = 304;
+    private static final int GETBACK_MAP_SILVER_KNIGHT_TOWN = 4;
+    private static final int GETBACK_MAP_TALKING_ISLAND = 0;
+    private static final int GETBACK_MAP_WERLDAN = 4;
+    private static final int GETBACK_MAP_WINDAWOOD = 4;
     public static final int TOWNID_ADEN = 12;
     public static final int TOWNID_ELVEN_FOREST = 11;
     public static final int TOWNID_GIRAN = 7;
@@ -66,7 +66,7 @@ public class L1TownLocation {
         return isGambling(pc.getX(), pc.getY(), pc.getMapId());
     }
 
-    public static final boolean isGambling(int x, int y, short map) {
+    public static final boolean isGambling(int x, int y, int map) {
         if (map == 4) {
             if (x > 33469 && x < 33528 && y > 32837 && y < 32848) {
                 return true;

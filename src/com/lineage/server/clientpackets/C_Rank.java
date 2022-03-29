@@ -136,7 +136,7 @@ public class C_Rank extends ClientBasePacket {
                         }
 
                         int lv = pc.getWeapon().getEnchantLevel();
-                        short gfx;
+                        int gfx;
                         switch(lv) {
                             case 0:
                             case 1:

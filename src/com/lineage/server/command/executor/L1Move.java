@@ -20,7 +20,7 @@ public class L1Move implements L1CommandExecutor {
 
     @Override // com.lineage.server.command.executor.L1CommandExecutor
     public void execute(L1PcInstance pc, String cmdName, String arg) {
-        short mapid;
+        int mapid;
         try {
             StringTokenizer st = new StringTokenizer(arg);
             int locx = Integer.parseInt(st.nextToken());

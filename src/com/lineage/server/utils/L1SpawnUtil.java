@@ -232,11 +232,11 @@ public class L1SpawnUtil {
         }
     }
 
-    public static L1NpcInstance spawn(int npcid, int x, int y, short m, int h) {
+    public static L1NpcInstance spawn(int npcid, int x, int y, int m, int h) {
         return spawnT(npcid, x, y, m, h, 0);
     }
 
-    public static L1NpcInstance spawnT(int npcid, int x, int y, short m, int h, int time) {
+    public static L1NpcInstance spawnT(int npcid, int x, int y, int m, int h, int time) {
         try {
             L1NpcInstance npc = NpcTable.get().newNpcInstance(npcid);
             if (npc == null) {
@@ -529,7 +529,7 @@ public class L1SpawnUtil {
         }
     }
 
-    public static L1EffectInstance spawnEffect(int npcId, int time, int locX, int locY, short mapId, L1Character user, int skiiId) {
+    public static L1EffectInstance spawnEffect(int npcId, int time, int locX, int locY, int mapId, L1Character user, int skiiId) {
         L1EffectInstance effect = null;
         try {
             L1NpcInstance npc = NpcTable.get().newNpcInstance(npcId);
@@ -573,7 +573,7 @@ public class L1SpawnUtil {
         }
     }
 
-    public static L1EffectInstance spawnEffect(int npcId, int time, int locX, int locY, short mapId, L1Character user, int skiiId, int gfxid) {
+    public static L1EffectInstance spawnEffect(int npcId, int time, int locX, int locY, int mapId, L1Character user, int skiiId, int gfxid) {
         L1EffectInstance effect = null;
         try {
             L1NpcInstance npc = NpcTable.get().newNpcInstance(npcId);
@@ -618,7 +618,7 @@ public class L1SpawnUtil {
         }
     }
 
-    public static L1DoorInstance spawnDoor(L1QuestUser quest, int doorId, int gfxid, int x, int y, short mapid, int direction) throws InvocationTargetException, InstantiationException, IllegalAccessException {
+    public static L1DoorInstance spawnDoor(L1QuestUser quest, int doorId, int gfxid, int x, int y, int mapid, int direction) throws InvocationTargetException, InstantiationException, IllegalAccessException {
         L1Npc l1npc = NpcTable.get().getTemplate(81158);
         if (l1npc == null) {
             return null;
@@ -689,7 +689,7 @@ public class L1SpawnUtil {
                 field.setId(IdFactoryNpc.get().nextId());
                 field.setGfxId(gfxid);
                 field.setTempCharGfx(gfxid);
-                field.setMap((short) map);
+                field.setMap( map);
                 field.setX(x);
                 field.setY(y);
                 field.setHomeX(x);

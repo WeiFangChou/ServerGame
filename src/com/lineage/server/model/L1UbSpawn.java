@@ -103,7 +103,7 @@ public class L1UbSpawn implements Comparable<L1UbSpawn> {
         mob.setHomeX(loc.getX());
         mob.setY(loc.getY());
         mob.setHomeY(loc.getY());
-        mob.setMap((short) loc.getMapId());
+        mob.setMap( loc.getMapId());
         if (3 >= getGroup()) {
             z = true;
         }

@@ -43,7 +43,7 @@ public class Teleportation {
                     pc.getMap().setPassable(pc.getLocation(), true);
                     int x = pc.getTeleportX();
                     int y = pc.getTeleportY();
-                    short mapId = pc.getTeleportMapId();
+                    int mapId = pc.getTeleportMapId();
                     int head = pc.getTeleportHeading();
                     if (!L1WorldMap.get().getMap(mapId).isInMap(x, y) && !pc.isGm()) {
                         x = pc.getX();
@@ -148,7 +148,7 @@ public class Teleportation {
         }
     }
 
-    private static void teleport(L1NpcInstance npc, int x, int y, short map, int head) {
+    private static void teleport(L1NpcInstance npc, int x, int y, int map, int head) {
         try {
             World.get().moveVisibleObject(npc, map);
             L1WorldMap.get().getMap(npc.getMapId()).setPassable(npc.getX(), npc.getY(), true, 2);

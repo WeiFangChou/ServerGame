@@ -460,7 +460,7 @@ public class Skill_Studying implements Skill_StudyingExecutor {
                     return;
                 } else {
                     pc.getInventory().removeItem(pc.getInventory().getItem(itemObj), 1);
-                    pc.receiveDamage(pc, (double) ((short) ((int) ((Math.random() * 50.0d) + 30.0d))), false, true);
+                    pc.receiveDamage(pc, (double) ( ((int) ((Math.random() * 50.0d) + 30.0d))), false, true);
                     if (pc.isInvisble()) {
                         pc.delInvis();
                     }
@@ -482,7 +482,7 @@ public class Skill_Studying implements Skill_StudyingExecutor {
                     return;
                 } else {
                     pc.getInventory().removeItem(pc.getInventory().getItem(itemObj), 1);
-                    pc.receiveDamage(pc, (double) ((short) ((int) ((Math.random() * 50.0d) + 30.0d))), false, true);
+                    pc.receiveDamage(pc, (double) ( ((int) ((Math.random() * 50.0d) + 30.0d))), false, true);
                     if (pc.isInvisble()) {
                         pc.delInvis();
                     }

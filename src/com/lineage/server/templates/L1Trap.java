@@ -216,7 +216,7 @@ public class L1Trap {
         try {
             if (this._trap == 6 && this._loc != null) {
                 sendEffect(trapObj);
-                L1Teleport.teleport(trodFrom, this._loc.getX(), this._loc.getY(), (short) this._loc.getMapId(), 5, true, 2);
+                L1Teleport.teleport(trodFrom, this._loc.getX(), this._loc.getY(),  this._loc.getMapId(), 5, true, 2);
             }
         } catch (Exception e) {
             _log.error(e.getLocalizedMessage(), e);

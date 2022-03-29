@@ -42,12 +42,11 @@ public final class ConfigCharSetting {
             DRAGONKNIGHT_MAX_MP = Integer.parseInt(set.getProperty("DragonKnightMaxMP", "600"));
             ILLUSIONIST_MAX_HP = Integer.parseInt(set.getProperty("IllusionistMaxHP", "900"));
             ILLUSIONIST_MAX_MP = Integer.parseInt(set.getProperty("IllusionistMaxMP", "1100"));
-            set.clear();
+
         } catch (Exception e) {
-            throw new ConfigErrorException("設置檔案遺失: ./config/charsettings.properties");
-        } catch (Throwable th) {
+            throw new ConfigErrorException("設置檔案遺失: "+CHAR_SETTINGS_CONFIG_FILE);
+        }finally {
             set.clear();
-            throw th;
         }
     }
 }

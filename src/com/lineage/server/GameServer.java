@@ -148,7 +148,7 @@ public class GameServer {
         return _instance;
     }
 
-    public void initialize() throws Exception {
+    public void initialize() {
         PerformanceTimer timer = new PerformanceTimer();
         try {
             _log.info("\n\r--------------------------------------------------\n\r       外部設置：經驗倍率: " + ConfigRate.RATE_XP + "\n\r       外部設置：正義質倍率: " + ConfigRate.RATE_LA + "\n\r       外部設置：有好度倍率: " + ConfigRate.RATE_KARMA + "\n\r       外部設置：物品掉落倍率: " + ConfigRate.RATE_DROP_ITEMS + "\n\r       外部設置：金幣掉落倍率: " + ConfigRate.RATE_DROP_ADENA + "\n\r       外部設置：廣播等級限制: " + ((int) ConfigAlt.GLOBAL_CHAT_LEVEL) + "\n\r       外部設置：PK設置: " + (ConfigAlt.ALT_NONPVP ? "允許" : "不允許") + "\n\r       外部設置：最大連線設置: " + ((int) Config.MAX_ONLINE_USERS) + "\n\r--------------------------------------------------");
@@ -264,7 +264,7 @@ public class GameServer {
             CharItemsTimeReading.get().load();
             L1PcOther.load();
             EventTable.get().load();
-            Thread.sleep((long) (ConfigOther.Gamesleep * L1SkillId.STATUS_BRAVE));
+            Thread.sleep((long) ConfigOther.Gamesleep * L1SkillId.STATUS_BRAVE);
             if (EventTable.get().size() > 0) {
                 EventSpawnTable.get().load();
             }

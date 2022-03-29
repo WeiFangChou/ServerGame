@@ -4,7 +4,7 @@ public class L1GetBackRestart {
     private int _area;
     private int _locX;
     private int _locY;
-    private short _mapId;
+    private int _mapId;
     private String _note;
 
     public int getArea() {
@@ -39,11 +39,11 @@ public class L1GetBackRestart {
         this._locY = i;
     }
 
-    public short getMapId() {
+    public int getMapId() {
         return this._mapId;
     }
 
-    public void setMapId(short i) {
+    public void setMapId(int i) {
         this._mapId = i;
     }
 }

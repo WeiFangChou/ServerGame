@@ -16,8 +16,8 @@ public class Elf_Crystallization extends ItemExecutor {
         if (pc.getX() >= 32665 && pc.getX() <= 32674 &&
                 pc.getY() >= 32976 && pc.getY() <= 32985 &&
                 pc.getMapId() == 440) {
-            short mapid = 430;
-            L1Teleport.teleport(pc, 32922, 32812, (short)430, 5, true);
+            int mapid = 430;
+            L1Teleport.teleport(pc, 32922, 32812, 430, 5, true);
         } else {
             pc.sendPackets((ServerBasePacket)new S_ServerMessage(79));
         }

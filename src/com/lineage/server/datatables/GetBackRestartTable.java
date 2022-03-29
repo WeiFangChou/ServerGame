@@ -59,7 +59,7 @@ public class GetBackRestartTable {
             gbr.setArea(area);
             gbr.setLocX(locx);
             gbr.setLocY(locy);
-            gbr.setMapId((short) map);
+            gbr.setMapId( map);
             _getbackrestart.put(new Integer(area), gbr);
         }
     }

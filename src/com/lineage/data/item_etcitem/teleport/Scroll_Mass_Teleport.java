@@ -28,7 +28,7 @@ public class Scroll_Mass_Teleport extends ItemExecutor {
     public void execute(int[] data, L1PcInstance pc, L1ItemInstance item) throws Exception {
         int mapID = data[0];
         int btele = data[1];
-        if (!L1WorldMap.get().getMap((short) mapID).isEscapable()) {
+        if (!L1WorldMap.get().getMap( mapID).isEscapable()) {
             pc.sendPackets(new S_ServerMessage(647));
             pc.sendPackets(new S_Paralysis(7, false));
             return;
@@ -56,7 +56,7 @@ public class Scroll_Mass_Teleport extends ItemExecutor {
             L1Location newLocation = pc.getLocation().randomLocation(200, true);
             int newX = newLocation.getX();
             int newY = newLocation.getY();
-            short newMapId = (short) newLocation.getMapId();
+            int newMapId =  newLocation.getMapId();
             Iterator<L1Object> it2 = World.get().getVisiblePoint(pc.getLocation(), 3, pc.get_showId()).iterator();
             while (it2.hasNext()) {
                 L1Object tgObj2 = it2.next();

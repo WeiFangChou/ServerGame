@@ -25,11 +25,11 @@ public class Npc_WeapomTeleport extends NpcExecutor {
     public void talk(L1PcInstance pc, L1NpcInstance npc) {
         int r = _random.nextInt(3);
         if (r == 0) {
-            L1Teleport.teleport(pc, 32557, 32863,  (short)5167, 6, true);
+            L1Teleport.teleport(pc, 32557, 32863,  5167, 6, true);
         } else if (r == 1) {
-            L1Teleport.teleport(pc, 32723, 32799,  (short)5167, 0, true);
+            L1Teleport.teleport(pc, 32723, 32799,  5167, 0, true);
         } else if (r == 2) {
-            L1Teleport.teleport(pc, 32606, 32745,  (short)5167, 4, true);
+            L1Teleport.teleport(pc, 32606, 32745,  5167, 4, true);
         }
     }
 }

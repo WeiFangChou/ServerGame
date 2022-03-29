@@ -33,7 +33,7 @@ public class NpcAiThreadPool {
     private Executor _executor;
 
     // 一个 ExecutorService，可安排在给定的延迟后运行或定期执行的命令。
-    private ScheduledExecutorService _scheduler;
+    private ScheduledExecutorService _scheduler = Executors.newScheduledThreadPool(100, new NpcAiThreadPool.PriorityThreadFactory("NpcAiTPool", 5));
 
     public static NpcAiThreadPool get() {
         if (_instance == null) {
@@ -43,12 +43,7 @@ public class NpcAiThreadPool {
     }
 
     private NpcAiThreadPool() {
-        // 创建一个可根据需要创建新线程的线程池，但是在以前构造的线程可用时将重用它们。
-        _executor = Executors.newCachedThreadPool();
 
-        // 常规(创建一个线程池，它可安排在给定延迟后运行命令或者定期地执行。)
-        _scheduler = Executors.newScheduledThreadPool(SCHEDULED_CORE_POOL_SIZE,
-                new PriorityThreadFactory("NpcAiTPool", Thread.NORM_PRIORITY));
     }
 
     // Executor
@@ -98,7 +93,7 @@ public class NpcAiThreadPool {
      */
     public ScheduledFuture<?> schedule(final Runnable r, final long delay) {
         try {
-            if (delay <= 0) {
+            if (delay <= 0L) {
                 _executor.execute(r);
                 return null;
             }
@@ -106,8 +101,9 @@ public class NpcAiThreadPool {
 
         } catch (final RejectedExecutionException e) {
             _log.error(e.getLocalizedMessage(), e);
+            return null;
         }
-        return null;
+
     }
 
     /**

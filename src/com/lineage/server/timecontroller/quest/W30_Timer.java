@@ -69,7 +69,7 @@ public class W30_Timer extends TimerTask {
                     while (it.hasNext()) {
                         L1PcInstance pc = it.next();
                         if (pc.getX() == 32868 && pc.getY() == 32919) {
-                            L1Teleport.teleport(pc, 32929, 32798, (short) 201, 5, true);
+                            L1Teleport.teleport(pc, 32929, 32798,  201, 5, true);
                             Thread.sleep(50);
                         }
                     }

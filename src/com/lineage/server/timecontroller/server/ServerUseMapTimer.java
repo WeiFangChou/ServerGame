@@ -52,7 +52,7 @@ public class ServerUseMapTimer extends TimerTask {
         MAP.remove(tgpc);
         if (World.get().getPlayer(tgpc.getName()) != null) {
             if (tgpc.getMapId() == tgpc.get_other().get_usemap()) {
-                L1Teleport.teleport(tgpc, 33080, 33392, (short) 4, 5, true);
+                L1Teleport.teleport(tgpc, 33080, 33392,  4, 5, true);
             }
             tgpc.get_other().set_usemapTime(0);
             tgpc.get_other().set_usemap(-1);

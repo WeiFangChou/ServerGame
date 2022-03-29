@@ -36,7 +36,7 @@ public class DeLv50Key extends ItemExecutor {
             pc.sendPackets((ServerBasePacket)new S_ServerMessage(79));
         } else if (pc.getMapId() == 306) {
             pc.getInventory().removeItem(item, 1L);
-            L1Teleport.teleport(pc, 32591, 32813, (short)306, 5, true);
+            L1Teleport.teleport(pc, 32591, 32813, 306, 5, true);
         } else {
             pc.sendPackets((ServerBasePacket)new S_ServerMessage(79));
         }

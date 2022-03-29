@@ -4,9 +4,11 @@ import com.lineage.config.Config;
 import com.lineage.echo.ServerExecutor;
 import com.lineage.server.model.skill.L1SkillId;
 import com.lineage.server.thread.GeneralThreadPool;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimerTask;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -52,14 +54,12 @@ public class EchoServerTimer extends TimerTask {
     public void run() {
         try {
             _log.warn("監聽端口重置作業!");
-            try {
-                stopEcho();
-                startEcho();
-            } catch (Exception e) {
-                _log.error("重新啟動端口作業失敗!!", e);
-            }
-        } catch (Exception e2) {
-            _log.error("監聽端口重置作業失敗!!", e2);
+
+            stopEcho();
+            startEcho();
+
+        } catch (Exception e) {
+            _log.error("監聽端口重置作業失敗!!", e);
         } finally {
             _log.warn("監聽端口重置作業完成!!");
         }
@@ -87,7 +87,7 @@ public class EchoServerTimer extends TimerTask {
                 int key = Integer.parseInt(ports);
                 ServerExecutor echoServer = new ServerExecutor(key);
                 if (echoServer != null) {
-                    _echoList.put(new Integer(key), echoServer);
+                    _echoList.put(key, echoServer);
                     echoServer.stsrtEcho();
                 }
                 Thread.sleep(100);
@@ -115,7 +115,7 @@ public class EchoServerTimer extends TimerTask {
 
     public boolean isPort(int key) {
         try {
-            return _echoList.get(new Integer(key)) != null;
+            return _echoList.get(key) != null;
         } catch (Exception e) {
             _log.error(e.getLocalizedMessage(), e);
             return false;
@@ -124,10 +124,10 @@ public class EchoServerTimer extends TimerTask {
 
     public void stopPort(int key) {
         try {
-            ServerExecutor echoServer = _echoList.get(new Integer(key));
+            ServerExecutor echoServer = _echoList.get(key);
             if (echoServer != null) {
                 echoServer.stopEcho();
-                _echoList.remove(new Integer(key));
+                _echoList.remove(key);
                 return;
             }
             _log.warn("關閉指定監聽端口 作業失敗:該端口未在作用中!");
@@ -138,9 +138,9 @@ public class EchoServerTimer extends TimerTask {
 
     public void startPort(int key) {
         try {
-            if (_echoList.get(new Integer(key)) == null) {
+            if (_echoList.get(key) == null) {
                 ServerExecutor echoServer = new ServerExecutor(key);
-                _echoList.put(new Integer(key), echoServer);
+                _echoList.put(key, echoServer);
                 echoServer.stsrtEcho();
                 return;
             }

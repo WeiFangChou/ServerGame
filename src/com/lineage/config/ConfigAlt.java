@@ -31,7 +31,7 @@ public final class ConfigAlt {
     public static boolean DORP_ITEM = false;
     public static int ELEMENTAL_STONE_AMOUNT = 0;
     public static int GDROPITEM_TIME = 0;
-    public static short GLOBAL_CHAT_LEVEL = 0;
+    public static int GLOBAL_CHAT_LEVEL = 0;
     public static int HOUSE_TAX_INTERVAL = 0;
     public static int LOOTING_RANGE = 0;
     public static int MAX_CLAN_WAREHOUSE_ITEM = 0;
@@ -47,7 +47,7 @@ public final class ConfigAlt {
     public static int SPAWN_HOME_POINT_COUNT;
     public static int SPAWN_HOME_POINT_DELAY;
     public static int SPAWN_HOME_POINT_RANGE;
-    public static short WHISPER_CHAT_LEVEL;
+    public static int WHISPER_CHAT_LEVEL;
 
     public static void load() throws ConfigErrorException {
         Properties set = new Properties();
@@ -74,25 +74,25 @@ public final class ConfigAlt {
                 ALT_WHO_COUNT = 1.0d;
             }
             String strWar = set.getProperty("WarTime", "2h");
-            if (strWar.indexOf("d") >= 0) {
+            if (strWar.contains("d")) {
                 ALT_WAR_TIME_UNIT = 5;
                 strWar = strWar.replace("d", "");
-            } else if (strWar.indexOf("h") >= 0) {
+            } else if (strWar.contains("h")) {
                 ALT_WAR_TIME_UNIT = 11;
                 strWar = strWar.replace("h", "");
-            } else if (strWar.indexOf("m") >= 0) {
+            } else if (strWar.contains("m")) {
                 ALT_WAR_TIME_UNIT = 12;
                 strWar = strWar.replace("m", "");
             }
             ALT_WAR_TIME = Integer.parseInt(strWar);
             String strWar2 = set.getProperty("WarInterval", "4d");
-            if (strWar2.indexOf("d") >= 0) {
+            if (strWar2.contains("d")) {
                 ALT_WAR_INTERVAL_UNIT = 5;
                 strWar2 = strWar2.replace("d", "");
-            } else if (strWar2.indexOf("h") >= 0) {
+            } else if (strWar2.contains("h")) {
                 ALT_WAR_INTERVAL_UNIT = 11;
                 strWar2 = strWar2.replace("h", "");
-            } else if (strWar2.indexOf("m") >= 0) {
+            } else if (strWar2.contains("m")) {
                 ALT_WAR_INTERVAL_UNIT = 12;
                 strWar2 = strWar2.replace("m", "");
             }
@@ -118,12 +118,10 @@ public final class ConfigAlt {
             CHAR_BOOK_INIT_COUNT = Integer.parseInt(set.getProperty("CharBookInitCount", "60"));
             CHAR_BOOK_MAX_CHARGE = Integer.parseInt(set.getProperty("CharBookMaxCharge", "4"));
             GDROPITEM_TIME = Integer.parseInt(set.getProperty("GDropItemTime", "15"));
-            set.clear();
         } catch (Exception e) {
-            throw new ConfigErrorException("設置檔案遺失: ./config/altsettings.properties");
-        } catch (Throwable th) {
+            throw new ConfigErrorException("設置檔案遺失: "+ALT_SETTINGS_FILE);
+        } finally {
             set.clear();
-            throw th;
         }
     }
 }

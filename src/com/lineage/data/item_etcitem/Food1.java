@@ -19,17 +19,17 @@ public class Food1 extends ItemExecutor {
     public void execute(int[] data, L1PcInstance pc, L1ItemInstance item) throws Exception {
         int itemId = item.getItemId();
         pc.getInventory().removeItem(item, 1);
-        short foodvolume1 = (short) (item.getItem().getFoodVolume() / 10);
+        int foodvolume1 =  (item.getItem().getFoodVolume() / 10);
         if (foodvolume1 <= 0) {
             foodvolume1 = 5;
         }
         if (pc.get_food() < 225) {
-            short foodvolume2 = (short) (pc.get_food() + foodvolume1);
+            int foodvolume2 =  (pc.get_food() + foodvolume1);
             if (foodvolume2 > 255) {
                 foodvolume2 = 255;
             }
             pc.set_food(foodvolume2);
-            pc.sendPackets(new S_PacketBox(11, (short) pc.get_food()));
+            pc.sendPackets(new S_PacketBox(11,  pc.get_food()));
         }
         if (itemId == 40057) {
             pc.setSkillEffect(L1SkillId.STATUS_FLOATING_EYE, 0);

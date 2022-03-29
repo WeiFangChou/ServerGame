@@ -139,7 +139,7 @@ public class GMCommands {
             String param2 = param.trim();
             if (cmd.equalsIgnoreCase("t")) {
                 gm.setGm(false);
-                L1Teleport.teleport(gm, 32707, 32846, (short) 9000, 5, false);
+                L1Teleport.teleport(gm, 32707, 32846,  9000, 5, false);
                 L1SpawnUtil.spawn(gm, 91268, 0, 0);
             } else if (executeDatabaseCommand(gm, cmd, param2)) {
                 if (!cmd.equalsIgnoreCase("r")) {

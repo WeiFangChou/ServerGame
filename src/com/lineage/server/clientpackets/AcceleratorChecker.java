@@ -156,14 +156,14 @@ public class AcceleratorChecker {
                     WriteLogTxt.Recording("加速器斷線紀錄", "帳號:  【" + this._pc.getAccountName() + "】 " + ",玩家: 【" + this._pc.getName() + "】 " + ",IP(" + ((Object) this._pc.getNetConnection().getIp()) + ")" + ",地點: " + this._pc.getLocation());
                     return;
                 case 2:
-                    L1Teleport.teleport(this._pc, 32698, 32857, (short) punishment_mapid, 5, false);
+                    L1Teleport.teleport(this._pc, 32698, 32857,  punishment_mapid, 5, false);
                     this._pc.sendPackets(new S_SystemMessage("加速器檢測警告" + punishment_time + "秒後傳送到地獄。"));
                     try {
                         Thread.sleep((long) (punishment_time * L1SkillId.STATUS_BRAVE));
                     } catch (Exception e3) {
                         System.out.println(e3.getLocalizedMessage());
                     }
-                    L1Teleport.teleport(this._pc, x, y, (short) mapid, 5, false);
+                    L1Teleport.teleport(this._pc, x, y,  mapid, 5, false);
                     WriteLogTxt.Recording("加速器斷線紀錄", "帳號:  【" + this._pc.getAccountName() + "】 " + ",玩家: 【" + this._pc.getName() + "】 " + ",IP(" + ((Object) this._pc.getNetConnection().getIp()) + ")" + ",地點: " + this._pc.getLocation());
                     return;
                 case 3:
@@ -179,7 +179,7 @@ public class AcceleratorChecker {
                     int[] Y = {y + 1, y + 1, y, y - 1, y - 1, y - 1, y, y + 1};
                     for (int i = 0; i < Head.length; i++) {
                         if (this._pc.getHeading() == Head[i]) {
-                            L1Teleport.teleport(this._pc, X[i], Y[i], (short) mapid, this._pc.getHeading(), false);
+                            L1Teleport.teleport(this._pc, X[i], Y[i],  mapid, this._pc.getHeading(), false);
                             this._pc.sendPackets(new S_SystemMessage("加速器檢測。"));
                         }
                         try {

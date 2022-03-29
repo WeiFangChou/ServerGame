@@ -1240,11 +1240,11 @@ public class L1AttackPc extends L1AttackMode {
             if (this._drainMana > this._targetPc.getCurrentMp()) {
                 this._drainMana = this._targetPc.getCurrentMp();
             }
-            this._targetPc.setCurrentMp((short) (this._targetPc.getCurrentMp() - this._drainMana));
-            this._pc.setCurrentMp((short) (this._pc.getCurrentMp() + this._drainMana));
+            this._targetPc.setCurrentMp( (this._targetPc.getCurrentMp() - this._drainMana));
+            this._pc.setCurrentMp( (this._pc.getCurrentMp() + this._drainMana));
         }
         if (this._drainHp > 0) {
-            this._pc.setCurrentHp((short) (this._pc.getCurrentHp() + this._drainHp));
+            this._pc.setCurrentHp( (this._pc.getCurrentHp() + this._drainHp));
         }
         damagePcWeaponDurability();
         this._targetPc.receiveDamage(this._pc, (double) this._damage, false, false);
@@ -1259,7 +1259,7 @@ public class L1AttackPc extends L1AttackMode {
             }
         }
         if (this._drainHp > 0) {
-            this._pc.setCurrentHp((short) (this._pc.getCurrentHp() + this._drainHp));
+            this._pc.setCurrentHp( (this._pc.getCurrentHp() + this._drainHp));
         }
         damageNpcWeaponDurability();
         this._targetNpc.receiveDamage(this._pc, this._damage);

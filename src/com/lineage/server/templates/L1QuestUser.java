@@ -28,7 +28,7 @@ public class L1QuestUser {
     private static final Log _log = LogFactory.getLog(L1QuestUser.class);
     private final int _id;
     private boolean _info = true;
-    private final short _mapid;
+    private final int _mapid;
     private QuestMobExecutor _mobNull = null;
     private final ArrayList<L1NpcInstance> _npcList;
     private boolean _outStop = false;
@@ -39,7 +39,7 @@ public class L1QuestUser {
 
     public L1QuestUser(int id, int mapid, int questid) {
         this._id = id;
-        this._mapid = (short) mapid;
+        this._mapid =  mapid;
         this._questid = questid;
         this._userList = new ArrayList<>();
         this._npcList = new ArrayList<>();
@@ -181,7 +181,7 @@ public class L1QuestUser {
                 this._npcList.add(mob);
                 groupSpawn(group_id, mob);
             } else {
-                L1Map map = L1WorldMap.get().getMap((short) mapid);
+                L1Map map = L1WorldMap.get().getMap( mapid);
                 for (int tryCount = 0; tryCount <= 50; tryCount++) {
                     int x = this._random.nextInt(locx2 - locx1) + locx1;
                     int y = this._random.nextInt(locy2 - locy1) + locy1;
@@ -246,7 +246,7 @@ public class L1QuestUser {
             while (it.hasNext()) {
                 L1PcInstance pc = it.next();
                 if (pc.getMapId() == this._mapid) {
-                    L1Teleport.teleport(pc, 33430, 32814, (short) 4, 4, true);
+                    L1Teleport.teleport(pc, 33430, 32814,  4, 4, true);
                 }
             }
         } catch (Exception e) {

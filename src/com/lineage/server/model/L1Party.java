@@ -84,7 +84,7 @@ public class L1Party {
         return user;
     }
 
-    public int partyUserInMap(short mapid) {
+    public int partyUserInMap(int mapid) {
         int i = 0;
         if (this._membersList.isEmpty()) {
             return 0;

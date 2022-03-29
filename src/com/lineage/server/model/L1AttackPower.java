@@ -73,7 +73,7 @@ public class L1AttackPower {
                 }
                 if (attrWeapon.getTypeDrainHp() > 0) {
                     int drainHp = _random.nextInt(attrWeapon.getTypeDrainHp()) + 1;
-                    this._pc.setCurrentHp((short) (this._pc.getCurrentHp() + drainHp));
+                    this._pc.setCurrentHp( (this._pc.getCurrentHp() + drainHp));
                     if (this._targetPc != null) {
                         this._targetPc.setCurrentHp(Math.max(this._targetPc.getCurrentHp() - drainHp, 0));
                         this._pc.sendPacketsAll(new S_SkillSound(this._targetPc.getId(), attrWeapon.gfxid()));
@@ -84,7 +84,7 @@ public class L1AttackPower {
                 }
                 if (attrWeapon.getTypeDrainMp() > 0) {
                     int drainMp = _random.nextInt(attrWeapon.getTypeDrainMp()) + 1;
-                    this._pc.setCurrentMp((short) (this._pc.getCurrentMp() + drainMp));
+                    this._pc.setCurrentMp( (this._pc.getCurrentMp() + drainMp));
                     if (this._targetPc != null) {
                         this._targetPc.setCurrentMp(Math.max(this._targetPc.getCurrentMp() - drainMp, 0));
                         this._pc.sendPacketsAll(new S_SkillSound(this._targetPc.getId(), attrWeapon.gfxid()));

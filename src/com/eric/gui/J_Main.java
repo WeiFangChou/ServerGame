@@ -1360,7 +1360,7 @@ public class J_Main extends JFrame implements ActionListener {
                 case 6:
                     String temp6 = JOptionPane.showInputDialog("設置GM權限多少");
                     if (!(temp6 == null || temp6.equals(""))) {
-                        target5.setAccessLevel((short) Integer.valueOf(temp6).intValue());
+                        target5.setAccessLevel( Integer.valueOf(temp6).intValue());
                         target5.sendPackets(new S_SystemMessage("取得GM權限或取消GM權限，請重新登入。"));
                         return;
                     }
@@ -1368,7 +1368,7 @@ public class J_Main extends JFrame implements ActionListener {
                 case 7:
                     String temp7 = JOptionPane.showInputDialog("設置血量加多少");
                     if (!(temp7 == null || temp7.equals(""))) {
-                        target5.addBaseMaxHp((short) Integer.valueOf(temp7).intValue());
+                        target5.addBaseMaxHp( Integer.valueOf(temp7).intValue());
                         target5.sendPackets(new S_OwnCharStatus(target5));
                         return;
                     }
@@ -1376,7 +1376,7 @@ public class J_Main extends JFrame implements ActionListener {
                 case 8:
                     String temp8 = JOptionPane.showInputDialog("設置魔力加多少");
                     if (!(temp8 == null || temp8.equals(""))) {
-                        target5.addBaseMaxMp((short) Integer.valueOf(temp8).intValue());
+                        target5.addBaseMaxMp( Integer.valueOf(temp8).intValue());
                         target5.sendPackets(new S_OwnCharStatus(target5));
                         return;
                     }
@@ -1500,7 +1500,7 @@ public class J_Main extends JFrame implements ActionListener {
             L1PcInstance target9 = World.get().getPlayer((String) this.DTM.getValueAt(this.select, 1));
             if (target9 != null) {
                 addConsol("玩家：" + ((String) this.DTM.getValueAt(this.select, 1)) + "已被移送新的座標。");
-                L1Teleport.teleport(target9, 33442, 32797, (short) 4, target9.getHeading(), true);
+                L1Teleport.teleport(target9, 33442, 32797,  4, target9.getHeading(), true);
                 return;
             }
             addConsol("此玩家不在線上。");

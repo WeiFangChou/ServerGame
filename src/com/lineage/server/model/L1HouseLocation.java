@@ -24,7 +24,7 @@ public class L1HouseLocation {
     private L1HouseLocation() {
     }
 
-    public static boolean isInHouse(short mapid) {
+    public static boolean isInHouse(int mapid) {
         switch (mapid) {
             case L1SkillId.SEXP20 /*{ENCODED_INT: 5001}*/:
             case L1SkillId.SEXP13 /*{ENCODED_INT: 5002}*/:
@@ -155,7 +155,7 @@ public class L1HouseLocation {
         }
     }
 
-    public static boolean isInHouse(int locx, int locy, short mapid) {
+    public static boolean isInHouse(int locx, int locy, int mapid) {
         for (Integer houseId : _houseLoc.keySet()) {
             if (isInHouseLoc(houseId.intValue(), locx, locy, mapid)) {
                 return true;
@@ -164,7 +164,7 @@ public class L1HouseLocation {
         return false;
     }
 
-    public static boolean isInHouseLoc(int houseId, int locx, int locy, short mapid) {
+    public static boolean isInHouseLoc(int houseId, int locx, int locy, int mapid) {
         try {
             L1HouseLocTmp loc = _houseLoc.get(new Integer(houseId));
             if (loc != null) {

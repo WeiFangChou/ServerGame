@@ -163,12 +163,12 @@ public class C_CharReset extends ClientBasePacket {
                 _log.error(e.getLocalizedMessage(), e);
             }
         }
-        L1Teleport.teleport(pc, 32628, 32772, (short) 4, 4, false);
+        L1Teleport.teleport(pc, 32628, 32772,  4, 4, false);
     }
 
     private void initCharStatus(L1PcInstance pc, int hp, int mp, int str, int intel, int wis, int dex, int con, int cha) {
-        pc.addBaseMaxHp((short) (hp - pc.getBaseMaxHp()));
-        pc.addBaseMaxMp((short) (mp - pc.getBaseMaxMp()));
+        pc.addBaseMaxHp( (hp - pc.getBaseMaxHp()));
+        pc.addBaseMaxMp( (mp - pc.getBaseMaxMp()));
         pc.addBaseStr((byte) (str - pc.getBaseStr()));
         pc.addBaseInt((byte) (intel - pc.getBaseInt()));
         pc.addBaseWis((byte) (wis - pc.getBaseWis()));
@@ -183,8 +183,8 @@ public class C_CharReset extends ClientBasePacket {
     private void setLevelUp(L1PcInstance pc, int addLv) {
         pc.setTempLevel(pc.getTempLevel() + addLv);
         for (int i = 0; i < addLv; i++) {
-            short randomHp = CalcStat.calcStatHp(pc.getType(), pc.getBaseMaxHp(), pc.getBaseCon(), pc.getOriginalHpup());
-            short randomMp = CalcStat.calcStatMp(pc.getType(), pc.getBaseMaxMp(), pc.getBaseWis(), pc.getOriginalMpup());
+            int randomHp = CalcStat.calcStatHp(pc.getType(), pc.getBaseMaxHp(), pc.getBaseCon(), pc.getOriginalHpup());
+            int randomMp = CalcStat.calcStatMp(pc.getType(), pc.getBaseMaxMp(), pc.getBaseWis(), pc.getOriginalMpup());
             pc.addBaseMaxHp(randomHp);
             pc.addBaseMaxMp(randomMp);
         }

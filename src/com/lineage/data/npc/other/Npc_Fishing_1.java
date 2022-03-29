@@ -25,7 +25,7 @@ public class Npc_Fishing_1 extends NpcExecutor {
     public void action(L1PcInstance pc, L1NpcInstance npc, String cmd, long amount) {
         if (cmd.equals("a")) {
             L1PolyMorph.undoPoly((L1Character)pc);
-            L1Teleport.teleport(pc, 32794, 32795, (short)5300, 6, true);
+            L1Teleport.teleport(pc, 32794, 32795, 5300, 6, true);
         }
     }
 }

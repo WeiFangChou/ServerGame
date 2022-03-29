@@ -109,19 +109,19 @@ public class Npc_Teleport extends NpcExecutor {
                                     tgpc.get_other().set_usemap(info.get_mapid());
                                     ServerUseMapTimer.put(tgpc, info.get_time());
                                 }
-                                L1Teleport.teleport(tgpc, info.get_locx(), info.get_locy(), (short) info.get_mapid(), 5, true);
+                                L1Teleport.teleport(tgpc, info.get_locx(), info.get_locy(),  info.get_mapid(), 5, true);
                             }
                             return;
                         }
                         return;
                     }
-                    L1Teleport.teleport(pc, info.get_locx(), info.get_locy(), (short) info.get_mapid(), 5, true);
+                    L1Teleport.teleport(pc, info.get_locx(), info.get_locy(),  info.get_mapid(), 5, true);
                     return;
                 }
                 pc.sendPackets(new S_ServerMessage(337, ItemTable.get().getTemplate(itemid).getName()));
             }
         } else if (pc.get_other().get_usemap() == info.get_mapid()) {
-            L1Teleport.teleport(pc, info.get_locx(), info.get_locy(), (short) info.get_mapid(), 5, true);
+            L1Teleport.teleport(pc, info.get_locx(), info.get_locy(),  info.get_mapid(), 5, true);
         } else {
             pc.sendPackets(new S_ServerMessage("必須先消除其它地圖使用權才能進入這裡"));
         }

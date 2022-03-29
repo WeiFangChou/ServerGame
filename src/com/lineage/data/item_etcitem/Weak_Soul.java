@@ -16,7 +16,7 @@ public class Weak_Soul extends ItemExecutor {
         if (pc.getX() >= 32844 && pc.getX() <= 32845 &&
                 pc.getY() >= 32693 && pc.getY() <= 32694 &&
                 pc.getMapId() == 550) {
-            L1Teleport.teleport(pc, 32833, 33089, (short)550, 5, true);
+            L1Teleport.teleport(pc, 32833, 33089, 550, 5, true);
         } else {
             pc.sendPackets((ServerBasePacket)new S_ServerMessage(79));
         }

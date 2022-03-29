@@ -3,10 +3,23 @@ package com.lineage.server.utils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+/**
+ * 排列数量
+ *
+ * @author dexc
+ *
+ */
 public class DigitalUtil {
+
     private static final Log _log = LogFactory.getLog(DigitalUtil.class);
 
-    public static long returnMin(long[] longs) {
+    /**
+     * 传回数组最小值
+     *
+     * @param longs
+     * @return
+     */
+    public static long returnMin(final long[] longs) {
         long i = -1;
         try {
             for (long count : longs) {
@@ -15,105 +28,161 @@ public class DigitalUtil {
                 }
                 i = Math.min(i, count);
             }
+
         } catch (Exception e) {
             _log.error(e.getLocalizedMessage(), e);
+
         }
         return i;
     }
 
-    public static long returnMin(int[] ints) {
+    /**
+     * 传回数组最小值
+     *
+     * @param ints
+     * @return
+     */
+    public static long returnMin(final int[] ints) {
         long i = -1;
         try {
-            for (int i2 : ints) {
-                long count = (long) i2;
+            for (long count : ints) {
                 if (i == -1) {
                     i = count;
                 }
                 i = Math.min(i, count);
             }
+
         } catch (Exception e) {
             _log.error(e.getLocalizedMessage(), e);
+
         }
         return i;
     }
 
-    public static long returnMin(short[] shorts) {
+    /**
+     * 传回数组最小值
+     *
+     * @param shorts
+     * @return
+     */
+    public static long returnMin(final short[] shorts) {
         long i = -1;
         try {
-            for (short s : shorts) {
-                long count = (long) s;
+            for (long count : shorts) {
                 if (i == -1) {
                     i = count;
                 }
                 i = Math.min(i, count);
             }
+
         } catch (Exception e) {
             _log.error(e.getLocalizedMessage(), e);
+
         }
         return i;
     }
 
-    public static long returnMin(byte[] bytes) {
+    /**
+     * 传回数组最小值
+     *
+     * @param bytes
+     * @return
+     */
+    public static long returnMin(final byte[] bytes) {
         long i = -1;
         try {
-            for (byte b : bytes) {
-                long count = (long) b;
+            for (long count : bytes) {
                 if (i == -1) {
                     i = count;
                 }
                 i = Math.min(i, count);
             }
+
         } catch (Exception e) {
             _log.error(e.getLocalizedMessage(), e);
+
         }
         return i;
     }
 
-    public static long returnMax(long[] longs) {
+    /**
+     * 传回数组最大值
+     *
+     * @param longs
+     * @return
+     */
+    public static long returnMax(final long[] longs) {
         long i = -1;
         try {
             for (long count : longs) {
                 i = Math.max(i, count);
             }
+
         } catch (Exception e) {
             _log.error(e.getLocalizedMessage(), e);
+
         }
         return i;
     }
 
-    public static long returnMax(int[] ints) {
+    /**
+     * 传回数组最大值
+     *
+     * @param ints
+     * @return
+     */
+    public static long returnMax(final int[] ints) {
         long i = -1;
         try {
-            for (int i2 : ints) {
-                i = Math.max(i, (long) i2);
+            for (long count : ints) {
+                i = Math.max(i, count);
             }
+
         } catch (Exception e) {
             _log.error(e.getLocalizedMessage(), e);
+
         }
         return i;
     }
 
-    public static long returnMax(short[] shorts) {
+    /**
+     * 传回数组最大值
+     *
+     * @param shorts
+     * @return
+     */
+    public static long returnMax(final short[] shorts) {
         long i = -1;
         try {
-            for (short s : shorts) {
-                i = Math.max(i, (long) s);
+            for (long count : shorts) {
+                i = Math.max(i, count);
             }
+
         } catch (Exception e) {
             _log.error(e.getLocalizedMessage(), e);
+
         }
         return i;
     }
 
-    public static long returnMax(byte[] bytes) {
+    /**
+     * 传回数组最大值
+     *
+     * @param bytes
+     * @return
+     */
+    public static long returnMax(final byte[] bytes) {
         long i = -1;
         try {
-            for (byte b : bytes) {
-                i = Math.max(i, (long) b);
+            for (long count : bytes) {
+                i = Math.max(i, count);
             }
+
         } catch (Exception e) {
             _log.error(e.getLocalizedMessage(), e);
+
         }
         return i;
     }
+
 }

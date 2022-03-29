@@ -81,7 +81,7 @@ public class C_CallPlayer extends ClientBasePacket {
 
                         int x = pc.getX();
                         int y = pc.getY() + 2;
-                        short map = pc.getMapId();
+                        int map = pc.getMapId();
                         HashMap<Integer, L1PcInstance> pcs = new HashMap();
                         pcs.putAll(party.partyUsers());
                         if (pcs.isEmpty()) {

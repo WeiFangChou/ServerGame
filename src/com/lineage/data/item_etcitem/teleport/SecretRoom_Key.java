@@ -14,7 +14,7 @@ public class SecretRoom_Key extends ItemExecutor {
     }
 
     public void execute(int[] data, L1PcInstance pc, L1ItemInstance item) {
-        short mapid = 13;
+        int mapid = 13;
         if (pc.isKnight() && pc.getX() >= 32806 && pc.getX() <= 32814 &&
                 pc.getY() >= 32798 && pc.getY() <= 32807 &&
                 pc.getMapId() == 13) {
@@ -26,7 +26,7 @@ public class SecretRoom_Key extends ItemExecutor {
                 if (!pc.getQuest().isStart(KnightLv30_1.QUEST.get_id())) {
                     pc.sendPackets((ServerBasePacket)new S_ServerMessage(79));
                 } else {
-                    L1Teleport.teleport(pc, 32815, 32810, (short)13, 5, false);
+                    L1Teleport.teleport(pc, 32815, 32810, 13, 5, false);
                 }
             }
         } else {

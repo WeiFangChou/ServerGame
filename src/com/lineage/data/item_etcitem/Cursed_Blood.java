@@ -17,7 +17,7 @@ public class Cursed_Blood extends ItemExecutor {
     @Override // com.lineage.data.executor.ItemExecutor
     public void execute(int[] data, L1PcInstance pc, L1ItemInstance item) throws Exception {
         int item_id;
-        switch ((short) ((int) (Math.random() * 6.0d))) {
+        switch ( ((int) (Math.random() * 6.0d))) {
             case 1:
                 item_id = 40031;
                 break;

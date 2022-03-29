@@ -23,7 +23,7 @@ public final class Config {
     public static boolean ISUBUNTU = false;
     public static String[] LANGUAGE_CODE_ARRAY = {"UTF8", "EUCKR", "UTF8", "BIG5", "SJIS", "GBK"};
     public static boolean LOGINS_TO_AUTOENTICATION = false;
-    public static short MAX_ONLINE_USERS = 10;
+    public static int MAX_ONLINE_USERS = 10;
     public static boolean NEWS = false;
     public static final int NVer = 120913201;
     public static int PC_RECOGNIZE_RANGE = 0;
@@ -55,9 +55,9 @@ public final class Config {
         }
         Properties set = new Properties();
         try {
-            InputStream is2 = new FileInputStream(new File(SERVER_CONFIG_FILE));
-            set.load(is2);
-            is2.close();
+            InputStream is = new FileInputStream(new File(SERVER_CONFIG_FILE));
+            set.load(is);
+            is.close();
             SERVERNO = Integer.parseInt(set.getProperty("ServerNo", "1"));
             GAME_SERVER_HOST_NAME = set.getProperty("GameserverHostname", "*");
             GAME_SERVER_PORT = set.getProperty("GameserverPort", "2000-2001");
@@ -69,7 +69,7 @@ public final class Config {
             }
             TIME_ZONE = set.getProperty("TimeZone", "CST");
             AUTO_CREATE_ACCOUNTS = Boolean.parseBoolean(set.getProperty("AutoCreateAccounts", "true"));
-            MAX_ONLINE_USERS = Short.parseShort(set.getProperty("MaximumOnlineUsers", "30"));
+            MAX_ONLINE_USERS = Integer.parseInt(set.getProperty("MaximumOnlineUsers", "30"));
             AUTOSAVE_INTERVAL = Integer.parseInt(set.getProperty("AutosaveInterval", "1200"), 10);
             AUTOSAVE_INTERVAL /= 60;
             if (AUTOSAVE_INTERVAL <= 0) {
@@ -86,12 +86,10 @@ public final class Config {
             if (NEWS) {
                 Announcements.get().load();
             }
+        } catch (Exception e) {
+            throw new ConfigErrorException("設置檔案遺失: "+SERVER_CONFIG_FILE);
+        }finally {
             set.clear();
-        } catch (Exception e2) {
-            throw new ConfigErrorException("設置檔案遺失: ./config/server.properties");
-        } catch (Throwable th) {
-            set.clear();
-            throw th;
         }
     }
 }

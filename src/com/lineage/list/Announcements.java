@@ -28,14 +28,11 @@ public class Announcements {
     }
 
     public void load() throws Exception {
-        Throwable th;
-        Exception e;
         LineNumberReader lnr = null;
         try {
             LineNumberReader lnr2 = new LineNumberReader(new InputStreamReader(new FileInputStream(new File("data/announcements.txt")), "utf8"));
             boolean isWhile = false;
             while (true) {
-                try {
                     String line = lnr2.readLine();
                     if (line == null) {
                         _log.info("載入公告事項數量: " + this._announcements.size());
@@ -46,36 +43,13 @@ public class Announcements {
                     } else if (line.trim().length() != 0 && !line.startsWith("#")) {
                         this._announcements.add(new StringTokenizer(line, "\r\n").nextToken());
                     }
-                } catch (FileNotFoundException e2) {
-                    e = e2;
-                    lnr = lnr2;
-                    try {
-                        _log.error(e.getLocalizedMessage(), e);
-                        StreamUtil.close(lnr);
-                    } catch (Throwable th2) {
-                        th = th2;
-                        StreamUtil.close(lnr);
-                        throw th;
-                    }
-                } catch (Exception e3) {
-                    e = e3;
-                    lnr = lnr2;
-                    _log.error(e.getLocalizedMessage(), e);
-                    StreamUtil.close(lnr);
-                } catch (Throwable th3) {
-                    th = th3;
-                    lnr = lnr2;
-                    StreamUtil.close(lnr);
-                    throw th;
-                }
+
             }
-        } catch (FileNotFoundException e4) {
-            e = e4;
+        } catch (FileNotFoundException e) {
             _log.error(e.getLocalizedMessage(), e);
-            StreamUtil.close(lnr);
-        } catch (Exception e5) {
-            e = e5;
+        } catch (Exception e) {
             _log.error(e.getLocalizedMessage(), e);
+        }finally {
             StreamUtil.close(lnr);
         }
     }

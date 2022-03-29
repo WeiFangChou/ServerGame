@@ -151,8 +151,8 @@ public class Npc_LevelUp extends NpcExecutor {
                 pc.addMr(0 - pc.getMr());
                 pc.addDmgup(0 - pc.getDmgup());
                 pc.addHitup(0 - pc.getHitup());
-                pc.addBaseMaxHp((short) (hp - pc.getBaseMaxHp()));
-                pc.addBaseMaxMp((short) (mp - pc.getBaseMaxMp()));
+                pc.addBaseMaxHp( (hp - pc.getBaseMaxHp()));
+                pc.addBaseMaxMp( (mp - pc.getBaseMaxMp()));
                 if (pc.getOriginalAc() > 0) {
                     pc.addAc(pc.getOriginalAc());
                 }
@@ -199,8 +199,8 @@ public class Npc_LevelUp extends NpcExecutor {
 
     public static void setHpMp(L1PcInstance pc) {
         for (int i = 0; i < pc.getLevel(); i++) {
-            short randomHp = CalcStat.calcStatHp(pc.getType(), pc.getBaseMaxHp(), pc.getBaseCon(), pc.getOriginalHpup());
-            short randomMp = CalcStat.calcStatMp(pc.getType(), pc.getBaseMaxMp(), pc.getBaseWis(), pc.getOriginalMpup());
+            int randomHp = CalcStat.calcStatHp(pc.getType(), pc.getBaseMaxHp(), pc.getBaseCon(), pc.getOriginalHpup());
+            int randomMp = CalcStat.calcStatMp(pc.getType(), pc.getBaseMaxMp(), pc.getBaseWis(), pc.getOriginalMpup());
             pc.addBaseMaxHp(randomHp);
             pc.addBaseMaxMp(randomMp);
         }

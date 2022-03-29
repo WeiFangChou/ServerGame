@@ -117,7 +117,7 @@ public class Npc_Ants extends NpcExecutor {
                         otherPc.getId() != pc.getId()) {
                     if (i <= users - 1) {
                         WorldQuest.get().put(showId, 217, questid, otherPc);
-                        L1Teleport.teleport(otherPc, 32662, 32786, (short)217, 3, true);
+                        L1Teleport.teleport(otherPc, 32662, 32786, 217, 3, true);
                     }
                     i++;
                 }
@@ -131,7 +131,7 @@ public class Npc_Ants extends NpcExecutor {
             Integer time = QuestMapTable.get().getTime(217);
             if (time != null)
                 quest.set_time(time.intValue());
-            L1Teleport.teleport(pc, 32662, 32786, (short)217, 3, true);
+            L1Teleport.teleport(pc, 32662, 32786, 217, 3, true);
             pc.getQuest().set_step(CrownLv30_1.QUEST.get_id(), 2);
         } catch (Exception e) {
             _log.error(e.getLocalizedMessage(), e);

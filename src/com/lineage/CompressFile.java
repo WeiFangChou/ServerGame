@@ -18,12 +18,10 @@ public class CompressFile {
         ZipOutputStream out = new ZipOutputStream(new FileOutputStream(zipFilename));
         try {
             zip(inputFile, out, "");
-            out.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw e;
-        } catch (Throwable th) {
+        } finally {
             out.close();
-            throw th;
         }
     }
 
@@ -51,12 +49,10 @@ public class CompressFile {
                     }
                     out.write(by, 0, c);
                 }
-                in.close();
             } catch (IOException e) {
                 throw e;
-            } catch (Throwable th) {
+            } finally {
                 in.close();
-                throw th;
             }
         }
     }

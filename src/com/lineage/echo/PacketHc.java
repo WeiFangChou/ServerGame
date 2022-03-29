@@ -1,8 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package com.lineage.echo;
 
 import java.util.Iterator;
@@ -13,54 +8,63 @@ import java.util.concurrent.LinkedBlockingQueue;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+/**
+ * 客戶資料處理
+ * @author dexc
+ *
+ */
 public class PacketHc implements Runnable {
-    private static final Log _log = LogFactory.getLog(PacketHc.class);
-    private final Queue<byte[]> _queue;
-    private final PacketHandlerExecutor _handler;
-    private final ClientExecutor _executor;
 
-    public PacketHc(ClientExecutor executor) {
-        this._executor = executor;
-        this._queue = new ConcurrentLinkedQueue<byte[]>();
-        this._handler = new PacketHandler(_executor);
-    }
+	private static final Log _log = LogFactory.getLog(PacketHc.class);
+	
+	private final Queue<byte[]> _queue;
 
-    public PacketHc(ClientExecutor executor, int capacity) {
-        this._executor = executor;
-        this._queue = new LinkedBlockingQueue<byte[]>(capacity);
-        this._handler = new PacketHandler(_executor);
-    }
+	private final PacketHandlerExecutor _handler;
 
-    public void requestWork(byte[] data) {
-        this._queue.offer(data);
-    }
+	private final ClientExecutor _executor;
+	
+	public PacketHc(ClientExecutor executor) {
+		_executor = executor;
+		_queue = new ConcurrentLinkedQueue<byte[]>();
+		_handler = new PacketHandler(_executor);
+	}
 
-    @Override
-    public void run() {
-        try {
-            while (_executor.get_socket() != null) {
-                for (final Iterator<byte[]> iter = _queue.iterator(); iter.hasNext();) {
-                    final byte[] decrypt = iter.next();
-                    iter.remove();
-                    _handler.handlePacket(decrypt);
-                    Thread.sleep(1);
-                }
-                // 队列为空 休眠
-                Thread.sleep(10);
-            }
+	public PacketHc(ClientExecutor executor, final int capacity) {
+		_executor = executor;
+		_queue = new LinkedBlockingQueue<byte[]>(capacity);
+		_handler = new PacketHandler(_executor);
+	}
 
-            // 垃圾回收
-            // finalize();
+	public void requestWork(final byte data[]) {
+		_queue.offer(data);
+	}
 
-        } catch (final Exception e) {
-            _log.error(e.getLocalizedMessage(), e);
-            /*
-             * } catch (Throwable e) { _log.error(e.getLocalizedMessage(), e);//
-             */
+	@Override
+	public void run() {
+		try {
+			while (_executor.get_socket() != null) {
+				for (final Iterator<byte[]> iter = _queue.iterator(); iter.hasNext();) {
+					final byte[] decrypt = iter.next();
+					iter.remove();
+					_handler.handlePacket(decrypt);
+					Thread.sleep(1);
+				}
+				// 隊列為空 休眠
+				Thread.sleep(10);
+			}
 
-        } finally {
-            // 移除此 collection 中的所有元素
-            _queue.clear();
-        }
-    }
+			// 垃圾回收
+			//finalize();
+			
+		} catch (final Exception e) {
+			_log.error(e.getLocalizedMessage(), e);
+			
+		/*} catch (Throwable e) {
+			_log.error(e.getLocalizedMessage(), e);//*/
+			
+		} finally {
+			// 移除此 collection 中的所有元素
+			_queue.clear();
+		}
+	}
 }

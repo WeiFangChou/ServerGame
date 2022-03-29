@@ -84,7 +84,7 @@ public class Npc_Yuki extends NpcExecutor {
                     L1BuffUtil.cancelAbsoluteBarrier(otherPc);
                     L1Teleport.teleport(otherPc,
                             32729 + _random.nextInt(5) - 2,
-                            32725 + _random.nextInt(5) - 2, (short)
+                            32725 + _random.nextInt(5) - 2, 
                                     9000, 0, true);
                     QuestClass.get().startQuest(otherPc, Chapter01.QUEST.get_id());
                 }
@@ -101,7 +101,7 @@ public class Npc_Yuki extends NpcExecutor {
                 quest.set_time(time.intValue());
             L1PolyMorph.undoPoly((L1Character)pc);
             L1BuffUtil.cancelAbsoluteBarrier(pc);
-            L1Teleport.teleport(pc, 32729, 32725, (short)9000, 2, true);
+            L1Teleport.teleport(pc, 32729, 32725, 9000, 2, true);
             QuestClass.get().startQuest(pc, Chapter01.QUEST.get_id());
             Chapter01R chapter01R = new Chapter01R(party, showId, Chapter01.QUEST.get_id());
             chapter01R.startR();

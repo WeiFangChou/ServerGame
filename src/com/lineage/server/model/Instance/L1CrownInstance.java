@@ -97,7 +97,7 @@ public class L1CrownInstance extends L1NpcInstance {
                 for (L1PcInstance pc : World.get().getAllPlayers()) {
                     if (pc.getClanid() != player.getClanid() && !pc.isGm() && L1CastleLocation.checkInWarArea(castle_id, pc)) {
                         int[] loc = L1CastleLocation.getGetBackLoc(castle_id);
-                        L1Teleport.teleport(pc, loc[0], loc[1], (short) loc[2], 5, true);
+                        L1Teleport.teleport(pc, loc[0], loc[1],  loc[2], 5, true);
                     }
                 }
                 L1PcInstance[] clanMember = clan.getOnlineClanMember();

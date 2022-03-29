@@ -31,7 +31,6 @@ public class DungeonRTable {
     }
 
     public void load() throws Exception {
-        Throwable th;
         PerformanceTimer timer = new PerformanceTimer();
         Connection cn = null;
         PreparedStatement ps = null;
@@ -42,7 +41,6 @@ public class DungeonRTable {
             rs = ps.executeQuery();
             int teltportId = 1000;
             while (rs.next()) {
-                try {
                     int srcMapId = rs.getInt("src_mapid");
                     String key = new StringBuilder().append(srcMapId).append(rs.getInt("src_x")).append(rs.getInt("src_y")).toString();
                     if (_dungeonMap.containsKey(key)) {
@@ -66,44 +64,19 @@ public class DungeonRTable {
                             value.add(new int[]{rs.getInt("new_x5"), rs.getInt("new_y5"), rs.getShort("new_mapid5"), heading});
                         }
                         _dungeonMap.put(key, value);
-                        _dungeonMapID.put(key, Integer.valueOf(teltportId));
+                        _dungeonMapID.put(key, teltportId);
                         teltportId++;
                     }
-                } catch (SQLException e) {
-                    SQLException e1 = e;
-                    try {
-                        _log.error(e1.getLocalizedMessage(), e1);
-                        SQLUtil.close(rs);
-                        SQLUtil.close(ps);
-                        SQLUtil.close(cn);
-                        _log.info("載入地圖切換點設置(多點)數量: " + _dungeonMapID.size() + "(" + timer.get() + "ms)");
-                    } catch (Throwable th2) {
-                        th = th2;
-                        SQLUtil.close(rs);
-                        SQLUtil.close(ps);
-                        SQLUtil.close(cn);
-                        throw th;
-                    }
-                } catch (Throwable th3) {
-                    th = th3;
-                    SQLUtil.close(rs);
-                    SQLUtil.close(ps);
-                    SQLUtil.close(cn);
-                    throw th;
-                }
             }
-            SQLUtil.close(rs);
-            SQLUtil.close(ps);
-            SQLUtil.close(cn);
-        } catch (SQLException e2) {
-            SQLException e = e2;
+        } catch (SQLException e) {
             _log.error(e.getLocalizedMessage(), e);
+            _log.info("載入地圖切換點設置(多點)數量: " + _dungeonMapID.size() + "(" + timer.get() + "ms)");
+        }finally {
             SQLUtil.close(rs);
             SQLUtil.close(ps);
             SQLUtil.close(cn);
-            _log.info("載入地圖切換點設置(多點)數量: " + _dungeonMapID.size() + "(" + timer.get() + "ms)");
         }
-        _log.info("載入地圖切換點設置(多點)數量: " + _dungeonMapID.size() + "(" + timer.get() + "ms)");
+        //_log.info("載入地圖切換點設置(多點)數量: " + _dungeonMapID.size() + "(" + timer.get() + "ms)");
     }
 
     public boolean dg(int locX, int locY, int mapId, L1PcInstance pc) {
@@ -115,16 +88,16 @@ public class DungeonRTable {
         int[] loc = newLocs.get(_random.nextInt(newLocs.size()));
         int newX = loc[0];
         int newY = loc[1];
-        short newMap = (short) loc[2];
+        int newMap =  loc[2];
         int heading = loc[3];
         pc.setSkillEffect(78, 2000);
         pc.stopHpRegeneration();
         pc.stopMpRegeneration();
-        teleport(pc, _dungeonMapID.get(key).intValue(), newX, newY, newMap, heading, false);
+        teleport(pc, _dungeonMapID.get(key), newX, newY, newMap, heading, false);
         return true;
     }
 
-    private void teleport(L1PcInstance pc, int id, int newX, int newY, short newMap, int heading, boolean b) {
+    private void teleport(L1PcInstance pc, int id, int newX, int newY, int newMap, int heading, boolean b) {
         pc.setTeleportX(newX);
         pc.setTeleportY(newY);
         pc.setTeleportMapId(newMap);

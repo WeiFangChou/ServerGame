@@ -32,8 +32,8 @@ public class Reactivating_Potion extends ItemExecutor {
         pc.resetBaseDmgup();
         int randomHp = pc.getMaxHp() - ((pc.getMaxHp() * 10) / 100);
         int randomMp = pc.getMaxMp() - ((pc.getMaxMp() * 10) / 100);
-        pc.addBaseMaxHp((short) (-randomHp));
-        pc.addBaseMaxMp((short) (-randomMp));
+        pc.addBaseMaxHp( (-randomHp));
+        pc.addBaseMaxMp( (-randomMp));
         pc.setCurrentHp(pc.getMaxHp());
         pc.setCurrentMp(pc.getMaxMp());
         pc.sendPacketsX8(new S_SkillSound(pcObjid, L1SkillId.MORTAL_BODY));

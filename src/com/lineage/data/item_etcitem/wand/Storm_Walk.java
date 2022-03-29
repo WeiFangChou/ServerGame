@@ -26,7 +26,7 @@ public class Storm_Walk extends ItemExecutor {
         }
         pc.setX(spellsc_x);
         pc.setY(spellsc_y);
-        pc.setMap((short) pc.getTempID());
+        pc.setMap( pc.getTempID());
         pc.setHeading(5);
         pc.sendPackets(new S_MapID(pc.getTempID()));
         pc.sendPackets(new S_OwnCharPack(pc));

@@ -106,13 +106,13 @@ public class TownReading {
     /* JADX INFO: finally extract failed */
     public int getPay(int objid) {
         this._lock.lock();
+        final int tmp = 0;
         try {
             this._storage.getPay(objid);
             this._lock.unlock();
-            return 0;
         } catch (Throwable th) {
             this._lock.unlock();
-            throw th;
         }
+        return tmp;
     }
 }

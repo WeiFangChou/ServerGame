@@ -26,7 +26,7 @@ public class TELEPORT extends SkillMode {
             return 0;
         } else if (pc.getMap().isTeleportable() || pc.isGm()) {
             L1Location newLocation = pc.getLocation().randomLocation(200, true);
-            L1Teleport.teleport(pc, newLocation.getX(), newLocation.getY(), (short) newLocation.getMapId(), 5, true);
+            L1Teleport.teleport(pc, newLocation.getX(), newLocation.getY(),  newLocation.getMapId(), 5, true);
             return 0;
         } else {
             pc.sendPackets(new S_ServerMessage(276));

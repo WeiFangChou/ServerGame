@@ -10,6 +10,7 @@ import com.lineage.server.model.skill.L1SkillId;
 import com.lineage.server.serverpackets.S_ServerMessage;
 import com.lineage.server.utils.SQLUtil;
 import com.lineage.server.world.World;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -89,46 +91,30 @@ public class CastleWarGiftTable {
     }
 
     public void get_gift(int key) {
-        ArrayList<Gift> list = _gifts.get(Integer.valueOf(key));
-        if (list != null) {
-            try {
-                L1Clan castle_clan = L1CastleLocation.castleClan(Integer.valueOf(key));
-                if (castle_clan != null) {
-                    Iterator<Gift> iter = list.iterator();
-                    while (iter.hasNext()) {
-                        Gift gift = iter.next();
-                        if (gift._recover) {
-                            recover_item(gift._itemid);
-                        }
-                        get_gift(castle_clan, gift._itemid, gift._count);
+        L1Clan castle_clan = null;
+        ArrayList<Gift> list = _gifts.get(key);
+        if (list == null) {
+            return;
+        }
+        try {
+            castle_clan = L1CastleLocation.castleClan(key);
+
+        } catch (Exception e) {
+            _log.error(e.getLocalizedMessage(), e);
+
+        } finally {
+            if (castle_clan != null) {
+                Iterator<Gift> iter = list.iterator();
+                while (iter.hasNext()) {
+                    Gift gift = iter.next();
+                    if (gift._recover) {
+                        recover_item(gift._itemid);
                     }
+                    get_gift(castle_clan, gift._itemid, gift._count);
                 }
-            } catch (Exception e) {
-                _log.error(e.getLocalizedMessage(), e);
-                if (0 != 0) {
-                    Iterator<Gift> iter2 = list.iterator();
-                    while (iter2.hasNext()) {
-                        Gift gift2 = iter2.next();
-                        if (gift2._recover) {
-                            recover_item(gift2._itemid);
-                        }
-                        get_gift(null, gift2._itemid, gift2._count);
-                    }
-                }
-            } catch (Throwable th) {
-                if (0 != 0) {
-                    Iterator<Gift> iter3 = list.iterator();
-                    while (iter3.hasNext()) {
-                        Gift gift3 = iter3.next();
-                        if (gift3._recover) {
-                            recover_item(gift3._itemid);
-                        }
-                        get_gift(null, gift3._itemid, gift3._count);
-                    }
-                }
-                throw th;
             }
         }
+
     }
 
     private void get_gift(L1Clan castle_clan, int itemid, int count) {

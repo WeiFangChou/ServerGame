@@ -47,7 +47,7 @@ public class VIPTimer extends TimerTask {
             L1Object target = World.get().findObject(objid.intValue());
             if (target != null && 0 != 0 && (target instanceof L1PcInstance)) {
                 L1PcInstance tgpc = (L1PcInstance) target;
-                L1Teleport.teleport(tgpc, 33080, 33392, (short) 4, 5, true);
+                L1Teleport.teleport(tgpc, 33080, 33392,  4, 5, true);
                 tgpc.sendPackets(new S_ServerMessage("VIP時間終止"));
             }
         } catch (Exception e) {

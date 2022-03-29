@@ -29,7 +29,7 @@ public class L1WarSpawn {
         L1Npc l1npc = NpcTable.get().getTemplate(npcId);
         int[] iArr = new int[3];
         int[] loc = L1CastleLocation.getTowerLoc(castleId);
-        SpawnWarObject(l1npc, loc[0], loc[1], (short) loc[2]);
+        SpawnWarObject(l1npc, loc[0], loc[1],  loc[2]);
         if (castleId == 7) {
             spawnSubTower();
         }
@@ -40,7 +40,7 @@ public class L1WarSpawn {
         for (int i = 1; i <= 4; i++) {
             L1Npc l1npc = NpcTable.get().getTemplate(81189 + i);
             int[] loc = L1CastleLocation.getSubTowerLoc(i);
-            SpawnWarObject(l1npc, loc[0], loc[1], (short) loc[2]);
+            SpawnWarObject(l1npc, loc[0], loc[1],  loc[2]);
         }
     }
 
@@ -48,7 +48,7 @@ public class L1WarSpawn {
         L1Npc l1npc = NpcTable.get().getTemplate(81125);
         int[] iArr = new int[3];
         int[] loc = L1CastleLocation.getTowerLoc(castleId);
-        SpawnWarObject(l1npc, loc[0], loc[1], (short) loc[2]);
+        SpawnWarObject(l1npc, loc[0], loc[1],  loc[2]);
     }
 
     public void SpawnFlag(int castleId) {
@@ -59,7 +59,7 @@ public class L1WarSpawn {
         int locx2 = loc[1];
         int locy1 = loc[2];
         int locy2 = loc[3];
-        short mapid = (short) loc[4];
+        int mapid =  loc[4];
         for (int x = locx1; x <= locx2; x += 8) {
             SpawnWarObject(l1npc, x, locy1, mapid);
         }
@@ -76,7 +76,7 @@ public class L1WarSpawn {
         }
     }
 
-    private void SpawnWarObject(L1Npc l1npc, int locx, int locy, short mapid) {
+    private void SpawnWarObject(L1Npc l1npc, int locx, int locy, int mapid) {
         if (l1npc != null) {
             try {
                 L1NpcInstance npc = NpcTable.get().newNpcInstance(l1npc);

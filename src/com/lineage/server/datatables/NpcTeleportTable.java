@@ -192,7 +192,7 @@ public class NpcTeleportTable {
             }
             pc.getInventory().consumeItem(t.get_itemid(), (long) t.get_price());
         }
-        L1Teleport.teleport(pc, t.get_locx(), t.get_locy(), (short) t.get_mapid(), 5, true);
+        L1Teleport.teleport(pc, t.get_locx(), t.get_locy(),  t.get_mapid(), 5, true);
         return true;
     }
 

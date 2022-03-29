@@ -99,11 +99,11 @@ public class MobTeleport extends NpcExecutor {
                 this._pc.sendPackets(new S_PacketBoxGree("$ 1秒後將會被傳送!"));
                 Thread.sleep(1000);
                 this._pc.sendPackets(new S_PacketBoxGree("$ "));
-                L1Teleport.teleport(this._pc, MobTeleport.this._locx, MobTeleport.this._locy, (short) MobTeleport.this._mapid, 5, true);
+                L1Teleport.teleport(this._pc, MobTeleport.this._locx, MobTeleport.this._locy,  MobTeleport.this._mapid, 5, true);
                 if (MobTeleport.this._party && (party = this._pc.getParty()) != null) {
                     for (L1PcInstance otherPc : party.partyUsers().values()) {
                         if (otherPc.getId() != party.getLeaderID() && this._pc.getMapId() == otherPc.getMapId()) {
-                            L1Teleport.teleport(otherPc, MobTeleport.this._locx, MobTeleport.this._locy, (short) MobTeleport.this._mapid, 5, true);
+                            L1Teleport.teleport(otherPc, MobTeleport.this._locx, MobTeleport.this._locy,  MobTeleport.this._mapid, 5, true);
                         }
                     }
                 }

@@ -293,13 +293,13 @@ public class C_LoginToServer extends ClientBasePacket {
                     int[] loc = L1CastleLocation.getGetBackLoc(castle_id);
                     pc.setX(loc[0]);
                     pc.setY(loc[1]);
-                    pc.setMap((short) loc[2]);
+                    pc.setMap( loc[2]);
                 } else if (clan.getCastleId() != castle_id) {
                     int[] iArr2 = new int[3];
                     int[] loc2 = L1CastleLocation.getGetBackLoc(castle_id);
                     pc.setX(loc2[0]);
                     pc.setY(loc2[1]);
-                    pc.setMap((short) loc2[2]);
+                    pc.setMap( loc2[2]);
                 }
             }
         } catch (Exception e) {

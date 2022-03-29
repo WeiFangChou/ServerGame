@@ -52,7 +52,7 @@ public class MySqlCharacterStorage implements CharacterStorage {
             pc.setHighLevel(rs.getInt("HighLevel"));
             pc.setExp(rs.getLong("Exp"));
             pc.addBaseMaxHp(rs.getShort("MaxHp"));
-            short currentHp = rs.getShort("CurHp");
+            int currentHp = rs.getShort("CurHp");
             if (currentHp < 1) {
                 currentHp = 1;
             }
@@ -127,7 +127,7 @@ public class MySqlCharacterStorage implements CharacterStorage {
             pc.setMoveSpeed(0);
             pc.setBraveSpeed(0);
             pc.setGmInvis(false);
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             _log.error(e.getLocalizedMessage(), e);
             return null;
         } finally {
@@ -144,39 +144,31 @@ public class MySqlCharacterStorage implements CharacterStorage {
         PreparedStatement pstm = null;
         try {
             con = DatabaseFactory.get().getConnection();
-            pstm = con.prepareStatement("INSERT INTO characters SET account_name=?,objid=?,char_name=?,level=?,HighLevel=?,Exp=?,MaxHp=?,CurHp=?,MaxMp=?,CurMp=?,Ac=?,Str=?,Con=?,Dex=?,Cha=?,Intel=?,Wis=?,Status=?,Class=?,Sex=?,Type=?,Heading=?,LocX=?,LocY=?,MapID=?,Food=?,Lawful=?,Title=?,ClanID=?,Clanname=?,ClanRank=?,BonusStatus=?,ElixirStatus=?,ElfAttr=?,PKcount=?,PkCountForElf=?,ExpRes=?,PartnerID=?,AccessLevel=?,OnlineStatus=?,HomeTownID=?,Contribution=?,Pay=?,HellTime=?,Banned=?,Karma=?,LastPk=?,LastPkForElf=?,DeleteTime=?,CreateTime=?,doll_hole=?");
+            pstm = con.prepareStatement("INSERT INTO characters SET account_name=?,objid=?,char_name=?," +
+                    "level=?,HighLevel=?,Exp=?,MaxHp=?,CurHp=?,MaxMp=?,CurMp=?,Ac=?,Str=?,Con=?,Dex=?,Cha=?," +
+                    "Intel=?,Wis=?,Status=?,Class=?,Sex=?,Type=?,Heading=?,LocX=?,LocY=?,MapID=?,Food=?,Lawful=?," +
+                    "Title=?,ClanID=?,Clanname=?,ClanRank=?,BonusStatus=?,ElixirStatus=?,ElfAttr=?,PKcount=?," +
+                    "PkCountForElf=?,ExpRes=?,PartnerID=?,AccessLevel=?,OnlineStatus=?,HomeTownID=?,Contribution=?" +
+                    ",Pay=?,HellTime=?,Banned=?,Karma=?,LastPk=?,LastPkForElf=?,DeleteTime=?,CreateTime=?,doll_hole=?");
             int i = 0;
-            pstm.setString(i, pc.getAccountName());
-
+            pstm.setString(++i, pc.getAccountName());
             pstm.setInt(++i, pc.getId());
-
             pstm.setString(++i, pc.getName());
-
             pstm.setInt(++i, pc.getLevel());
-
             pstm.setInt(++i, pc.getHighLevel());
-
             pstm.setLong(++i, pc.getExp());
-
             pstm.setInt(++i, pc.getBaseMaxHp());
             int hp = pc.getCurrentHp();
             if (hp < 1) {
                 hp = 1;
             }
-
             pstm.setInt(++i, hp);
-
             pstm.setInt(++i, pc.getBaseMaxMp());
-
             pstm.setInt(++i, pc.getCurrentMp());
-
             pstm.setInt(++i, pc.getAc());
-
             pstm.setInt(++i, pc.getBaseStr());
-
             pstm.setInt(++i, pc.getBaseCon());
-
-
+            pstm.setInt(++i, pc.getBaseDex());
             pstm.setInt(++i, pc.getBaseCha());
             pstm.setInt(++i, pc.getBaseInt());
             pstm.setInt(++i, pc.getBaseWis());
@@ -201,7 +193,7 @@ public class MySqlCharacterStorage implements CharacterStorage {
             pstm.setInt(++i, pc.getPkCountForElf());
             pstm.setInt(++i, pc.getExpRes());
             pstm.setInt(++i, pc.getPartnerId());
-            pstm.setShort(++i, pc.getAccessLevel());
+            pstm.setInt(++i, pc.getAccessLevel());
             pstm.setInt(++i, pc.getOnlineStatus());
             pstm.setInt(++i, pc.getHomeTownId());
             pstm.setInt(++i, pc.getContribution());
@@ -212,7 +204,7 @@ public class MySqlCharacterStorage implements CharacterStorage {
             pstm.setTimestamp(++i, pc.getLastPk());
             pstm.setTimestamp(++i, pc.getLastPkForElf());
             pstm.setTimestamp(++i, pc.getDeleteTime());
-            pstm.setInt(++i, Integer.parseInt(new SimpleDateFormat("yyyy-MM-dd").format(Long.valueOf(System.currentTimeMillis())).replace("-", "")));
+            pstm.setInt(++i, Integer.parseInt(new SimpleDateFormat("yyyy-MM-dd").format(System.currentTimeMillis()).replace("-", "")));
             pstm.setInt(++i, pc.getDollhole());
             pstm.execute();
         } catch (SQLException e) {
@@ -224,7 +216,7 @@ public class MySqlCharacterStorage implements CharacterStorage {
     }
 
     @Override // com.lineage.server.storage.CharacterStorage
-    public void deleteCharacter(String accountName, String charName)   {
+    public void deleteCharacter(String accountName, String charName) {
         Connection con = null;
         PreparedStatement pstm = null;
         ResultSet rs = null;
@@ -279,107 +271,62 @@ public class MySqlCharacterStorage implements CharacterStorage {
         try {
             con = DatabaseFactory.get().getConnection();
             pstm = con.prepareStatement("UPDATE characters SET level=?,HighLevel=?,Exp=?,MaxHp=?,CurHp=?,MaxMp=?,CurMp=?,Ac=?,Str=?,Con=?,Dex=?,Cha=?,Intel=?,Wis=?,Status=?,Class=?,Sex=?,Type=?,Heading=?,LocX=?,LocY=?,MapID=?,Food=?,Lawful=?,Title=?,ClanID=?,Clanname=?,ClanRank=?,BonusStatus=?,ElixirStatus=?,ElfAttr=?,PKcount=?,PkCountForElf=?,ExpRes=?,PartnerID=?,AccessLevel=?,OnlineStatus=?,HomeTownID=?,Contribution=?,HellTime=?,Banned=?,Karma=?,LastPk=?,LastPkForElf=?,DeleteTime=?,doll_hole=? WHERE objid=?");
-            int i = 0 + 1;
-            pstm.setInt(i, pc.getLevel());
-            int i2 = i + 1;
-            pstm.setInt(i2, pc.getHighLevel());
-            int i3 = i2 + 1;
-            pstm.setLong(i3, pc.getExp());
-            int i4 = i3 + 1;
-            pstm.setInt(i4, pc.getBaseMaxHp());
+            int i = 0;
+            pstm.setInt(++i, pc.getLevel());
+            pstm.setInt(++i, pc.getHighLevel());
+            pstm.setLong(++i, pc.getExp());
+            pstm.setInt(++i, pc.getBaseMaxHp());
             int hp = pc.getCurrentHp();
             if (hp < 1) {
                 hp = 1;
             }
-            int i5 = i4 + 1;
-            pstm.setInt(i5, hp);
-            int i6 = i5 + 1;
-            pstm.setInt(i6, pc.getBaseMaxMp());
-            int i7 = i6 + 1;
-            pstm.setInt(i7, pc.getCurrentMp());
-            int i8 = i7 + 1;
-            pstm.setInt(i8, pc.getAc());
-            int i9 = i8 + 1;
-            pstm.setInt(i9, pc.getBaseStr());
-            int i10 = i9 + 1;
-            pstm.setInt(i10, pc.getBaseCon());
-            int i11 = i10 + 1;
-            pstm.setInt(i11, pc.getBaseDex());
-            int i12 = i11 + 1;
-            pstm.setInt(i12, pc.getBaseCha());
-            int i13 = i12 + 1;
-            pstm.setInt(i13, pc.getBaseInt());
-            int i14 = i13 + 1;
-            pstm.setInt(i14, pc.getBaseWis());
-            int i15 = i14 + 1;
-            pstm.setInt(i15, pc.getCurrentWeapon());
-            int i16 = i15 + 1;
-            pstm.setInt(i16, pc.getClassId());
-            int i17 = i16 + 1;
-            pstm.setInt(i17, pc.get_sex());
-            int i18 = i17 + 1;
-            pstm.setInt(i18, pc.getType());
-            int i19 = i18 + 1;
-            pstm.setInt(i19, pc.getHeading());
-            int i20 = i19 + 1;
-            pstm.setInt(i20, pc.getX());
-            int i21 = i20 + 1;
-            pstm.setInt(i21, pc.getY());
-            int i22 = i21 + 1;
-            pstm.setInt(i22, pc.getMapId());
-            int i23 = i22 + 1;
-            pstm.setInt(i23, pc.get_food());
-            int i24 = i23 + 1;
-            pstm.setInt(i24, pc.getLawful());
-            int i25 = i24 + 1;
-            pstm.setString(i25, pc.getTitle());
-            int i26 = i25 + 1;
-            pstm.setInt(i26, pc.getClanid());
-            int i27 = i26 + 1;
-            pstm.setString(i27, pc.getClanname());
-            int i28 = i27 + 1;
-            pstm.setInt(i28, pc.getClanRank());
-            int i29 = i28 + 1;
-            pstm.setInt(i29, pc.getBonusStats());
-            int i30 = i29 + 1;
-            pstm.setInt(i30, pc.getElixirStats());
-            int i31 = i30 + 1;
-            pstm.setInt(i31, pc.getElfAttr());
-            int i32 = i31 + 1;
-            pstm.setInt(i32, pc.get_PKcount());
-            int i33 = i32 + 1;
-            pstm.setInt(i33, pc.getPkCountForElf());
-            int i34 = i33 + 1;
-            pstm.setInt(i34, pc.getExpRes());
-            int i35 = i34 + 1;
-            pstm.setInt(i35, pc.getPartnerId());
-            short leve = pc.getAccessLevel();
+            pstm.setInt(++i, hp);
+            pstm.setInt(++i, pc.getBaseMaxMp());
+            pstm.setInt(++i, pc.getCurrentMp());
+            pstm.setInt(++i, pc.getAc());
+            pstm.setInt(++i, pc.getBaseStr());
+            pstm.setInt(++i, pc.getBaseCon());
+            pstm.setInt(++i, pc.getBaseDex());
+            pstm.setInt(++i, pc.getBaseCha());
+            pstm.setInt(++i, pc.getBaseInt());
+            pstm.setInt(++i, pc.getBaseWis());
+            pstm.setInt(++i, pc.getCurrentWeapon());
+            pstm.setInt(++i, pc.getClassId());
+            pstm.setInt(++i, pc.get_sex());
+            pstm.setInt(++i, pc.getType());
+            pstm.setInt(++i, pc.getHeading());
+            pstm.setInt(++i, pc.getX());
+            pstm.setInt(++i, pc.getY());
+            pstm.setInt(++i, pc.getMapId());
+            pstm.setInt(++i, pc.get_food());
+            pstm.setInt(++i, pc.getLawful());
+            pstm.setString(++i, pc.getTitle());
+            pstm.setInt(++i, pc.getClanid());
+            pstm.setString(++i, pc.getClanname());
+            pstm.setInt(++i, pc.getClanRank());
+            pstm.setInt(++i, pc.getBonusStats());
+            pstm.setInt(++i, pc.getElixirStats());
+            pstm.setInt(++i, pc.getElfAttr());
+            pstm.setInt(++i, pc.get_PKcount());
+            pstm.setInt(++i, pc.getPkCountForElf());
+            pstm.setInt(++i, pc.getExpRes());
+            pstm.setInt(++i, pc.getPartnerId());
+            int leve = pc.getAccessLevel();
             if (leve >= 20000) {
                 leve = 0;
             }
-            int i36 = i35 + 1;
-            pstm.setShort(i36, leve);
-            int i37 = i36 + 1;
-            pstm.setInt(i37, pc.getOnlineStatus());
-            int i38 = i37 + 1;
-            pstm.setInt(i38, pc.getHomeTownId());
-            int i39 = i38 + 1;
-            pstm.setInt(i39, pc.getContribution());
-            int i40 = i39 + 1;
-            pstm.setInt(i40, pc.getHellTime());
-            int i41 = i40 + 1;
-            pstm.setBoolean(i41, pc.isBanned());
-            int i42 = i41 + 1;
-            pstm.setInt(i42, pc.getKarma());
-            int i43 = i42 + 1;
-            pstm.setTimestamp(i43, pc.getLastPk());
-            int i44 = i43 + 1;
-            pstm.setTimestamp(i44, pc.getLastPkForElf());
-            int i45 = i44 + 1;
-            pstm.setTimestamp(i45, pc.getDeleteTime());
-            int i46 = i45 + 1;
-            pstm.setInt(i46, pc.getDollhole());
-            pstm.setInt(i46 + 1, pc.getId());
+            pstm.setInt(++i, leve);
+            pstm.setInt(++i, pc.getOnlineStatus());
+            pstm.setInt(++i, pc.getHomeTownId());
+            pstm.setInt(++i, pc.getContribution());
+            pstm.setInt(++i, pc.getHellTime());
+            pstm.setBoolean(++i, pc.isBanned());
+            pstm.setInt(++i, pc.getKarma());
+            pstm.setTimestamp(++i, pc.getLastPk());
+            pstm.setTimestamp(++i, pc.getLastPkForElf());
+            pstm.setTimestamp(++i, pc.getDeleteTime());
+            pstm.setInt(++i, pc.getDollhole());
+            pstm.setInt(++i, pc.getId());
             pstm.execute();
         } catch (SQLException e) {
             _log.error(e.getLocalizedMessage(), e);

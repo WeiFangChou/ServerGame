@@ -70,7 +70,7 @@ public class Npc_YouLiya extends NpcExecutor {
                     }
                     if (!error) {
                         L1PolyMorph.undoPoly((L1Character)pc);
-                        L1Teleport.teleport(pc, 32747, 32861, (short)9100, 5, true);
+                        L1Teleport.teleport(pc, 32747, 32861, 9100, 5, true);
                         QuestClass.get().endQuest(pc, Chapter00.QUEST.get_id());
                     }
                     isCloseList = true;

@@ -37,7 +37,7 @@ public class Npc_Gambling extends NpcExecutor {
             return;
         }
         if (npc.getNpcId() == 91172) {
-            L1Teleport.teleport(pc, 33529, 32856, (short)4, 5, true);
+            L1Teleport.teleport(pc, 33529, 32856, 4, 5, true);
             return;
         }
         String no = String.valueOf(String.valueOf(GamblingTime.get_gamblingNo())) + "~" + RangeLong.scount(gambling.get_allRate()) + "~";

@@ -21,7 +21,7 @@ public class L1MapArea extends Rectangle {
 
     public L1MapArea(int left, int top, int right, int bottom, int mapId) {
         super(left, top, right, bottom);
-        this._map = L1WorldMap.get().getMap((short) mapId);
+        this._map = L1WorldMap.get().getMap( mapId);
     }
 
     public boolean contains(L1Location loc) {

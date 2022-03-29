@@ -381,10 +381,10 @@ public class L1V1Map extends L1Map {
                 return;
             default:
                 if (isPassable) {
-                    setTile(x, y, (short) (accessTile(x, y) & 127));
+                    setTile(x, y,  (accessTile(x, y) & 127));
                     return;
                 } else {
-                    setTile(x, y, (short) (accessTile(x, y) | -128));
+                    setTile(x, y,  (accessTile(x, y) | -128));
                     return;
                 }
         }

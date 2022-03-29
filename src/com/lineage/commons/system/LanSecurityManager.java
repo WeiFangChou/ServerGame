@@ -33,10 +33,10 @@ public class LanSecurityManager extends SecurityManager {
             throw new SecurityException();
         } else {
             if (ConfigIpCheck.ONETIMEMILLIS != 0) {
-                ONETIMEMILLISMAP.put(host, Long.valueOf(System.currentTimeMillis()));
+                ONETIMEMILLISMAP.put(host, System.currentTimeMillis());
             }
             if (ConfigIpCheck.ISONEIP) {
-                ONEIPMAP.put(host, Integer.valueOf(port));
+                ONEIPMAP.put(host, port);
             }
             if (ConfigIpCheck.IPCHECK && !IpAttackCheck.get().check(host)) {
                 throw new SecurityException();

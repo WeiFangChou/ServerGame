@@ -33,7 +33,7 @@ public class Npc_Tikal extends NpcExecutor {
             L1ItemInstance item = pc.getInventory().checkItemX(49273, 1);
             if (item != null) {
                 pc.getInventory().removeItem(item, 1);
-                L1Teleport.teleport(pc, 32732, 32862,  (short)784, 5, true);
+                L1Teleport.teleport(pc, 32732, 32862,  784, 5, true);
                 return;
             }
             pc.sendPackets(new S_ServerMessage(337, ItemTable.get().getTemplate(49273).getName()));

@@ -82,70 +82,70 @@ public class CalcStat {
         return calcStatMr(wis + diff) - calcStatMr(wis);
     }
 
-    public static short calcStatHp(int charType, int baseMaxHp, int baseCon, int originalHpup) {
-        short randomhp = 0;
+    public static int calcStatHp(int charType, int baseMaxHp, int baseCon, int originalHpup) {
+        int randomhp = 0;
         if (baseCon > 15) {
-            randomhp = (short) (baseCon - 15);
+            randomhp =  (baseCon - 15);
         }
         switch (charType) {
             case 0:
-                randomhp = (short) (((short) (rnd.nextInt(2) + 11)) + randomhp);
+                randomhp =  (( (rnd.nextInt(2) + 11)) + randomhp);
                 if (baseMaxHp + randomhp > ConfigCharSetting.PRINCE_MAX_HP) {
-                    randomhp = (short) (ConfigCharSetting.PRINCE_MAX_HP - baseMaxHp);
+                    randomhp =  (ConfigCharSetting.PRINCE_MAX_HP - baseMaxHp);
                     break;
                 }
                 break;
             case 1:
-                randomhp = (short) (((short) (rnd.nextInt(2) + 17)) + randomhp);
+                randomhp =  (( (rnd.nextInt(2) + 17)) + randomhp);
                 if (baseMaxHp + randomhp > ConfigCharSetting.KNIGHT_MAX_HP) {
-                    randomhp = (short) (ConfigCharSetting.KNIGHT_MAX_HP - baseMaxHp);
+                    randomhp =  (ConfigCharSetting.KNIGHT_MAX_HP - baseMaxHp);
                     break;
                 }
                 break;
             case 2:
-                randomhp = (short) (((short) (rnd.nextInt(2) + 10)) + randomhp);
+                randomhp =  (( (rnd.nextInt(2) + 10)) + randomhp);
                 if (baseMaxHp + randomhp > ConfigCharSetting.ELF_MAX_HP) {
-                    randomhp = (short) (ConfigCharSetting.ELF_MAX_HP - baseMaxHp);
+                    randomhp =  (ConfigCharSetting.ELF_MAX_HP - baseMaxHp);
                     break;
                 }
                 break;
             case 3:
-                randomhp = (short) (((short) (rnd.nextInt(2) + 7)) + randomhp);
+                randomhp =  (( (rnd.nextInt(2) + 7)) + randomhp);
                 if (baseMaxHp + randomhp > ConfigCharSetting.WIZARD_MAX_HP) {
-                    randomhp = (short) (ConfigCharSetting.WIZARD_MAX_HP - baseMaxHp);
+                    randomhp =  (ConfigCharSetting.WIZARD_MAX_HP - baseMaxHp);
                     break;
                 }
                 break;
             case 4:
-                randomhp = (short) (((short) (rnd.nextInt(2) + 10)) + randomhp);
+                randomhp =  (( (rnd.nextInt(2) + 10)) + randomhp);
                 if (baseMaxHp + randomhp > ConfigCharSetting.DARKELF_MAX_HP) {
-                    randomhp = (short) (ConfigCharSetting.DARKELF_MAX_HP - baseMaxHp);
+                    randomhp =  (ConfigCharSetting.DARKELF_MAX_HP - baseMaxHp);
                     break;
                 }
                 break;
             case 5:
-                randomhp = (short) (((short) (rnd.nextInt(2) + 13)) + randomhp);
+                randomhp =  (( (rnd.nextInt(2) + 13)) + randomhp);
                 if (baseMaxHp + randomhp > ConfigCharSetting.DRAGONKNIGHT_MAX_HP) {
-                    randomhp = (short) (ConfigCharSetting.DRAGONKNIGHT_MAX_HP - baseMaxHp);
+                    randomhp =  (ConfigCharSetting.DRAGONKNIGHT_MAX_HP - baseMaxHp);
                     break;
                 }
                 break;
             case 6:
-                randomhp = (short) (((short) (rnd.nextInt(2) + 9)) + randomhp);
+                randomhp =  (( (rnd.nextInt(2) + 9)) + randomhp);
                 if (baseMaxHp + randomhp > ConfigCharSetting.ILLUSIONIST_MAX_HP) {
-                    randomhp = (short) (ConfigCharSetting.ILLUSIONIST_MAX_HP - baseMaxHp);
+                    randomhp =  (ConfigCharSetting.ILLUSIONIST_MAX_HP - baseMaxHp);
                     break;
                 }
                 break;
         }
-        short randomhp2 = (short) (randomhp + originalHpup);
+        int randomhp2 =  (randomhp + originalHpup);
         if (randomhp2 < 0) {
             return 0;
         }
         return randomhp2;
     }
 
-    public static short calcStatMp(int charType, int baseMaxMp, int baseWis, int originalMpup) {
+    public static int calcStatMp(int charType, int baseMaxMp, int baseWis, int originalMpup) {
         int seedY;
         int seedZ;
         switch (baseWis) {
@@ -299,6 +299,6 @@ public class CalcStat {
         if (randommp2 < 0) {
             randommp2 = 0;
         }
-        return (short) randommp2;
+        return  randommp2;
     }
 }

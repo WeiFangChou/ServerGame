@@ -45,12 +45,12 @@ public class L1Character extends L1Object {
     private int _bowDmgup = 0;
     private int _bowHitup = 0;
     private int _braveSpeed;
-    private short _cha = 0;
+    private int _cha = 0;
     private int _chaLightSize;
-    private short _con = 0;
+    private int _con = 0;
     private int _currentHp;
     private int _currentMp;
-    private short _dex = 0;
+    private int _dex = 0;
     private int _dmgup = 0;
     private int _dodge_down = 0;
     private int _dodge_up = 0;
@@ -64,7 +64,7 @@ public class L1Character extends L1Object {
     private int _hitup = 0;
     private int _innKeyId;
     private int _innRoomNumber;
-    private short _int = 0;
+    private int _int = 0;
     private boolean _isDead;
     private boolean _isHall;
     private int _isShowDrop = 0;
@@ -76,7 +76,7 @@ public class L1Character extends L1Object {
     private int _lawful;
     private int _level = 1;
     private int _maxHp = 0;
-    private short _maxMp = 0;
+    private int _maxMp = 0;
     private int _moveSpeed;
     private int _mr = 0;
     private String _name;
@@ -98,7 +98,7 @@ public class L1Character extends L1Object {
     private boolean _sleeped;
     private int _sp = 0;
     private int _status;
-    private short _str = 0;
+    private int _str = 0;
     private int _tempCharGfx;
     private int _temp_adena = 0;
     private String _title;
@@ -107,14 +107,14 @@ public class L1Character extends L1Object {
     private int _trueAc = 0;
     private int _trueBowDmgup = 0;
     private int _trueBowHitup = 0;
-    private short _trueCha = 0;
-    private short _trueCon = 0;
-    private short _trueDex = 0;
+    private int _trueCha = 0;
+    private int _trueCon = 0;
+    private int _trueDex = 0;
     private int _trueDmgup = 0;
     private int _trueEarth = 0;
     private int _trueFire = 0;
     private int _trueHitup = 0;
-    private short _trueInt = 0;
+    private int _trueInt = 0;
     private int _trueMaxHp = 0;
     private int _trueMaxMp = 0;
     private int _trueMr = 0;
@@ -124,13 +124,13 @@ public class L1Character extends L1Object {
     private int _trueRegistStone = 0;
     private int _trueRegistStun = 0;
     private int _trueRegistSustain = 0;
-    private short _trueStr = 0;
+    private int _trueStr = 0;
     private int _trueWater = 0;
     private int _trueWind = 0;
-    private short _trueWis = 0;
+    private int _trueWis = 0;
     private int _water = 0;
     private int _wind = 0;
-    private short _wis = 0;
+    private int _wis = 0;
 
     static {
         byte[] bArr = new byte[8];
@@ -745,13 +745,13 @@ public class L1Character extends L1Object {
         setMaxHp(this._trueMaxHp + i);
     }
 
-    public short getMaxMp() {
+    public int getMaxMp() {
         return this._maxMp;
     }
 
     public void setMaxMp(int mp) {
         this._trueMaxMp = mp;
-        this._maxMp = (short) RangeInt.ensure(this._trueMaxMp, 0, 32767);
+        this._maxMp =  RangeInt.ensure(this._trueMaxMp, 0, 32767);
         this._currentMp = Math.min(this._currentMp, (int) this._maxMp);
     }
 
@@ -786,78 +786,78 @@ public class L1Character extends L1Object {
         setAc(this._trueAc + i);
     }
 
-    public short getStr() {
+    public int getStr() {
         return this._str;
     }
 
     public void setStr(int i) {
-        this._trueStr = (short) i;
-        this._str = (short) RangeInt.ensure(i, 1, OpcodesServer.S_OPCODE_SHOWSHOPBUYLIST);
+        this._trueStr =  i;
+        this._str =  RangeInt.ensure(i, 1, OpcodesServer.S_OPCODE_SHOWSHOPBUYLIST);
     }
 
     public void addStr(int i) {
         setStr(this._trueStr + i);
     }
 
-    public short getCon() {
+    public int getCon() {
         return this._con;
     }
 
     public void setCon(int i) {
-        this._trueCon = (short) i;
-        this._con = (short) RangeInt.ensure(i, 1, OpcodesServer.S_OPCODE_SHOWSHOPBUYLIST);
+        this._trueCon =  i;
+        this._con =  RangeInt.ensure(i, 1, OpcodesServer.S_OPCODE_SHOWSHOPBUYLIST);
     }
 
     public void addCon(int i) {
         setCon(this._trueCon + i);
     }
 
-    public short getDex() {
+    public int getDex() {
         return this._dex;
     }
 
     public void setDex(int i) {
-        this._trueDex = (short) i;
-        this._dex = (short) RangeInt.ensure(i, 1, OpcodesServer.S_OPCODE_SHOWSHOPBUYLIST);
+        this._trueDex =  i;
+        this._dex =  RangeInt.ensure(i, 1, OpcodesServer.S_OPCODE_SHOWSHOPBUYLIST);
     }
 
     public void addDex(int i) {
         setDex(this._trueDex + i);
     }
 
-    public short getCha() {
+    public int getCha() {
         return this._cha;
     }
 
     public void setCha(int i) {
-        this._trueCha = (short) i;
-        this._cha = (short) RangeInt.ensure(i, 1, OpcodesServer.S_OPCODE_SHOWSHOPBUYLIST);
+        this._trueCha =  i;
+        this._cha =  RangeInt.ensure(i, 1, OpcodesServer.S_OPCODE_SHOWSHOPBUYLIST);
     }
 
     public void addCha(int i) {
         setCha(this._trueCha + i);
     }
 
-    public short getInt() {
+    public int getInt() {
         return this._int;
     }
 
     public void setInt(int i) {
-        this._trueInt = (short) i;
-        this._int = (short) RangeInt.ensure(i, 1, OpcodesServer.S_OPCODE_SHOWSHOPBUYLIST);
+        this._trueInt =  i;
+        this._int =  RangeInt.ensure(i, 1, OpcodesServer.S_OPCODE_SHOWSHOPBUYLIST);
     }
 
     public void addInt(int i) {
         setInt(this._trueInt + i);
     }
 
-    public short getWis() {
+    public int getWis() {
         return this._wis;
     }
 
     public void setWis(int i) {
-        this._trueWis = (short) i;
-        this._wis = (short) RangeInt.ensure(i, 1, OpcodesServer.S_OPCODE_SHOWSHOPBUYLIST);
+        this._trueWis =  i;
+        this._wis =  RangeInt.ensure(i, 1, OpcodesServer.S_OPCODE_SHOWSHOPBUYLIST);
     }
 
     public void addWis(int i) {

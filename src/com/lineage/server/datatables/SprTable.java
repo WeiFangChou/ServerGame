@@ -53,8 +53,7 @@ public class SprTable {
     }
 
     public void load() throws Exception {
-        Throwable th;
-        SQLException e;
+
         PerformanceTimer timer = new PerformanceTimer();
         Connection con = null;
         PreparedStatement pstm = null;
@@ -65,13 +64,12 @@ public class SprTable {
             pstm = con.prepareStatement("SELECT * FROM `spr_action`");
             rs = pstm.executeQuery();
             while (rs.next()) {
-                try {
                     int key = rs.getInt("spr_id");
-                    if (!_dataMap.containsKey(Integer.valueOf(key))) {
+                    if (!_dataMap.containsKey(key)) {
                         spr = new Spr(null);
-                        _dataMap.put(Integer.valueOf(key), spr);
+                        _dataMap.put(key, spr);
                     } else {
-                        spr = _dataMap.get(Integer.valueOf(key));
+                        spr = _dataMap.get(key);
                     }
                     int actid = rs.getInt("act_id");
                     int frameCount = rs.getInt("framecount");
@@ -97,7 +95,7 @@ public class SprTable {
                         case 58:
                         case 62:
                         case 83:
-                            spr._moveSpeed.put(Integer.valueOf(actid), Integer.valueOf(speed));
+                            spr._moveSpeed.put(actid, speed);
                             break;
                         case 1:
                         case 5:
@@ -111,8 +109,8 @@ public class SprTable {
                         case 59:
                         case 63:
                         case 84:
-                            spr._attackSpeed.put(Integer.valueOf(actid), Integer.valueOf(speed));
-                            spr._frame.put(Integer.valueOf(actid), frame);
+                            spr._attackSpeed.put(actid, speed);
+                            spr._frame.put(actid, frame);
                             break;
                         case 2:
                             spr._dmg = speed;
@@ -127,34 +125,14 @@ public class SprTable {
                             spr._dirSpellSpeed30 = speed;
                             break;
                     }
-                } catch (SQLException e2) {
-                    e = e2;
-                    try {
-                        _log.error(e.getLocalizedMessage(), e);
-                        SQLUtil.close(rs);
-                        SQLUtil.close(pstm);
-                        SQLUtil.close(con);
-                        _log.info("載入圖形影格資料數量: " + _dataMap.size() + "(" + timer.get() + "ms)");
-                    } catch (Throwable th2) {
-                        th = th2;
-                        SQLUtil.close(rs);
-                        SQLUtil.close(pstm);
-                        SQLUtil.close(con);
-                        throw th;
-                    }
-                } catch (Throwable th3) {
-                    th = th3;
-                    SQLUtil.close(rs);
-                    SQLUtil.close(pstm);
-                    SQLUtil.close(con);
-                    throw th;
-                }
             }
+
+        } catch (SQLException e) {
+            _log.error(e.getLocalizedMessage(), e);
+        }finally {
             SQLUtil.close(rs);
             SQLUtil.close(pstm);
             SQLUtil.close(con);
-        } catch (SQLException e3) {
-            e = e3;
         }
         _log.info("載入圖形影格資料數量: " + _dataMap.size() + "(" + timer.get() + "ms)");
     }
@@ -164,8 +142,8 @@ public class SprTable {
     }
 
     public final boolean containsTripleArrowSpr(int sprid) {
-        if (_dataMap.containsKey(Integer.valueOf(sprid))) {
-            return _dataMap.get(Integer.valueOf(sprid))._attackSpeed.containsKey(21);
+        if (_dataMap.containsKey(sprid)) {
+            return _dataMap.get(sprid)._attackSpeed.containsKey(21);
         }
         return false;
     }
@@ -173,61 +151,61 @@ public class SprTable {
     public Collection<String> getspr() {
         ArrayList<String> list = new ArrayList<>();
         for (L1Command command : CommandsTable.get().getList()) {
-            list.add(String.valueOf(command.getName()) + ": " + command.get_note());
+            list.add(command.getName() + ": " + command.get_note());
         }
         return list;
     }
 
     public int getAttackSpeed(int sprid, int actid) {
-        if (!_dataMap.containsKey(Integer.valueOf(sprid))) {
+        if (!_dataMap.containsKey(sprid)) {
             return 0;
         }
-        if (_dataMap.get(Integer.valueOf(sprid))._attackSpeed.containsKey(Integer.valueOf(actid))) {
-            return ((Integer) _dataMap.get(Integer.valueOf(sprid))._attackSpeed.get(Integer.valueOf(actid))).intValue();
+        if (_dataMap.get(sprid)._attackSpeed.containsKey(actid)) {
+            return _dataMap.get(sprid)._attackSpeed.get(actid);
         }
         if (actid == 1) {
             return 0;
         }
-        return ((Integer) _dataMap.get(Integer.valueOf(sprid))._attackSpeed.get(1)).intValue();
+        return _dataMap.get(sprid)._attackSpeed.get(1);
     }
 
     public int getMoveSpeed(int sprid, int actid) {
-        if (!_dataMap.containsKey(Integer.valueOf(sprid))) {
+        if (!_dataMap.containsKey(sprid)) {
             return 0;
         }
-        if (_dataMap.get(Integer.valueOf(sprid))._moveSpeed.containsKey(Integer.valueOf(actid))) {
-            return ((Integer) _dataMap.get(Integer.valueOf(sprid))._moveSpeed.get(Integer.valueOf(actid))).intValue();
+        if (_dataMap.get(sprid)._moveSpeed.containsKey(actid)) {
+            return _dataMap.get(sprid)._moveSpeed.get(actid);
         }
         if (actid == 0) {
             return 0;
         }
-        return ((Integer) _dataMap.get(Integer.valueOf(sprid))._moveSpeed.get(0)).intValue();
+        return _dataMap.get(sprid)._moveSpeed.get(0);
     }
 
     public int getDirSpellSpeed(int sprid) {
-        if (_dataMap.containsKey(Integer.valueOf(sprid))) {
-            return _dataMap.get(Integer.valueOf(sprid))._dirSpellSpeed;
+        if (_dataMap.containsKey(sprid)) {
+            return _dataMap.get(sprid)._dirSpellSpeed;
         }
         return 0;
     }
 
     public int getNodirSpellSpeed(int sprid) {
-        if (_dataMap.containsKey(Integer.valueOf(sprid))) {
-            return _dataMap.get(Integer.valueOf(sprid))._nodirSpellSpeed;
+        if (_dataMap.containsKey(sprid)) {
+            return _dataMap.get(sprid)._nodirSpellSpeed;
         }
         return 0;
     }
 
     public int getDirSpellSpeed30(int sprid) {
-        if (_dataMap.containsKey(Integer.valueOf(sprid))) {
-            return _dataMap.get(Integer.valueOf(sprid))._dirSpellSpeed30;
+        if (_dataMap.containsKey(sprid)) {
+            return _dataMap.get(sprid)._dirSpellSpeed30;
         }
         return 0;
     }
 
     public int getDmg(int sprid) {
-        if (_dataMap.containsKey(Integer.valueOf(sprid))) {
-            return _dataMap.get(Integer.valueOf(sprid))._dmg;
+        if (_dataMap.containsKey(sprid)) {
+            return _dataMap.get(sprid)._dmg;
         }
         return 0;
     }
@@ -245,22 +223,22 @@ public class SprTable {
     }
 
     public final boolean containsChainswordSpr(int sprid) {
-        if (_dataMap.containsKey(Integer.valueOf(sprid))) {
-            return _dataMap.get(Integer.valueOf(sprid))._moveSpeed.containsKey(83);
+        if (_dataMap.containsKey(sprid)) {
+            return _dataMap.get(sprid)._moveSpeed.containsKey(83);
         }
         return false;
     }
 
     public int[] getFrame(int sprid, int actid) {
-        if (!_dataMap.containsKey(Integer.valueOf(sprid))) {
+        if (!_dataMap.containsKey(sprid)) {
             return null;
         }
-        if (_dataMap.get(Integer.valueOf(sprid))._attackSpeed.containsKey(Integer.valueOf(actid))) {
-            return (int[]) _dataMap.get(Integer.valueOf(sprid))._frame.get(Integer.valueOf(actid));
+        if (_dataMap.get(sprid)._attackSpeed.containsKey(actid)) {
+            return (int[]) _dataMap.get(sprid)._frame.get(actid);
         }
         if (actid == 1) {
             return null;
         }
-        return (int[]) _dataMap.get(Integer.valueOf(sprid))._frame.get(1);
+        return (int[]) _dataMap.get(sprid)._frame.get(1);
     }
 }

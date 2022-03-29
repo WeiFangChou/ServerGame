@@ -7,6 +7,7 @@ import com.lineage.server.datatables.storage.AccountStorage;
 import com.lineage.server.templates.L1Account;
 import com.lineage.server.utils.PerformanceTimer;
 import com.lineage.server.utils.SQLUtil;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -87,8 +89,6 @@ public class AccountTable implements AccountStorage {
             ps.setInt(++i, value.get_server_no());
             ps.execute();
             _log.info("新帳號建立: " + value.get_login());
-            SQLUtil.close(ps);
-            SQLUtil.close(cn);
             return value;
         } catch (SQLException e) {
             _log.error(e.getLocalizedMessage(), e);
@@ -189,11 +189,13 @@ public class AccountTable implements AccountStorage {
             ps = co.prepareStatement("SELECT * FROM `characters` WHERE `account_name`=?");
             ps.setString(1, loginName.toLowerCase());
             rs = ps.executeQuery();
-            while (rs.next()) {i++;}
+            while (rs.next()) {
+                i++;
+            }
             return i;
         } catch (Exception e) {
             _log.error(e.getLocalizedMessage(), e);
-        }finally {
+        } finally {
             SQLUtil.close(ps);
             SQLUtil.close(co);
             SQLUtil.close(rs);
@@ -223,18 +225,18 @@ public class AccountTable implements AccountStorage {
     public void updateLastActive(L1Account account) {
         Connection con = null;
         PreparedStatement pstm = null;
-        try{
+        try {
             Timestamp lastactive = new Timestamp(System.currentTimeMillis());
-            con =DatabaseFactoryLogin.get().getConnection();
+            con = DatabaseFactoryLogin.get().getConnection();
             pstm = con.prepareStatement("UPDATE `accounts` SET `lastactive`=?,`ip`=?,`host`=? WHERE `login`=?");
             pstm.setTimestamp(1, lastactive);
             pstm.setString(2, account.get_ip());
             pstm.setString(3, account.get_mac());
             pstm.setString(4, account.get_login());
             pstm.execute();
-        }catch (Exception e){
+        } catch (Exception e) {
             _log.error(e.getLocalizedMessage(), e);
-        }finally {
+        } finally {
             SQLUtil.close(pstm);
             SQLUtil.close(con);
         }
@@ -349,9 +351,8 @@ public class AccountTable implements AccountStorage {
     }
 
     @Override // com.lineage.server.datatables.storage.AccountStorage
-    public int getPoint(String loginName) throws Exception {
-        Throwable th;
-        Exception e;
+    public int getPoint(String loginName) {
+
         Connection co = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -362,39 +363,18 @@ public class AccountTable implements AccountStorage {
             ps.setString(1, loginName);
             rs = ps.executeQuery();
             while (rs.next()) {
-                try {
-                    i = rs.getInt("累積金額");
-                } catch (Exception e2) {
-                    e = e2;
-                    try {
-                        _log.error(e.getLocalizedMessage(), e);
-                        SQLUtil.close(ps);
-                        SQLUtil.close(co);
-                        SQLUtil.close(rs);
-                        return 0;
-                    } catch (Throwable th2) {
-                        th = th2;
-                        SQLUtil.close(ps);
-                        SQLUtil.close(co);
-                        SQLUtil.close(rs);
-                        throw th;
-                    }
-                } catch (Throwable th3) {
-                    th = th3;
-                    SQLUtil.close(ps);
-                    SQLUtil.close(co);
-                    SQLUtil.close(rs);
-                    throw th;
-                }
+                i = rs.getInt("累積金額");
             }
+
+            return i;
+        } catch (Exception e) {
+            _log.error(e.getLocalizedMessage(), e);
+        } finally {
             SQLUtil.close(ps);
             SQLUtil.close(co);
             SQLUtil.close(rs);
-            return i;
-        } catch (Exception e3) {
-            e = e3;
-            return 0;
         }
+        return 0;
     }
 
     @Override // com.lineage.server.datatables.storage.AccountStorage

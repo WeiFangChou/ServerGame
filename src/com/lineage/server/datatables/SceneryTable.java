@@ -73,7 +73,7 @@ public class SceneryTable {
                 field.setId(IdFactoryNpc.get().nextId());
                 field.setGfxId(scenery.get_gfxid());
                 field.setTempCharGfx(scenery.get_gfxid());
-                field.setMap((short) scenery.get_mapid());
+                field.setMap( scenery.get_mapid());
                 field.setX(scenery.get_locx());
                 field.setY(scenery.get_locy());
                 field.setHomeX(scenery.get_locx());

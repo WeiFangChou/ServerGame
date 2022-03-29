@@ -86,12 +86,11 @@ public final class ConfigElfSkill {
             WIND_SHACKLE_INT = Double.parseDouble(set.getProperty("WIND_SHACKLE_INT", "0"));
             WIND_SHACKLE_MR = Double.parseDouble(set.getProperty("WIND_SHACKLE_MR", "0"));
             TRIPLE_ARROW_GFX = set.getProperty("TRIPLE_ARROW_GFX", "0");
-            set.clear();
+
         } catch (Exception e) {
-            throw new ConfigErrorException("設置檔案遺失: ./config/【妖精】技能設置.properties");
-        } catch (Throwable th) {
+            throw new ConfigErrorException("設置檔案遺失: "+CONFIG_FILE);
+        }finally {
             set.clear();
-            throw th;
         }
     }
 }

@@ -20,7 +20,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class ServerElementalStoneTimer extends TimerTask {
     private static final int ELEMENTAL_STONE_ID = 40515;
-    private static final short ELVEN_FOREST_MAPID = 4;
+    private static final int ELVEN_FOREST_MAPID = 4;
     private static final int FIRST_X = 32911;
     private static final int FIRST_Y = 32210;
     private static final int INTERVAL = 3;

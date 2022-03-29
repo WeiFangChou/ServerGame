@@ -50,7 +50,7 @@ public final class ConfigOther {
     private static final String LIANG = "./config/other.properties";
     public static boolean LIGHT;
     public static int MAX_LEVEL;
-    public static short ONLINE_GIFT_LEVEL;
+    public static int ONLINE_GIFT_LEVEL;
     public static int PET_MAX_LEVEL;
     public static int PUNISHMENT_MAP_ID;
     public static int PUNISHMENT_TIME;
@@ -176,10 +176,9 @@ public final class ConfigOther {
             Enchant = Integer.parseInt(set.getProperty("enchant", "3"));
             set.clear();
         } catch (Exception e) {
-            throw new ConfigErrorException("設置檔案遺失: ./config/other.properties");
-        } catch (Throwable th) {
+            throw new ConfigErrorException("設置檔案遺失: "+LIANG);
+        }finally {
             set.clear();
-            throw th;
         }
     }
 

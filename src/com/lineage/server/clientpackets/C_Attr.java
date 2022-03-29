@@ -543,7 +543,7 @@ public class C_Attr extends ClientBasePacket {
                         if (c14 != 0 && c14 == 1) {
                             int locX = pc.getTeleportX();
                             int locY = pc.getTeleportY();
-                            short mapId = pc.getTeleportMapId();
+                            int mapId = pc.getTeleportMapId();
                             pc.getInventory().consumeItem(ConfigOther.SET_ITEM, (long) ConfigOther.SET_ITEM_COUNT);
                             L1Teleport.teleport(pc, locX, locY, mapId, 5, true);
                             break;
@@ -553,7 +553,7 @@ public class C_Attr extends ClientBasePacket {
                         if (c15 != 0 && c15 == 1) {
                             int locX2 = pc.getTeleportX();
                             int locY2 = pc.getTeleportY();
-                            short mapId2 = pc.getTeleportMapId();
+                            int mapId2 = pc.getTeleportMapId();
                             pc.getInventory().consumeItem(ConfigOther.SET_ITEM_Party, (long) ConfigOther.SET_ITEM_COUNT_Party);
                             L1Teleport.teleport(pc, locX2, locY2, mapId2, 5, true);
                             break;
@@ -664,7 +664,7 @@ public class C_Attr extends ClientBasePacket {
                     isInWarArea = false;
                 }
             }
-            short mapId = callClanPc.getMapId();
+            int mapId = callClanPc.getMapId();
             if ((mapId != 0 && mapId != 4 && mapId != 304) || isInWarArea) {
                 pc.sendPackets(new S_ServerMessage(629));
             } else if (QuestMapTable.get().isQuestMap(pc.getMapId())) {

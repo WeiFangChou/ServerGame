@@ -107,7 +107,7 @@ public class Npc_Sepia extends NpcExecutor {
             if (time != null) {
                 quest.set_time(time.intValue());
             }
-            L1Teleport.teleport(pc, 32745, 32872, (short) mapid, 0, true);
+            L1Teleport.teleport(pc, 32745, 32872,  mapid, 0, true);
         } catch (Exception e) {
             _log.error(e.getLocalizedMessage(), e);
         }

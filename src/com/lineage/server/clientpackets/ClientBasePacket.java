@@ -81,8 +81,7 @@ public abstract class ClientBasePacket {
 
             return i;
         } catch (final Exception e) {
-            // _log.error("OpCode:" + (_decrypt[0] & 0xff) + "/" +
-            // _decrypt.length, e);
+            _log.error("OpCode:" + (_decrypt[0] & 0xff) + "/" + _decrypt.length, e);
         }
         /*
          * } catch (final NullPointerException e) {// 要求的byte内容为空
@@ -116,8 +115,7 @@ public abstract class ClientBasePacket {
 
             return i;
         } catch (final Exception e) {
-            // _log.error("OpCode:" + (_decrypt[0] & 0xff) + "/" +
-            // _decrypt.length, e);
+            _log.error("OpCode:" + (_decrypt[0] & 0xff) + "/" + _decrypt.length, e);
         }
         /*
          * } catch (final NullPointerException e) {// 要求的byte内容为空
@@ -153,8 +151,7 @@ public abstract class ClientBasePacket {
             return i;
 
         } catch (final Exception e) {
-            // _log.error("OpCode:" + (_decrypt[0] & 0xff) + "/" +
-            // _decrypt.length, e);
+            _log.error("OpCode:" + (_decrypt[0] & 0xff) + "/" + _decrypt.length, e);
         }
         /*
          * } catch (final NullPointerException e) {// 要求的byte内容为空
@@ -191,8 +188,7 @@ public abstract class ClientBasePacket {
             return i;
 
         } catch (final Exception e) {
-            // _log.error("OpCode:" + (_decrypt[0] & 0xff) + "/" +
-            // _decrypt.length, e);
+            _log.error("OpCode:" + (_decrypt[0] & 0xff) + "/" + _decrypt.length, e);
         }
         /*
          * } catch (final NullPointerException e) {// 要求的byte内容为空
@@ -234,8 +230,7 @@ public abstract class ClientBasePacket {
             return Double.longBitsToDouble(l);
 
         } catch (final Exception e) {
-            // _log.error("OpCode:" + (_decrypt[0] & 0xff) + "/" +
-            // _decrypt.length, e);
+            _log.error("OpCode:" + (_decrypt[0] & 0xff) + "/" + _decrypt.length, e);
         }
         /*
          * } catch (final NullPointerException e) {// 要求的byte内容为空
@@ -249,7 +244,7 @@ public abstract class ClientBasePacket {
          * } catch (final Exception e) { _log.error(e.getLocalizedMessage(), e);
          * }
          */
-        return 0D;
+        return 0.0D;
     }
 
     /**
@@ -269,8 +264,7 @@ public abstract class ClientBasePacket {
             this._off += s.getBytes(CLIENT_LANGUAGE_CODE).length + 1;
 
         } catch (final Exception e) {
-            // _log.error("OpCode:" + (_decrypt[0] & 0xff) + "/" +
-            // _decrypt.length, e);
+            _log.error("OpCode:" + (_decrypt[0] & 0xff) + "/" + _decrypt.length, e);
         }
         /*
          * } catch (final NullPointerException e) {// 要求的byte内容为空
@@ -300,8 +294,7 @@ public abstract class ClientBasePacket {
             this._off = this._decrypt.length;
 
         } catch (final Exception e) {
-            // _log.error("OpCode:" + (_decrypt[0] & 0xff) + "/" +
-            // _decrypt.length, e);
+            _log.error("OpCode:" + (_decrypt[0] & 0xff) + "/" + _decrypt.length, e);
         }
         /*
          * } catch (final NullPointerException e) {// 要求的byte内容为空

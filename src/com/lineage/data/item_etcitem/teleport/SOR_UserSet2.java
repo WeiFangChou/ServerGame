@@ -31,7 +31,7 @@ public class SOR_UserSet2 extends ItemExecutor {
         if (loc != null) {
             int locX = loc[0];
             int locY = loc[1];
-            short mapId = (short) loc[2];
+            int mapId =  loc[2];
             if (pc.getMap().isEscapable()) {
                 L1BuffUtil.cancelAbsoluteBarrier(pc);
                 GeneralThreadPool.get().schedule(new TeleportRunnable(pc, locX, locY, mapId), 0);
@@ -65,7 +65,7 @@ public class SOR_UserSet2 extends ItemExecutor {
             int newX;
             int newY;
             try {
-                L1Map map = L1WorldMap.get().getMap((short) this._mapid);
+                L1Map map = L1WorldMap.get().getMap( this._mapid);
                 int tryCount = 0;
                 int i = this._locX;
                 int i2 = this._locY;
@@ -83,9 +83,9 @@ public class SOR_UserSet2 extends ItemExecutor {
                     }
                 }
                 if (tryCount >= 5) {
-                    L1Teleport.teleport(this._pc, this._locX, this._locY, (short) this._mapid, this._pc.getHeading(), true);
+                    L1Teleport.teleport(this._pc, this._locX, this._locY,  this._mapid, this._pc.getHeading(), true);
                 } else {
-                    L1Teleport.teleport(this._pc, newX, newY, (short) this._mapid, this._pc.getHeading(), true);
+                    L1Teleport.teleport(this._pc, newX, newY,  this._mapid, this._pc.getHeading(), true);
                 }
             } catch (InterruptedException e) {
                 SOR_UserSet2._log.error(e.getLocalizedMessage(), e);

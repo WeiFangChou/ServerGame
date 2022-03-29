@@ -35,7 +35,7 @@ public class Npc_Chapter00Out extends NpcExecutor {
             boolean isCloseList = false;
             if (cmd.equalsIgnoreCase("a")) {
                 L1BuffUtil.cancelAbsoluteBarrier(pc);
-                L1Teleport.teleport(pc, 32594, 32917, (short)0, 4, true);
+                L1Teleport.teleport(pc, 32594, 32917, 0, 4, true);
                 isCloseList = true;
             }
             if (isCloseList)

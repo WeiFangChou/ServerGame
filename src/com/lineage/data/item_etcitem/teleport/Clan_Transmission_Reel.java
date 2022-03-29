@@ -36,7 +36,7 @@ public class Clan_Transmission_Reel extends ItemExecutor {
                 if (pc.getMap().isEscapable() || pc.isGm()) {
                     int[] iArr = new int[3];
                     int[] loc = L1CastleLocation.getCastleLoc(castle_id);
-                    L1Teleport.teleport(pc, loc[0], loc[1], (short) loc[2], 5, true);
+                    L1Teleport.teleport(pc, loc[0], loc[1],  loc[2], 5, true);
                     pc.getInventory().removeItem(item, 1);
                 } else {
                     pc.sendPackets(new S_ServerMessage(647));
@@ -46,7 +46,7 @@ public class Clan_Transmission_Reel extends ItemExecutor {
                 if (pc.getMap().isEscapable() || pc.isGm()) {
                     int[] iArr2 = new int[3];
                     int[] loc2 = L1HouseLocation.getHouseLoc(house_id);
-                    L1Teleport.teleport(pc, loc2[0], loc2[1], (short) loc2[2], 5, true);
+                    L1Teleport.teleport(pc, loc2[0], loc2[1],  loc2[2], 5, true);
                     pc.getInventory().removeItem(item, 1);
                 } else {
                     pc.sendPackets(new S_ServerMessage(647));
@@ -54,11 +54,11 @@ public class Clan_Transmission_Reel extends ItemExecutor {
                 }
             } else if (pc.getHomeTownId() > 0) {
                 int[] loc3 = L1TownLocation.getGetBackLoc(pc.getHomeTownId());
-                L1Teleport.teleport(pc, loc3[0], loc3[1], (short) loc3[2], 5, true);
+                L1Teleport.teleport(pc, loc3[0], loc3[1],  loc3[2], 5, true);
                 pc.getInventory().removeItem(item, 1);
             } else {
                 int[] loc4 = GetbackTable.GetBack_Location(pc, true);
-                L1Teleport.teleport(pc, loc4[0], loc4[1], (short) loc4[2], 5, true);
+                L1Teleport.teleport(pc, loc4[0], loc4[1],  loc4[2], 5, true);
                 pc.getInventory().removeItem(item, 1);
             }
         } else {

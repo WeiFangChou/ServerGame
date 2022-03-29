@@ -37,12 +37,10 @@ public final class ConfigIpCheck {
             if (ONETIMEMILLIS != 0) {
                 new LanSecurityManager().stsrt_cmd();
             }
-            set.clear();
         } catch (Exception e) {
-            throw new ConfigErrorException("設置檔案遺失: ./config/ipcheck.properties");
-        } catch (Throwable th) {
+            throw new ConfigErrorException("設置檔案遺失: "+_ipcheck);
+        }finally {
             set.clear();
-            throw th;
         }
     }
 }

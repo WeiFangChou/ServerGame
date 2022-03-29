@@ -44,7 +44,7 @@ public class CharBookTable implements CharBookStorage {
                     String name = rs.getString("name");
                     int locx = rs.getInt("locx");
                     int locy = rs.getInt("locy");
-                    short mapid = rs.getShort("mapid");
+                    int mapid = rs.getShort("mapid");
                     L1BookMark bookmark = new L1BookMark();
                     bookmark.setId(id);
                     bookmark.setCharId(char_id);

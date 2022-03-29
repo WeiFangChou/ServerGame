@@ -30,7 +30,7 @@ public class L1PartyRecall implements L1CommandExecutor {
                 if (party != null) {
                     int x = pc.getX();
                     int y = pc.getY() + 2;
-                    short map = pc.getMapId();
+                    int map = pc.getMapId();
                     ConcurrentHashMap<Integer, L1PcInstance> pcs = party.partyUsers();
                     if (!pcs.isEmpty() && pcs.size() > 0) {
                         for (L1PcInstance pc2 : pcs.values()) {

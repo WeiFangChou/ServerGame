@@ -7,12 +7,14 @@ import com.lineage.server.storage.CharacterStorage;
 import com.lineage.server.storage.mysql.MySqlCharacterStorage;
 import com.lineage.server.templates.L1CharName;
 import com.lineage.server.utils.SQLUtil;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -69,7 +71,7 @@ public class CharacterTable {
             if (!L1WorldMap.get().getMap(pc.getMapId()).isInMap(pc.getX(), pc.getY())) {
                 pc.setX(33087);
                 pc.setY(33396);
-                pc.setMap((short) 4);
+                pc.setMap(4);
             }
         } catch (Exception e) {
             _log.error(e.getLocalizedMessage(), e);
@@ -202,9 +204,8 @@ public class CharacterTable {
         }
     }
 
-    public static void loadAllCharName() throws Exception {
-        Throwable th;
-        SQLException e;
+    public static void loadAllCharName() {
+
         L1CharName cn = null;
         Connection con = null;
         PreparedStatement pstm = null;
@@ -214,40 +215,18 @@ public class CharacterTable {
             pstm = con.prepareStatement("SELECT * FROM `characters`");
             rs = pstm.executeQuery();
             while (rs.next()) {
-                try {
-                    cn = new L1CharName();
-                    String name = rs.getString("char_name");
-                    cn.setName(name);
-                    cn.setId(rs.getInt("objid"));
-                    _charNameList.put(name, cn);
-                } catch (SQLException e2) {
-                    e = e2;
-                    try {
-                        _log.error(e.getLocalizedMessage(), e);
-                        SQLUtil.close(rs);
-                        SQLUtil.close(pstm);
-                        SQLUtil.close(con);
-                        return;
-                    } catch (Throwable th2) {
-                        th = th2;
-                        SQLUtil.close(rs);
-                        SQLUtil.close(pstm);
-                        SQLUtil.close(con);
-                        throw th;
-                    }
-                } catch (Throwable th3) {
-                    th = th3;
-                    SQLUtil.close(rs);
-                    SQLUtil.close(pstm);
-                    SQLUtil.close(con);
-                    throw th;
-                }
+                cn = new L1CharName();
+                String name = rs.getString("char_name");
+                cn.setName(name);
+                cn.setId(rs.getInt("objid"));
+                _charNameList.put(name, cn);
             }
+        } catch (SQLException e) {
+            _log.error(e.getLocalizedMessage(), e);
+        } finally {
             SQLUtil.close(rs);
             SQLUtil.close(pstm);
             SQLUtil.close(con);
-        } catch (SQLException e3) {
-            e = e3;
         }
     }
 

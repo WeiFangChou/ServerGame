@@ -53,11 +53,11 @@ public class L1Status implements L1CommandExecutor {
             if (param.equalsIgnoreCase("AC")) {
                 target.addAc((byte) (value - target.getAc()));
             } else if (param.equalsIgnoreCase("MR")) {
-                target.addMr((short) (value - target.getMr()));
+                target.addMr( (value - target.getMr()));
             } else if (param.equalsIgnoreCase("HIT")) {
-                target.addHitup((short) (value - target.getHitup()));
+                target.addHitup( (value - target.getHitup()));
             } else if (param.equalsIgnoreCase("DMG")) {
-                target.addDmgup((short) (value - target.getDmgup()));
+                target.addDmgup( (value - target.getDmgup()));
             } else {
                 if (param.equalsIgnoreCase("HP")) {
                     if (value > _max_int) {
@@ -67,7 +67,7 @@ public class L1Status implements L1CommandExecutor {
                     if (target.getBaseMaxHp() + maxHP > _max_int) {
                         maxHP = 20000 - target.getBaseMaxHp();
                     }
-                    target.addBaseMaxHp((short) maxHP);
+                    target.addBaseMaxHp( maxHP);
                     target.setCurrentHpDirect(target.getMaxHp());
                 } else if (param.equalsIgnoreCase("MP")) {
                     if (value > _max_int) {
@@ -77,7 +77,7 @@ public class L1Status implements L1CommandExecutor {
                     if (target.getBaseMaxMp() + maxMP > _max_int) {
                         maxMP = 20000 - target.getBaseMaxMp();
                     }
-                    target.addBaseMaxMp((short) maxMP);
+                    target.addBaseMaxMp( maxMP);
                     target.setCurrentMpDirect(target.getMaxMp());
                 } else if (param.equalsIgnoreCase("LAWFUL") || param.equalsIgnoreCase("L")) {
                     target.setLawful(value);
@@ -88,7 +88,7 @@ public class L1Status implements L1CommandExecutor {
                     if (value > 200) {
                         value = 200;
                     }
-                    target.setAccessLevel((short) value);
+                    target.setAccessLevel( value);
                     target.sendPackets(new S_SystemMessage("取得GM權限"));
                 } else if (param.equalsIgnoreCase("STR")) {
                     target.addBaseStr((byte) (value - target.getBaseStr()));

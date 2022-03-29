@@ -112,7 +112,7 @@ public class Npc_VIP extends NpcExecutor {
     private void teleport(L1PcInstance pc, int x, int y, int mapid) {
         try {
             L1Location newLocation = new L1Location(x, y, mapid).randomLocation(200, false);
-            L1Teleport.teleport(pc, newLocation.getX(), newLocation.getY(), (short) newLocation.getMapId(), 5, true);
+            L1Teleport.teleport(pc, newLocation.getX(), newLocation.getY(),  newLocation.getMapId(), 5, true);
         } catch (Exception e) {
             _log.error(e.getLocalizedMessage(), e);
         }

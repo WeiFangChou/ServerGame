@@ -30,7 +30,7 @@ public class L1WorldMap {
         _log.info("MAP數據加載完成(" + timer.get() + " ms)");
     }
 
-    public L1Map getMap(short mapId) {
+    public L1Map getMap(int mapId) {
         L1Map map = this._maps.get(Integer.valueOf(mapId));
         if (map == null) {
             return L1Map.newNull();

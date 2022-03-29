@@ -100,7 +100,7 @@ public class SpawnBossTable implements SpawnBossStorage {
                             _log.error("spawnlist_boss : locx2 < locx1:" + id);
                         } else if (locy2 >= locy1 || locy2 == 0) {
                             spawnDat.setHeading(heading);
-                            spawnDat.setMapId((short) mapid);
+                            spawnDat.setMapId( mapid);
                             spawnDat.setMinRespawnDelay(10);
                             spawnDat.setMovementDistance(100);
                             spawnDat.setName(temp1.get_name());

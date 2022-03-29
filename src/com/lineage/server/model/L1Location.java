@@ -85,7 +85,7 @@ public class L1Location extends Point {
     }
 
     public void setMap(int mapId) {
-        this._map = L1WorldMap.get().getMap((short) mapId);
+        this._map = L1WorldMap.get().getMap( mapId);
     }
 
     @Override // com.lineage.server.types.Point
@@ -138,7 +138,7 @@ public class L1Location extends Point {
             try {
                 int locX = baseLocation.getX();
                 int locY = baseLocation.getY();
-                short mapId = (short) baseLocation.getMapId();
+                int mapId =  baseLocation.getMapId();
                 L1Map map = baseLocation.getMap();
                 newLocation2.setMap(map);
                 int locX1 = locX - max;
@@ -164,7 +164,7 @@ public class L1Location extends Point {
                 int diffX = locX2 - locX1;
                 int diffY = locY2 - locY1;
                 int trial = 0;
-                int amax = (int) Math.pow((double) ((max * 2) + 1), 2.0d);
+                int amax = (int) Math.pow(((max * 2) + 1), 2.0d);
                 int trialLimit = (amax * 40) / (amax - (min == 0 ? 0 : (int) Math.pow((double) (((min - 1) * 2) + 1), 2.0d)));
                 while (true) {
                     if (1 == 0) {
@@ -190,8 +190,8 @@ public class L1Location extends Point {
                         }
                     }
                 }
-            } catch (Exception e3) {
-                Exception e = e3;
+            } catch (Exception e) {
+
                 newLocation = newLocation2;
                 _log.error(e.getLocalizedMessage(), e);
                 return newLocation;

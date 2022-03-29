@@ -48,7 +48,7 @@ public class LightSpawnTable {
                     field.setId(IdFactoryNpc.get().nextId());
                     field.setX(rs.getInt("locx"));
                     field.setY(rs.getInt("locy"));
-                    field.setMap((short) rs.getInt("mapid"));
+                    field.setMap( rs.getInt("mapid"));
                     field.setHomeX(field.getX());
                     field.setHomeY(field.getY());
                     field.setHeading(0);

@@ -105,13 +105,13 @@ public class Npc_Qguard extends NpcExecutor {
             Integer time = QuestMapTable.get().getTime(22);
             if (time != null)
                 quest.set_time(time.intValue());
-            L1SpawnUtil.spawnDoor(quest, 10004, 89, 32769, 32778, (short)22, 1);
+            L1SpawnUtil.spawnDoor(quest, 10004, 89, 32769, 32778, 22, 1);
             L1Location loc = new L1Location(32774, 32778, 22);
             L1NpcInstance mob = L1SpawnUtil.spawn(81107, loc, 5, showId);
             mob.getInventory().storeItem(40544, 1L);
             quest.addNpc(mob);
             pc.getInventory().takeoffEquip(945);
-            L1Teleport.teleport(pc, 32769, 32768, (short)22, 4, true);
+            L1Teleport.teleport(pc, 32769, 32768, 22, 4, true);
         } catch (Exception e) {
             _log.error(e.getLocalizedMessage(), e);
         }

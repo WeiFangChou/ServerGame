@@ -162,39 +162,39 @@ public class L1PcInstance extends L1Character {
         this._isKill = _isKill;
     }
 
-    private short _hpr = 0;
+    private int _hpr = 0;
 
-    private short _trueHpr = 0;
+    private int _trueHpr = 0;
 
-    public short getHpr() {
+    public int getHpr() {
         return this._hpr;
     }
 
     public void addHpr(int i) {
-        this._trueHpr = (short)(this._trueHpr + i);
-        this._hpr = (short)Math.max(0, this._trueHpr);
+        this._trueHpr = (this._trueHpr + i);
+        this._hpr = Math.max(0, this._trueHpr);
     }
 
-    private short _mpr = 0;
+    private int _mpr = 0;
 
-    private short _trueMpr = 0;
+    private int _trueMpr = 0;
 
-    public short getMpr() {
+    public int getMpr() {
         return this._mpr;
     }
 
     public void addMpr(int i) {
-        this._trueMpr = (short)(this._trueMpr + i);
-        this._mpr = (short)Math.max(0, this._trueMpr);
+        this._trueMpr = (this._trueMpr + i);
+        this._mpr = Math.max(0, this._trueMpr);
     }
 
-    public short _originalHpr = 0;
+    public int _originalHpr = 0;
 
-    public short getOriginalHpr() {
+    public int getOriginalHpr() {
         return this._originalHpr;
     }
 
-    public short _originalMpr = 0;
+    public int _originalMpr = 0;
 
     private boolean _mpRegenActive;
 
@@ -202,7 +202,7 @@ public class L1PcInstance extends L1Character {
 
     private boolean _hpRegenActive;
 
-    public short getOriginalMpr() {
+    public int getOriginalMpr() {
         return this._originalMpr;
     }
 
@@ -820,11 +820,11 @@ public class L1PcInstance extends L1Character {
         this._type = i;
     }
 
-    public short getAccessLevel() {
+    public int getAccessLevel() {
         return this._accessLevel;
     }
 
-    public void setAccessLevel(short i) {
+    public void setAccessLevel(int i) {
         this._accessLevel = i;
     }
 
@@ -1546,7 +1546,7 @@ public class L1PcInstance extends L1Character {
 
     private boolean _gmInvis;
 
-    private short _accessLevel;
+    private int _accessLevel;
 
     private int _currentWeapon;
 
@@ -1596,9 +1596,9 @@ public class L1PcInstance extends L1Character {
 
     private String _accountName;
 
-    private short _baseMaxHp;
+    private int _baseMaxHp;
 
-    private short _baseMaxMp;
+    private int _baseMaxMp;
 
     private int _baseAc;
 
@@ -1708,7 +1708,7 @@ public class L1PcInstance extends L1Character {
 
     private int _ghostSaveLocY;
 
-    private short _ghostSaveMapId;
+    private int _ghostSaveMapId;
 
     private int _ghostSaveHeading;
 
@@ -1756,7 +1756,7 @@ public class L1PcInstance extends L1Character {
 
     private int _teleportY;
 
-    private short _teleportMapId;
+    private int _teleportMapId;
 
     private int _teleportHeading;
 
@@ -2712,12 +2712,12 @@ public class L1PcInstance extends L1Character {
         this._accountName = s;
     }
 
-    public short getBaseMaxHp() {
+    public int getBaseMaxHp() {
         return this._baseMaxHp;
     }
 
-    public void addBaseMaxHp(short i) {
-        i = (short)(i + this._baseMaxHp);
+    public void addBaseMaxHp(int i) {
+        i = (i + this._baseMaxHp);
         if (i >= Short.MAX_VALUE) {
             i = Short.MAX_VALUE;
         } else if (i < 1) {
@@ -2727,12 +2727,12 @@ public class L1PcInstance extends L1Character {
         this._baseMaxHp = i;
     }
 
-    public short getBaseMaxMp() {
+    public int getBaseMaxMp() {
         return this._baseMaxMp;
     }
 
-    public void addBaseMaxMp(short i) {
-        i = (short)(i + this._baseMaxMp);
+    public void addBaseMaxMp(int i) {
+        i = (i + this._baseMaxMp);
         if (i >= Short.MAX_VALUE) {
             i = Short.MAX_VALUE;
         } else if (i < 1) {
@@ -3183,8 +3183,8 @@ public class L1PcInstance extends L1Character {
     private void levelUp(int gap) {
         resetLevel();
         for (int i = 0; i < gap; i++) {
-            short randomHp = CalcStat.calcStatHp(getType(), getBaseMaxHp(), getBaseCon(), getOriginalHpup());
-            short randomMp = CalcStat.calcStatMp(getType(), getBaseMaxMp(), getBaseWis(), getOriginalMpup());
+            int randomHp = CalcStat.calcStatHp(getType(), getBaseMaxHp(), getBaseCon(), getOriginalHpup());
+            int randomMp = CalcStat.calcStatMp(getType(), getBaseMaxMp(), getBaseWis(), getOriginalMpup());
             addBaseMaxHp(randomHp);
             addBaseMaxMp(randomMp);
         }
@@ -3234,20 +3234,20 @@ public class L1PcInstance extends L1Character {
     private void levelDown(int gap) {
         resetLevel();
         for (int i = 0; i > gap; i--) {
-            short randomHp = CalcStat.calcStatHp(getType(), 0, getBaseCon(), getOriginalHpup());
-            short randomMp = CalcStat.calcStatMp(getType(), 0, getBaseWis(), getOriginalMpup());
-            addBaseMaxHp((short)-randomHp);
-            addBaseMaxMp((short)-randomMp);
+            int randomHp = CalcStat.calcStatHp(getType(), 0, getBaseCon(), getOriginalHpup());
+            int randomMp = CalcStat.calcStatMp(getType(), 0, getBaseWis(), getOriginalMpup());
+            addBaseMaxHp(-randomHp);
+            addBaseMaxMp(-randomMp);
         }
         if (getLevel() == 1) {
             int initHp = CalcInitHpMp.calcInitHp(this);
             int initMp = CalcInitHpMp.calcInitMp(this);
-            addBaseMaxHp((short)-getBaseMaxHp());
-            addBaseMaxHp((short)initHp);
-            setCurrentHp((short)initHp);
-            addBaseMaxMp((short)-getBaseMaxMp());
-            addBaseMaxMp((short)initMp);
-            setCurrentMp((short)initMp);
+            addBaseMaxHp(-getBaseMaxHp());
+            addBaseMaxHp(initHp);
+            setCurrentHp(initHp);
+            addBaseMaxMp(-getBaseMaxMp());
+            addBaseMaxMp(initMp);
+            setCurrentMp(initMp);
         }
         resetBaseHitup();
         resetBaseDmgup();
@@ -3295,11 +3295,11 @@ public class L1PcInstance extends L1Character {
         this._isReserveGhost = flag;
     }
 
-    public void beginGhost(int locx, int locy, short mapid, boolean canTalk) {
+    public void beginGhost(int locx, int locy, int mapid, boolean canTalk) {
         beginGhost(locx, locy, mapid, canTalk, 0);
     }
 
-    public void beginGhost(int locx, int locy, short mapid, boolean canTalk, int sec) {
+    public void beginGhost(int locx, int locy, int mapid, boolean canTalk, int sec) {
         if (isGhost())
             return;
         setGhost(true);
@@ -3329,8 +3329,8 @@ public class L1PcInstance extends L1Character {
         if (getMapId() != 666) {
             int locx = 32701;
             int locy = 32777;
-            short mapid = 666;
-            L1Teleport.teleport(this, 32701, 32777, (short)666, 5, false);
+            int mapid = 666;
+            L1Teleport.teleport(this, 32701, 32777, 666, 5, false);
         }
         if (isFirst) {
             if (get_PKcount() <= 10) {
@@ -3346,7 +3346,7 @@ public class L1PcInstance extends L1Character {
 
     public void endHell() {
         int[] loc = L1TownLocation.getGetBackLoc(4);
-        L1Teleport.teleport(this, loc[0], loc[1], (short)loc[2], 5, true);
+        L1Teleport.teleport(this, loc[0], loc[1], loc[2], 5, true);
         try {
             save();
         } catch (Exception e) {
@@ -3768,11 +3768,11 @@ public class L1PcInstance extends L1Character {
         this._teleportY = i;
     }
 
-    public short getTeleportMapId() {
+    public int getTeleportMapId() {
         return this._teleportMapId;
     }
 
-    public void setTeleportMapId(short i) {
+    public void setTeleportMapId(int i) {
         this._teleportMapId = i;
     }
 

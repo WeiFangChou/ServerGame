@@ -88,12 +88,11 @@ public final class ConfigWizardSkill {
             DARKNESS_3 = Integer.parseInt(set.getProperty("DARKNESS_3", "15"));
             DARKNESS_INT = Double.parseDouble(set.getProperty("DARKNESS_INT", "0"));
             DARKNESS_MR = Double.parseDouble(set.getProperty("DARKNESS_MR", "0"));
-            set.clear();
+
         } catch (Exception e) {
-            throw new ConfigErrorException("設置檔案遺失: ./config/【法師】技能設置.properties");
-        } catch (Throwable th) {
+            throw new ConfigErrorException("設置檔案遺失: "+CONFIG_FILE);
+        }finally {
             set.clear();
-            throw th;
         }
     }
 }

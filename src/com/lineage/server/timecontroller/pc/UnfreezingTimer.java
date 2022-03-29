@@ -32,7 +32,7 @@ public class UnfreezingTimer extends TimerTask {
                         if (time <= 0) {
                             UpdateLocReading.get().setPcLoc(tgpc.getAccountName());
                             tgpc.sendPackets(new S_ServerMessage("\\fR帳號內其他人物傳送回指定位置！"));
-                            L1Teleport.teleport(tgpc, 32781, 32856, (short) 340, 5, true);
+                            L1Teleport.teleport(tgpc, 32781, 32856,  340, 5, true);
                         } else {
                             tgpc.sendPackets(new S_ServerMessage("\\fR" + time + "秒後傳送回指定位置！"));
                         }

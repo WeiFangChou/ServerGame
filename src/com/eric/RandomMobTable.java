@@ -34,7 +34,7 @@ public final class RandomMobTable {
         /* renamed from: id */
         public int f0id;
         public boolean isActive;
-        public short[] mapId;
+        public int[] mapId;
         public int mobId;
         public String note;
         public int timeSecondToDelete;
@@ -44,7 +44,7 @@ public final class RandomMobTable {
             this.note = "";
             this.mobId = 0;
             this.cont = 0;
-            this.mapId = new short[0];
+            this.mapId = new int[0];
             this.timeSecondToDelete = -1;
             this.isActive = false;
         }
@@ -72,10 +72,10 @@ public final class RandomMobTable {
                 data.f0id = id;
                 data.note = rs.getString("note");
                 String[] temp = rs.getString("mapId").split(",");
-                short[] i = new short[temp.length];
+                int[] i = new int[temp.length];
                 int loop = 0;
                 for (String s : temp) {
-                    i[loop] = (short) Integer.parseInt(s);
+                    i[loop] =  Integer.parseInt(s);
                     loop++;
                 }
                 data.mapId = i;
@@ -111,7 +111,7 @@ public final class RandomMobTable {
         return _instance;
     }
 
-    public short getRandomMapId(int RandomMobId) {
+    public int getRandomMapId(int RandomMobId) {
         if (this._mobs.get(Integer.valueOf(RandomMobId)) == null) {
             return 0;
         }
@@ -163,7 +163,7 @@ public final class RandomMobTable {
             int mobId = mobTable.getMobId(randomMobId);
             L1NpcInstance[] npc = new L1NpcInstance[mobCont];
             for (int i = 0; i < mobCont; i++) {
-                short mapId = mobTable.getRandomMapId(randomMobId);
+                int mapId = mobTable.getRandomMapId(randomMobId);
                 int x = mobTable.getRandomMapX(mapId);
                 int y = mobTable.getRandomMapY(mapId);
                 npc[i] = NpcTable.get().newNpcInstance(mobId);

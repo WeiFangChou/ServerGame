@@ -38,7 +38,7 @@ public class FurnitureSpawnTable implements FurnitureSpawnStorage {
                     int item_obj_id = rs.getInt("item_obj_id");
                     int locx = rs.getInt("locx");
                     int locy = rs.getInt("locy");
-                    short mapid = rs.getShort("mapid");
+                    int mapid = rs.getShort("mapid");
                     if (World.get().findObject(item_obj_id) != null) {
                         L1Furniture value = new L1Furniture();
                         value.set_npcid(npcid);
@@ -102,7 +102,7 @@ public class FurnitureSpawnTable implements FurnitureSpawnStorage {
             int npcid = furniture.getNpcTemplate().get_npcId();
             int locx = furniture.getX();
             int locy = furniture.getY();
-            short mapid = furniture.getMapId();
+            int mapid = furniture.getMapId();
             L1Furniture value = new L1Furniture();
             value.set_npcid(npcid);
             value.set_item_obj_id(item_obj_id);

@@ -99,7 +99,7 @@ public class Npc_Fairyp extends NpcExecutor {
             if (time != null) {
                 quest.set_time(time.intValue());
             }
-            L1Teleport.teleport(pc, 32744, 32794, (short) mapid, 5, true);
+            L1Teleport.teleport(pc, 32744, 32794,  mapid, 5, true);
         } catch (Exception e) {
             _log.error(e.getLocalizedMessage(), e);
         }

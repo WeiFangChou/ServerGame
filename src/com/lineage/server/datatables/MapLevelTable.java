@@ -53,7 +53,7 @@ public class MapLevelTable {
         int[] levelX = _level.get(new Integer(mapid));
         if (levelX != null) {
             if ((pc.getLevel() < levelX[0] || pc.getLevel() >= levelX[1]) && !pc.isGm()) {
-                L1Teleport.teleport(pc, levelX[2], levelX[3], (short) levelX[4], 5, true);
+                L1Teleport.teleport(pc, levelX[2], levelX[3],  levelX[4], 5, true);
             }
         }
     }

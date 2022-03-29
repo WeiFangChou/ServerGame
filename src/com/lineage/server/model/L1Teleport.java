@@ -26,18 +26,18 @@ public class L1Teleport {
     }
 
     public static void teleport(L1PcInstance pc, L1Location loc, int head, boolean effectable) {
-        teleport(pc, loc.getX(), loc.getY(), (short) loc.getMapId(), head, effectable, 0);
+        teleport(pc, loc.getX(), loc.getY(),  loc.getMapId(), head, effectable, 0);
     }
 
     public static void teleport(L1PcInstance pc, L1Location loc, int head, boolean effectable, int skillType) {
-        teleport(pc, loc.getX(), loc.getY(), (short) loc.getMapId(), head, effectable, skillType);
+        teleport(pc, loc.getX(), loc.getY(),  loc.getMapId(), head, effectable, skillType);
     }
 
-    public static void teleport(L1PcInstance pc, int x, int y, short mapid, int head, boolean effectable) {
+    public static void teleport(L1PcInstance pc, int x, int y, int mapid, int head, boolean effectable) {
         teleport(pc, x, y, mapid, head, effectable, 0);
     }
 
-    public static void teleport(L1PcInstance pc, int x, int y, short mapId, int head, boolean effectable, int skillType) {
+    public static void teleport(L1PcInstance pc, int x, int y, int mapId, int head, boolean effectable, int skillType) {
         if (pc.getTradeID() != 0) {
             new L1Trade().tradeCancel(pc);
         }
@@ -62,7 +62,7 @@ public class L1Teleport {
         int locY = target.getY();
         int heading = target.getHeading();
         L1Map map = target.getMap();
-        short mapId = target.getMapId();
+        int mapId = target.getMapId();
         switch (heading) {
             case 0:
                 locY -= distance;
@@ -108,7 +108,7 @@ public class L1Teleport {
         int locY = target.getY();
         int heading = target.getHeading();
         L1Map map = target.getMap();
-        short mapId = target.getMapId();
+        int mapId = target.getMapId();
         if (chkitem) {
             switch (heading) {
                 case 0:
@@ -162,7 +162,7 @@ public class L1Teleport {
         int locY = target.getY();
         int heading = target.getHeading();
         L1Map map = target.getMap();
-        short mapId = target.getMapId();
+        int mapId = target.getMapId();
         if (chkitem) {
             switch (heading) {
                 case 0:
@@ -213,7 +213,7 @@ public class L1Teleport {
     public static void randomTeleport(L1PcInstance pc, boolean effectable) {
         try {
             L1Location newLocation = pc.getLocation().randomLocation(200, true);
-            teleport(pc, newLocation.getX(), newLocation.getY(), (short) newLocation.getMapId(), 5, effectable);
+            teleport(pc, newLocation.getX(), newLocation.getY(),  newLocation.getMapId(), 5, effectable);
         } catch (Exception e) {
             _log.error(e.getLocalizedMessage(), e);
         }

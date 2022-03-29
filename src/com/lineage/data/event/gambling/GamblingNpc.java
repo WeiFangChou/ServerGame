@@ -96,7 +96,7 @@ public class GamblingNpc implements Runnable {
             } else {
                 gfxids = GamblingConfig.GFXD[i];
             }
-            this._npc = L1SpawnUtil.spawn(npcid, x, y, (short) 4, 6, gfxids[this._random.nextInt(gfxids.length)]);
+            this._npc = L1SpawnUtil.spawn(npcid, x, y,  4, 6, gfxids[this._random.nextInt(gfxids.length)]);
         }
     }
 

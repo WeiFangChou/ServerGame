@@ -48,10 +48,9 @@ public final class ConfigPoly {
             NeedCount4 = Integer.parseInt(set.getProperty("Count4", "50"));
             set.clear();
         } catch (Exception e) {
-            throw new ConfigErrorException("設置檔案遺失: ./config/變身卡合成設定.properties");
-        } catch (Throwable th) {
+            throw new ConfigErrorException("設置檔案遺失: "+ALT_SETTINGS_FILE);
+        }finally {
             set.clear();
-            throw th;
         }
     }
 

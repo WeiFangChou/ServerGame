@@ -134,7 +134,7 @@ public class GamblingSet extends EventExecutor {
                 door.setGfxId(gfxid);
                 door.setX(locx);
                 door.setY(locy);
-                door.setMap((short) mapid);
+                door.setMap( mapid);
                 door.setHomeX(locx);
                 door.setHomeY(locy);
                 door.setDirection(direction);

@@ -222,7 +222,7 @@ public class C_AuthLogin extends ClientBasePacket {
             }
 
         } catch (final Exception e) {
-            //_log.error(e.getLocalizedMessage(), e);
+            _log.error(e.getLocalizedMessage(), e);
         }
     }
 

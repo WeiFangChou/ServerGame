@@ -113,7 +113,7 @@ public class MprExecutor {
         int baseMpr;
         tgpc.set_mpRegenType(0);
         if (tgpc.getMapId() != 201) {
-            Integer wis = _wis.get(Short.valueOf(tgpc.getWis()));
+            Integer wis = _wis.get( tgpc.getWis());
             if (wis != null) {
                 baseMpr = wis.intValue();
             } else {

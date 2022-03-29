@@ -28,10 +28,9 @@ public final class ConfigKnightSkill {
             ImpactHalo3 = Integer.parseInt(set.getProperty("Impact_Halo_3", "1"));
             set.clear();
         } catch (Exception e) {
-            throw new ConfigErrorException("設置檔案遺失: ./config/【騎士】技能設置.properties");
-        } catch (Throwable th) {
+            throw new ConfigErrorException("設置檔案遺失: "+CONFIG_FILE);
+        }finally {
             set.clear();
-            throw th;
         }
     }
 }

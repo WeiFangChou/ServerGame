@@ -1,5 +1,11 @@
-/* Decompiler 49ms, total 326ms, lines 312 */
 package com.lineage.echo;
+
+import java.io.IOException;
+import java.math.BigInteger;
+import java.net.Socket;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.lineage.commons.system.IpAttackCheck;
 import com.lineage.commons.system.LanSecurityManager;
@@ -14,311 +20,460 @@ import com.lineage.server.thread.GeneralThreadPool;
 import com.lineage.server.utils.StreamUtil;
 import com.lineage.server.utils.SystemUtil;
 
-import java.io.IOException;
-import java.math.BigInteger;
-import java.net.Socket;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
+/**
+ * 客戶資料處理
+ * @author dexc
+ *
+ */
 public class ClientExecutor extends OpcodesClient implements Runnable {
-    private static final Log _log = LogFactory.getLog(ClientExecutor.class);
-    private Socket _csocket = null;
-    private L1Account _account = null;
-    private L1PcInstance _activeChar = null;
-    private StringBuilder _ip = null;
-    private StringBuilder _mac = null;
-    private int _kick = 0;
-    private boolean _isStrat = true;
-    private EncryptExecutor _encrypt;
-    private DecryptExecutor _decrypt;
-    private PacketHandlerExecutor _handler;
-    private Encryption _keys;
-    private int _error = -1;
-    private static final int M = 3;
-    private static final int O = 2;
-    private int _saveInventory = 0;
-    private int _savePc = 0;
-    public int _xorByte = -16;
-    public long _authdata;
 
-    public ClientExecutor(Socket socket) throws IOException {
-        this._csocket = socket;
-        if (Config.LOGINS_TO_AUTOENTICATION) {
-            int randomNumber = (int) (Math.random() * 9.0E8D) + 255;
-            this._xorByte = randomNumber % 255 + 1;
-            this._authdata = (new BigInteger(Integer.toString(randomNumber))).modPow(new BigInteger(Config.RSA_KEY_E), new BigInteger(Config.RSA_KEY_N)).longValue();
-        }
+	private static final Log _log = LogFactory.getLog(ClientExecutor.class);
 
-        this._ip = (new StringBuilder()).append(socket.getInetAddress().getHostAddress());
-        this._handler = new PacketHandler(this);
-        this._keys = new Encryption();
-        this._decrypt = new DecryptExecutor(this, socket.getInputStream());
-        this._encrypt = new EncryptExecutor(this, socket.getOutputStream());
-    }
+	private Socket _csocket = null;
 
-    public void start() {
-    }
+	private L1Account _account = null;// 連線帳戶資料
 
-    public void run() {
-        PacketHc m = new PacketHc(this, M);
-        GeneralThreadPool.get().schedule(m, 0);
-        PacketHc o = new PacketHc(this, O);
-        GeneralThreadPool.get().schedule(o, 0);
-        this.set_savePc(Config.AUTOSAVE_INTERVAL);
-        this.set_saveInventory(Config.AUTOSAVE_INTERVAL_INVENTORY);
+	private L1PcInstance _activeChar = null;// 登入人物資料
 
-        try {
-            this._encrypt.satrt();// 開始處理封包輸出
-            this._encrypt.outStart();// 把第一個封包送出去
-            boolean isEcho = false;// 完成要求接收伺服器版本(防止惡意封包發送)
+	private StringBuilder _ip = null;// 連線IP資料
 
-            while (this._isStrat) {
+	private StringBuilder _mac = null;// MAC資料
 
-                byte[] decrypt;
-                try {
-                    decrypt = this.readPacket();
-                } catch (Exception var10) {
-                    break;
-                }
+	private int _kick = 0;
 
-                if (decrypt.length > 1440) {
-                    _log.warn("客戶端送出長度異常封包:" + this._ip.toString() + " 帳號:" + (this._account != null ? this._account.get_login() : "未登入"));
-                    LanSecurityManager.BANIPMAP.put(this._ip.toString(), 100);
-                    break;
-                }
+	private boolean _isStrat = true;
 
-                if (this._account != null) {
-                    if (!OnlineUser.get().isLan(this._account.get_login())) {
-                        break;
-                    }
-                    if (!this._account.is_isLoad()) {
-                        break;
-                    }
-                }
+	private EncryptExecutor _encrypt;// 封包加密管理
 
-                int opcode = decrypt[0] & 0xFF;
-                if (this._activeChar == null) {
-                    if (opcode == 127) {
-                        if (ConfigIpCheck.IPCHECKPACK) {
-                            LanSecurityManager.BANIPPACK.remove(this._ip.toString());
-                        }
+	private DecryptExecutor _decrypt;// 封包解密管理
 
-                        isEcho = true;
-                    }
+	private PacketHandlerExecutor _handler;// 資料處理者
 
-                    if (!isEcho) {
-                        continue;
-                    }
-                    _handler.handlePacket(decrypt);
-                    continue;
-                }
-                if (!isEcho) {
-                    continue;
-                }
-                switch (opcode) {
-                    case C_OPCODE_QUITGAME:
-                    case C_OPCODE_CHANGECHAR:
-                    case C_OPCODE_DROPITEM:
-                    case C_OPCODE_DELETEINVENTORYITEM:
-                        _handler.handlePacket(decrypt);
-                        break;
-                    case C_OPCODE_MOVECHAR:
-                        m.requestWork(decrypt);
-                        break;
-                    default:
-                        o.requestWork(decrypt);
-                }
+	private Encryption _keys;
 
-            }
-        } catch (Exception var11) {
-        } finally {
-            if (ConfigIpCheck.IPCHECK) {
-                IpAttackCheck.SOCKETLIST.remove(this);
-            }
+	private int _error = -1;// 錯誤次數
 
-            this.set_savePc(-1);
-            this.set_saveInventory(-1);
-            this.close();
-        }
+	private static final int M = 3; // 移動最大封包處理量
 
-    }
+	private static final int O = 2;// 人物其他動作最大封包處理量
+	
+	private int _saveInventory = 0;
+	
+	private int _savePc = 0;
+	
+	public int _xorByte = (byte) 0xf0;
+	
+	public long _authdata;
 
-    public void close() {
-        try {
-            String mac = null;
-            if (this._mac != null) {
-                mac = this._mac.toString();
-            }
+	/**
+	 * 啟用設置
+	 * @param socket
+	 * @throws IOException
+	 */
+	public ClientExecutor(final Socket socket) throws IOException {
+		_csocket = socket;
+		//TODO 伺服器綑綁 
+		if(Config.LOGINS_TO_AUTOENTICATION) {
+ 			int randomNumber = (int) (Math.random() * 900000000) + 255;
+ 			_xorByte = randomNumber % 255 + 1;
+			_authdata = new BigInteger(Integer.toString(randomNumber)).modPow(
+					new BigInteger(Config.RSA_KEY_E),
+					new BigInteger(Config.RSA_KEY_N)).longValue();
+		}
 
-            if (this._csocket == null) {
-                return;
-            }
+		_ip = new StringBuilder().append(socket.getInetAddress().getHostAddress());
+		_handler = new PacketHandler(this);
+		_keys = new Encryption();
+		_decrypt = new DecryptExecutor(this, socket.getInputStream());
+		_encrypt = new EncryptExecutor(this, socket.getOutputStream());
+	}
 
-            this._kick = 0;
-            if (this._account != null) {
-                OnlineUser.get().remove(this._account.get_login());
-            }
+	public void start() {
+		
+	}
+	
+	@Override
+	public void run() {
+		final PacketHc m = new PacketHc(this, M);
+		GeneralThreadPool.get().schedule(m, 0);
+		
+		final PacketHc o = new PacketHc(this, O);
+		GeneralThreadPool.get().schedule(o, 0);
 
-            if (this._activeChar != null) {
-                this.quitGame();
-            }
+		// 加入人物自動保存時間軸
+		set_savePc(Config.AUTOSAVE_INTERVAL);
+		// 加入背包物品自動保存時間軸
+		set_saveInventory(Config.AUTOSAVE_INTERVAL_INVENTORY);
+		
+		try {
+			_encrypt.satrt();// 開始處理封包輸出
+			_encrypt.outStart();// 把第一個封包送出去
+			
+			boolean isEcho = false;// 完成要求接收伺服器版本(防止惡意封包發送)
+			while (_isStrat) {
+				byte[] decrypt = null;
+				try {
+					decrypt = readPacket();
 
-            String ipAddr = this._ip.toString();
-            String account = null;
-            if (this._kick < 1 && this._account != null) {
-                account = this._account.get_login();
-            }
+				} catch (final Exception e) {
+					break;
+				}
+				
+				if (decrypt.length > 1440) {
+					_log.warn("客戶端送出長度異常封包:" + _ip.toString() + " 帳號:" + (_account != null? _account.get_login():"未登入"));
+					LanSecurityManager.BANIPMAP.put(_ip.toString(), 100);
+					break;
+				}
+				if (_account != null) {
+					if (!OnlineUser.get().isLan(_account.get_login())) {
+						break;
+					}
+					if (!_account.is_isLoad()) {
+						break;
+					}
+				}
+				
+				final int opcode = decrypt[0] & 0xFF;
 
-            this._decrypt.stop();
-            this._encrypt.stop();
-            StreamUtil.close(this._csocket);
-            if (ConfigIpCheck.ISONEIP) {
-                LanSecurityManager.ONEIPMAP.remove(ipAddr);
-            }
+				_log.debug("opcode" + opcode);
+				
+				if (this._activeChar == null) {
+					if (opcode == C_OPCODE_CLIENTVERSION) {// 要求接收伺服器版本
+						if (ConfigIpCheck.IPCHECKPACK) {
+							LanSecurityManager.BANIPPACK.remove(_ip.toString());
+						}
+						isEcho = true;
+					}
+					
+					if (isEcho) {
+						this._handler.handlePacket(decrypt);
+					}
+					continue;
+				}
+				
+				if (!isEcho) {
+					continue;
+				}//*/
 
-            this._handler = null;
-            this._mac = null;
-            this._ip = null;
-            this._activeChar = null;
-            this._account = null;
-            this._decrypt = null;
-            this._encrypt = null;
-            this._csocket = null;
-            this._keys = null;
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("\n--------------------------------------------------");
-            stringBuilder.append("\n       客戶端 離線: (");
-            if (account != null) {
-                stringBuilder.append(account + " ");
-            }
+				switch (opcode) {
+				case C_OPCODE_QUITGAME:// 要求離開遊戲
+				case C_OPCODE_CHANGECHAR: // 要求切換角色
+				case C_OPCODE_DROPITEM: // 要求丟棄物品(丟棄置地面)
+				case C_OPCODE_DELETEINVENTORYITEM: // 要求刪除物品
+					_handler.handlePacket(decrypt);
+					break;
 
-            if (mac != null) {
-                stringBuilder.append(" " + mac + " / ");
-            }
+				case C_OPCODE_MOVECHAR: // 人物移動封包處理
+					m.requestWork(decrypt);
+					break;
 
-            stringBuilder.append(ipAddr + ") 完成連線中斷!!");
-            stringBuilder.append("\n--------------------------------------------------");
-            _log.info(stringBuilder.toString());
-            SystemUtil.printMemoryUsage(_log);
-        } catch (Exception var5) {
-        }
+				default: // 其他封包處理
+					o.requestWork(decrypt);
+					break;
+				}
+			}
 
-    }
+			// 垃圾回收
+			//finalize();
 
-    public L1Account getAccount() {
-        return this._account;
-    }
+		} catch (Exception e) {
+			//_log.error(e.getLocalizedMessage(), e);
+			
+		//} catch (Throwable e) {
+			//_log.error(e.getLocalizedMessage(), e);*/
+			
+		} finally {
+			if (ConfigIpCheck.IPCHECK) {
+				IpAttackCheck.SOCKETLIST.remove(this);
+			}
+			// 移出人物自動保存時間軸
+			set_savePc(-1);
+			// 移出背包物品自動保存時間軸
+			set_saveInventory(-1);
 
-    public void setAccount(L1Account account) {
-        this._account = account;
-    }
+			// 關閉IO
+			close();
+		}
+		return;
+	}
+	
+	/**
+	 * 關閉連線線程
+	 * @throws IOException
+	 */
+	public void close() {
+		try {
+			String mac = null;
+			if (_mac != null) {
+				mac = _mac.toString();
+			}
+			
+			if (_csocket == null) {
+				return;
+			}
 
-    public String getAccountName() {
-        return this._account == null ? null : this._account.get_login();
-    }
+			_kick = 0;
 
-    public L1PcInstance getActiveChar() {
-        return this._activeChar;
-    }
+			if (_account != null) {
+				OnlineUser.get().remove(_account.get_login());
+			}
+			
+			if (_activeChar != null) {
+				quitGame();
+			}
 
-    public void setActiveChar(L1PcInstance pc) {
-        this._activeChar = pc;
-    }
+			String ipAddr = _ip.toString();
+			String account = null;
+			
+			if (_kick < 1) {
+				if (_account != null) {
+					account = _account.get_login();
+				}
+			}
 
-    public StringBuilder getIp() {
-        return this._ip;
-    }
+			_decrypt.stop();
+			_encrypt.stop();
+			
+			StreamUtil.close(_csocket);
 
-    public StringBuilder getMac() {
-        return this._mac;
-    }
+			if (ConfigIpCheck.ISONEIP) {
+				LanSecurityManager.ONEIPMAP.remove(ipAddr);
+			}
+			
+			_handler = null;
+			_mac = null;// MAC資料
+			_ip = null;// 連線IP資料
+			_activeChar = null;// 登入人物資料
+			_account = null;// 連線帳戶資料
 
-    public boolean setMac(StringBuilder mac) {
-        this._mac = mac;
-        return true;
-    }
+			_decrypt = null;
+			_encrypt = null;
+			_csocket = null;
+			_keys = null;
+			
+			StringBuilder stringBuilder = new StringBuilder();
+			stringBuilder.append("\n--------------------------------------------------");
+			stringBuilder.append("\n       客戶端 離線: (");
+			if (account != null) {
+				stringBuilder.append(account + " ");
+			}
+			if (mac != null) {
+				stringBuilder.append(" " + mac + " / ");
+			}
+			stringBuilder.append(ipAddr + ") 完成連線中斷!!");
+			stringBuilder.append("\n--------------------------------------------------");
+			_log.info(stringBuilder.toString());
+			SystemUtil.printMemoryUsage(_log);
+			
+			//System.gc();
+			
+		} catch (final Exception e) {
+			//_log.error(e.getLocalizedMessage(), e);
+		}
+	}
 
-    public Socket get_socket() {
-        return this._csocket;
-    }
+	/**
+	 * 傳回帳號暫存資料
+	 * @return
+	 */
+	public L1Account getAccount() {
+		return _account;
+	}
 
-    public boolean kick() {
-        try {
-            this._encrypt.encrypt(new S_Disconnect());
-        } catch (Exception var2) {
-        }
+	/**
+	 * 設置登入帳號
+	 * @param account
+	 */
+	public void setAccount(final L1Account account) {
+		_account = account;
+	}
 
-        this.quitGame();
-        this._kick = 1;
-        this._isStrat = false;
-        this.close();
-        return true;
-    }
+	/**
+	 * 傳回登入帳號
+	 * @return
+	 */
+	public String getAccountName() {
+		if (_account == null) {
+			return null;
+		}
+		return _account.get_login();
+	}
 
-    public void quitGame() {
-        try {
-            if (this._activeChar == null) {
-                return;
-            }
+	/**
+	 * 傳回目前登入人物
+	 * @return
+	 */
+	public L1PcInstance getActiveChar() {
+		return _activeChar;
+	}
 
-            synchronized (this._activeChar) {
-                QuitGame.quitGame(this._activeChar);
-                this._activeChar = null;
-            }
-        } catch (Exception var3) {
-        }
+	/**
+	 * 設置目前登入人物
+	 * @param pc
+	 */
+	public void setActiveChar(final L1PcInstance pc) {
+		_activeChar = pc;
+	}
 
-    }
+	/**
+	 * 傳回IP位置
+	 * @return
+	 */
+	public StringBuilder getIp() {
+		return _ip;
+	}
 
-    private byte[] readPacket() {
-        try {
-            byte[] data = null;
-            data = this._decrypt.decrypt();
-            return data;
-        } catch (Exception var2) {
+	/**
+	 * 傳回MAC位置
+	 * @return
+	 */
+	public StringBuilder getMac() {
+		return _mac;
+	}
 
-        }
-        return null;
-    }
+	/**
+	 * 設置MAC位置
+	 * @param mac
+	 * @return true:允許登入 false:禁止登入
+	 */
+	public boolean setMac(final StringBuilder mac) {
+		_mac = mac;
+		return true;
+	}
 
-    public EncryptExecutor out() {
-        return this._encrypt;
-    }
+	/**
+	 * 傳回 Socket
+	 * @return
+	 */
+	public Socket get_socket() {
+		return _csocket;
+	}
 
-    public void set_keys(Encryption keys) {
-        this._keys = keys;
-    }
+	/**
+	 * 中斷連線
+	 * @return 
+	 */
+	public boolean kick() {
+		try {
+			_encrypt.encrypt(new S_Disconnect());
+		} catch (final Exception e) {
+			//_log.error(e.getLocalizedMessage(), e);
+		}
+		quitGame();
 
-    public Encryption get_keys() {
-        return this._keys;
-    }
+		_kick = 1;
+		_isStrat = false;
+		close();
+		return true;
+	}
 
-    public int get_error() {
-        return this._error;
-    }
+	/**
+	 * 人物離開遊戲的處理
+	 * @param pc
+	 */
+	public void quitGame() {
+		try {
+			if (_activeChar == null) {
+				return;
+			}
+			synchronized (_activeChar) {
+				QuitGame.quitGame(_activeChar);
+				_activeChar = null;
+			}
 
-    public void set_error(int error) {
-        this._error = error;
-        if (error >= 2) {
-            this.kick();
-        }
+		} catch (final Exception e) {
+			//_log.error(e.getLocalizedMessage(), e);
+		}
+	}
 
-    }
+	/**
+	 * 封包解密
+	 * @return
+	 * @throws Exception
+	 */
+	private byte[] readPacket() {
+		try {
+			byte[] data = null;
+			data = _decrypt.decrypt();
+			return data;
 
-    public void set_saveInventory(int saveInventory) {
-        this._saveInventory = saveInventory;
-    }
+		} catch (final Exception e) {
+			_log.error(e.getLocalizedMessage(), e);
+		}
+		return null;
+	}
 
-    public int get_saveInventory() {
-        return this._saveInventory;
-    }
+	/**
+	 * 傳回封包加密解密管理接口
+	 */
+	public EncryptExecutor out() {
+		return _encrypt;
+	}
 
-    public void set_savePc(int savePc) {
-        this._savePc = savePc;
-    }
+	/**
+	 * 加密與解密金鑰
+	 */
+	public void set_keys(Encryption keys) {
+		//System.out.println("加密與解密金鑰:"+keys);
+		_keys = keys;
+	}
 
-    public int get_savePc() {
-        return this._savePc;
-    }
+	/**
+	 * 傳回加密與解密金鑰
+	 * @return the _keys
+	 */
+	public Encryption get_keys() {
+		return _keys;
+	}
+
+	/**
+	 * 傳回錯誤次數
+	 * @return
+	 */
+	public int get_error() {
+		return _error;
+	}
+
+	/**
+	 * 設置錯誤次數
+	 * @param error
+	 */
+	public void set_error(final int error) {
+		_error = error;
+		if (error >= 2) {
+			kick();
+		}
+	}
+
+	/**
+	 * 設置自動存檔背包物件時間
+	 * @param _saveInventory
+	 */
+	public void set_saveInventory(final int saveInventory) {
+		_saveInventory = saveInventory;
+	}
+
+	/**
+	 * 傳回自動存檔背包物件時間
+	 * @return
+	 */
+	public int get_saveInventory() {
+		return _saveInventory;
+	}
+
+	/**
+	 * 設置自動存檔人物資料時間
+	 * @param _saveInventory
+	 */
+	public void set_savePc(final int savePc) {
+		_savePc = savePc;
+	}
+
+	/**
+	 * 傳回自動存檔人物資料時間
+	 * @return
+	 */
+	public int get_savePc() {
+		return _savePc;
+	}
 }

@@ -15,7 +15,7 @@ public class DK45_Teleport extends ItemExecutor {
     public void execute(int[] data, L1PcInstance pc, L1ItemInstance item) throws Exception {
         if (pc.isDragonKnight()) {
             pc.getInventory().removeItem(item, 1L);
-            L1Teleport.teleport(pc, 32839, 32860, (short)1000, 2, true);
+            L1Teleport.teleport(pc, 32839, 32860, 1000, 2, true);
         } else {
             pc.sendPackets((ServerBasePacket)new S_ServerMessage(79));
         }

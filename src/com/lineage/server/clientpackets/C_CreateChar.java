@@ -249,15 +249,15 @@ public class C_CreateChar extends ClientBasePacket {
             int[] loc = LOC_LIST[pc.getType()];
             pc.setX(loc[0]);
             pc.setY(loc[1]);
-            pc.setMap((short) loc[2]);
+            pc.setMap( loc[2]);
             pc.setHeading(0);
             pc.setLawful(0);
             int initHp = CalcInitHpMp.calcInitHp(pc);
             int initMp = CalcInitHpMp.calcInitMp(pc);
-            pc.addBaseMaxHp((short) initHp);
-            pc.setCurrentHp((short) initHp);
-            pc.addBaseMaxMp((short) initMp);
-            pc.setCurrentMp((short) initMp);
+            pc.addBaseMaxHp( initHp);
+            pc.setCurrentHp( initHp);
+            pc.addBaseMaxMp( initMp);
+            pc.setCurrentMp( initMp);
             pc.resetBaseAc();
             pc.setTitle("");
             pc.setClanid(0);
@@ -287,11 +287,11 @@ public class C_CreateChar extends ClientBasePacket {
             pc.setClanRank(0);
             pc.set_food(OpcodesClient.C_OPCODE_PLEDGE);
             if (account.get_access_level() >= 200) {
-                pc.setAccessLevel((short) account.get_access_level());
+                pc.setAccessLevel( account.get_access_level());
                 pc.setGm(true);
                 pc.setMonitor(false);
             } else {
-                pc.setAccessLevel((short) 0);
+                pc.setAccessLevel( 0);
                 pc.setGm(false);
                 pc.setMonitor(false);
             }

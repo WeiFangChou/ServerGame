@@ -158,7 +158,7 @@ public class ServerWarExecutor {
                             L1Clan clan = WorldClan.get().getClan(pc.getClanname());
                             if (clan == null || clan.getCastleId() != castleId) {
                                 int[] loc = L1CastleLocation.getGetBackLoc(castleId);
-                                L1Teleport.teleport(pc, loc[0], loc[1], (short) loc[2], 5, true);
+                                L1Teleport.teleport(pc, loc[0], loc[1],  loc[2], 5, true);
                             }
                         }
                     }

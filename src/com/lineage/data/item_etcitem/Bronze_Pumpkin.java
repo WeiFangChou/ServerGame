@@ -21,7 +21,7 @@ public class Bronze_Pumpkin extends ItemExecutor {
     public void execute(int[] data, L1PcInstance pc, L1ItemInstance item) throws Exception {
         int item_id;
         int count = 1;
-        switch ((short) ((int) (Math.random() * 100.0d))) {
+        switch ( ((int) (Math.random() * 100.0d))) {
             case 0:
             case 1:
             case 2:

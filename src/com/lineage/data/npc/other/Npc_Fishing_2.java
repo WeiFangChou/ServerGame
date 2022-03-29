@@ -22,6 +22,6 @@ public class Npc_Fishing_2 extends NpcExecutor {
 
     public void action(L1PcInstance pc, L1NpcInstance npc, String cmd, long amount) {
         if (cmd.equals("teleportURL"))
-            L1Teleport.teleport(pc, 32613, 32781, (short)4, 4, true);
+            L1Teleport.teleport(pc, 32613, 32781, 4, 4, true);
     }
 }

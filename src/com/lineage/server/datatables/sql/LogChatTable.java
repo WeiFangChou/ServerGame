@@ -26,7 +26,7 @@ public class LogChatTable implements LogChatStorage {
                 String clan_name = pc.getClanname();
                 int locx = pc.getX();
                 int locy = pc.getY();
-                short mapid = pc.getMapId();
+                int mapid = pc.getMapId();
                 String target_account_name = target.getAccountName();
                 int target_id = target.getId();
                 String target_name = target.getName();
@@ -34,7 +34,7 @@ public class LogChatTable implements LogChatStorage {
                 String target_clan_name = target.getClanname();
                 int target_locx = target.getX();
                 int target_locy = target.getY();
-                short target_mapid = target.getMapId();
+                int target_mapid = target.getMapId();
                 con = DatabaseFactory.get().getConnection();
                 pstm = con.prepareStatement("INSERT INTO other_chat (account_name, char_id, name, clan_id, clan_name, locx, locy, mapid, type, target_account_name, target_id, target_name, target_clan_id, target_clan_name, target_locx, target_locy, target_mapid, content, datetime) VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE())");
                 pstm.setString(1, account_name);
@@ -77,7 +77,7 @@ public class LogChatTable implements LogChatStorage {
             String clan_name = pc.getClanname();
             int locx = pc.getX();
             int locy = pc.getY();
-            short mapid = pc.getMapId();
+            int mapid = pc.getMapId();
             con = DatabaseFactory.get().getConnection();
             pstm = con.prepareStatement("INSERT INTO other_chat (account_name, char_id, name, clan_id, clan_name, locx, locy, mapid, type, content, datetime) VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE())");
             pstm.setString(1, account_name);

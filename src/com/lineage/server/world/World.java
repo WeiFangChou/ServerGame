@@ -22,12 +22,15 @@ import com.lineage.server.serverpackets.S_GreenMessage;
 import com.lineage.server.serverpackets.S_SystemMessage;
 import com.lineage.server.serverpackets.ServerBasePacket;
 import com.lineage.server.types.Point;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import com.lineage.server.utils.DigitalUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -204,29 +207,201 @@ public class World {
         }
     }
 
-    public L1GroundInventory getInventory(int x, int y, short map) {
+
+    /**
+     * 传回数组最小值
+     *
+     * @param longs
+     * @return
+     */
+    public static long returnMin(final long[] longs) {
+        long i = -1;
+        try {
+            for (long count : longs) {
+                if (i == -1) {
+                    i = count;
+                }
+                i = Math.min(i, count);
+            }
+
+        } catch (Exception e) {
+            _log.error(e.getLocalizedMessage(), e);
+
+        }
+        return i;
+    }
+
+    /**
+     * 传回数组最小值
+     *
+     * @param ints
+     * @return
+     */
+    public static long returnMin(final int[] ints) {
+        long i = -1;
+        try {
+            for (long count : ints) {
+                if (i == -1) {
+                    i = count;
+                }
+                i = Math.min(i, count);
+            }
+
+        } catch (Exception e) {
+            _log.error(e.getLocalizedMessage(), e);
+
+        }
+        return i;
+    }
+
+    /**
+     * 传回数组最小值
+     *
+     * @param shorts
+     * @return
+     */
+    public static long returnMin(final short[] shorts) {
+        long i = -1;
+        try {
+            for (long count : shorts) {
+                if (i == -1) {
+                    i = count;
+                }
+                i = Math.min(i, count);
+            }
+
+        } catch (Exception e) {
+            _log.error(e.getLocalizedMessage(), e);
+
+        }
+        return i;
+    }
+
+    /**
+     * 传回数组最小值
+     *
+     * @param bytes
+     * @return
+     */
+    public static long returnMin(final byte[] bytes) {
+        long i = -1;
+        try {
+            for (long count : bytes) {
+                if (i == -1) {
+                    i = count;
+                }
+                i = Math.min(i, count);
+            }
+
+        } catch (Exception e) {
+            _log.error(e.getLocalizedMessage(), e);
+
+        }
+        return i;
+    }
+
+    /**
+     * 传回数组最大值
+     *
+     * @param longs
+     * @return
+     */
+    public static long returnMax(final long[] longs) {
+        long i = -1;
+        try {
+            for (long count : longs) {
+                i = Math.max(i, count);
+            }
+
+        } catch (Exception e) {
+            _log.error(e.getLocalizedMessage(), e);
+
+        }
+        return i;
+    }
+
+    /**
+     * 传回数组最大值
+     *
+     * @param ints
+     * @return
+     */
+    public static long returnMax(final int[] ints) {
+        long i = -1;
+        try {
+            for (long count : ints) {
+                i = Math.max(i, count);
+            }
+
+        } catch (Exception e) {
+            _log.error(e.getLocalizedMessage(), e);
+
+        }
+        return i;
+    }
+
+    /**
+     * 传回数组最大值
+     *
+     * @param shorts
+     * @return
+     */
+    public static long returnMax(final short[] shorts) {
+        long i = -1;
+        try {
+            for (long count : shorts) {
+                i = Math.max(i, count);
+            }
+
+        } catch (Exception e) {
+            _log.error(e.getLocalizedMessage(), e);
+
+        }
+        return i;
+    }
+
+    /**
+     * 传回数组最大值
+     *
+     * @param bytes
+     * @return
+     */
+    public static long returnMax(final byte[] bytes) {
+        long i = -1;
+        try {
+            for (long count : bytes) {
+                i = Math.max(i, count);
+            }
+
+        } catch (Exception e) {
+            _log.error(e.getLocalizedMessage(), e);
+
+        }
+        return i;
+    }
+
+
+    public L1GroundInventory getInventory(final int x, final int y, final int map) {
         int inventoryKey = (((x - 30000) * 10000) + (y - 30000)) * -1;
         try {
             ConcurrentHashMap<Integer, L1Object> idmap = this._visibleObjects.get(new Integer(map));
             if (idmap != null) {
-                Object object = idmap.get(Integer.valueOf(inventoryKey));
+                Object object = idmap.get(inventoryKey);
                 if (object == null) {
                     return new L1GroundInventory(inventoryKey, x, y, map);
                 }
                 return (L1GroundInventory) object;
             }
-            _log.error("遊戲世界儲存中心並未建立該地圖編號資料檔案: " + ((int) map));
-            return null;
+            _log.error("遊戲世界儲存中心並未建立該地圖編號資料檔案: " + (map));
         } catch (Exception e) {
             _log.error(e.getLocalizedMessage(), e);
         }
-        return  null;
+        return null;
     }
 
 
-
     public L1GroundInventory getInventory(L1Location loc) {
-        return getInventory(loc.getX(), loc.getY(), (short) loc.getMap().getId());
+        return getInventory(loc.getX(), loc.getY(), loc.getMap().getId());
     }
 
     public void addVisibleObject(L1Object object) {
